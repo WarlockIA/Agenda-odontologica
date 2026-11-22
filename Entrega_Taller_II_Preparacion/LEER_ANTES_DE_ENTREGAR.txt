@@ -1,0 +1,51 @@
+ENTREGA DE TALLER II — PREPARACIÓN
+
+Esta carpeta es una preparación, no una entrega definitiva. El informe está
+marcado como borrador porque faltan datos y evidencias reales por confirmar.
+
+01_Informe_y_Anexos
+- Informe principal en Word y PDF.
+- Anexo D de pruebas en Word y PDF; las nueve capturas están en su subcarpeta.
+- Acta de revisión, guía de entrevista y evidencia de presentación: plantillas
+  pendientes. La aceptación requiere revisión y firma auténtica.
+
+02_Base_de_Datos
+- schema.sql: creación de tablas SQLite.
+- datos_prueba.sql: dos pacientes y un tratamiento ficticios; no incluye usuarios.
+  Ejecutar primero schema.sql y después datos_prueba.sql sobre una base nueva.
+
+03_Ciencia_de_Datos
+- CSV mínimos del conjunto sintético: 320 citas y sus pacientes y vínculos;
+  se excluyeron nombres, teléfonos, documentos y notas clínicas.
+- Los datos de edad y sexo corresponden a pacientes marcados como sintéticos;
+  los tratamientos y costos provienen del catálogo usado por la simulación.
+- El notebook Entrenamiento_Modelo.ipynb ejecuta el script de entrenamiento
+  incluido y requiere Python y sus dependencias científicas. No se volvió a
+  ejecutar en esta preparación. La ejecución sobrescribe los modelos guardados.
+- El análisis exploratorio original del informe incluye datos anonimizados y
+  sintéticos; este subconjunto sintético no reproduce ese análisis completo.
+- Se adjuntan los modelos existentes y sus métricas. El modelo es experimental
+  y no está validado para decisiones reales.
+
+CÓDIGO E INSTALADOR
+El repositorio existente es https://github.com/WarlockIA/Agenda_odontologica.
+Antes de compartirlo o entregarlo, revisar su contenido y actualizarlo con
+los cambios que correspondan: existen respaldos de base de datos versionados
+y cambios locales sin publicar. No incluir datos clínicos ni credenciales.
+Quitar un archivo en un nuevo commit no lo elimina del historial de Git.
+No se incluye el instalador existente: su configuración incorpora database.db
+y no se ha verificado que sea seguro ni que corresponda a la versión actual.
+Preparar y verificar uno con una base vacía o ficticia si el docente lo exige.
+
+PENDIENTES ANTES DE ENTREGAR
+[ ] Confirmar fecha de entrega, visita, año de inicio, años de funcionamiento
+    y cronograma; actualizar Word y PDF.
+[ ] Realizar y documentar entrevista y presentación; obtener aceptación firmada.
+[ ] Revisar el repositorio y su README, eliminar datos sensibles del contenido
+    que se vaya a compartir y acordar una forma segura de entrega.
+[ ] Verificar el notebook en un entorno con Python y, si corresponde, preparar
+    y probar un instalador seguro.
+[ ] Volver a copiar aquí las versiones finales después de los cambios.
+
+No usar el ZIP anterior sin revisión: contiene exportaciones completas de la
+base. No copiar bases operativas, respaldos, adjuntos ni archivos .env.

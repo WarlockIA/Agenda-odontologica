@@ -480,6 +480,9 @@ body.light-theme .treatment-rank-bar-bg {
 .prediction-card {
   margin-top: 24px;
   padding: 28px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--card-border);
+  background: var(--bg-secondary, rgba(15, 23, 42, 0.5));
 }
 
 .prediction-header h3 {
@@ -743,6 +746,13 @@ body.light-theme .prediction-input {
 
 body.light-theme .prediction-result {
   background: linear-gradient(135deg, #ffffff, #f1f5f9);
+}
+
+body.light-theme .prediction-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
 }
 
 @media (max-width: 900px) {

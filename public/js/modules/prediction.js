@@ -294,7 +294,7 @@ export async function setupPredictionHandlers() {
 
   try {
     await loadPredictionTreatments();
-    setStatus('Los datos ingresados se usan solo para calcular esta demostración.');
+    setStatus('');
   } catch (error) {
     setStatus(error.message, true);
   }
