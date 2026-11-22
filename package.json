@@ -1,0 +1,62 @@
+{
+  "name": "agenda-odontologica",
+  "version": "1.0.0",
+  "author": "Consultorio Odontológico Cristo Rey",
+  "description": "Sistema de agenda y gestión odontológica con autenticación segura",
+  "main": "src/electron.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch-path=src --watch-path=public src/server.js",
+    "electron:dev": "electron .",
+    "electron:build": "electron-builder",
+    "test": "node --test tests/ausentismoPrediction.test.js tests/patientPredictionFeatures.test.js tests/predictionForm.test.js tests/productionConfig.test.js tests/protectedUploads.test.js",
+    "clean:db": "node clean-db.js",
+    "admin:create": "node scripts/create-admin.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^9.0.3",
+    "sqlite3": "^5.1.7",
+    "zod": "^4.4.3"
+  },
+  "build": {
+    "appId": "com.agendaodontologica.app",
+    "productName": "Agenda Odontológica",
+    "files": [
+      "src/**/*",
+      "public/**/*",
+      "build/**/*",
+      "Proyecto_Ciencia_de_Datos/modelos/regresion_logistica_node.json",
+      "schema.sql",
+      "database.db",
+      "package.json"
+    ],
+    "asar": false,
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico",
+      "signtoolOptions": {
+        "sign": "./customSign.js"
+      }
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Agenda Odontológica"
+    }
+  },
+  "devDependencies": {
+    "electron": "^43.0.0",
+    "electron-builder": "^26.15.3",
+    "png-to-ico": "^3.0.2"
+  }
+}

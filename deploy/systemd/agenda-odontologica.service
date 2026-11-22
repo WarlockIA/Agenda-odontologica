@@ -1,0 +1,24 @@
+[Unit]
+Description=Agenda Odontologica web application
+After=network.target
+
+[Service]
+Type=simple
+User=agenda
+Group=agenda
+WorkingDirectory=/opt/agenda-odontologica
+EnvironmentFile=/etc/agenda-odontologica/agenda.env
+ExecStart=/usr/bin/node /opt/agenda-odontologica/src/server.js
+Restart=on-failure
+RestartSec=5
+StateDirectory=agenda-odontologica
+StateDirectoryMode=0750
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/agenda-odontologica
+
+[Install]
+WantedBy=multi-user.target

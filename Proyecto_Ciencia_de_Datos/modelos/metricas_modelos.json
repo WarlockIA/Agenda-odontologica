@@ -1,0 +1,40 @@
+{
+  "regresion_logistica": {
+    "accuracy": 0.5833333333333334,
+    "balanced_accuracy": 0.47,
+    "precision": 0.14285714285714285,
+    "recall": 0.3,
+    "f1": 0.1935483870967742,
+    "roc_auc": 0.46799999999999997,
+    "confusion_matrix": [
+      [
+        32,
+        18
+      ],
+      [
+        7,
+        3
+      ]
+    ],
+    "classification_report": "              precision    recall  f1-score   support\n\n    Atendida       0.82      0.64      0.72        50\n     Ausente       0.14      0.30      0.19        10\n\n    accuracy                           0.58        60\n   macro avg       0.48      0.47      0.46        60\nweighted avg       0.71      0.58      0.63        60\n"
+  },
+  "random_forest": {
+    "accuracy": 0.8333333333333334,
+    "balanced_accuracy": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.494,
+    "confusion_matrix": [
+      [
+        50,
+        0
+      ],
+      [
+        10,
+        0
+      ]
+    ],
+    "classification_report": "              precision    recall  f1-score   support\n\n    Atendida       0.83      1.00      0.91        50\n     Ausente       0.00      0.00      0.00        10\n\n    accuracy                           0.83        60\n   macro avg       0.42      0.50      0.45        60\nweighted avg       0.69      0.83      0.76        60\n"
+  }
+}

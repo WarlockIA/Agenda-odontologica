@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Consultorio Odontológico "Cristo Rey" - Hojas de Estilos Centralizadas
+   ========================================================================== */
+
+@import url('base.css?v=3.4.0');
+@import url('login.css?v=3.4.0');
+@import url('sidebar.css?v=3.4.0');
+@import url('citas.css?v=3.4.0');
+@import url('modals.css?v=3.4.0');
+@import url('pacientes.css?v=3.4.0');
+@import url('ficha.css?v=3.4.0');
+@import url('settings.css?v=3.4.0');
+@import url('toast.css?v=3.4.0');
+@import url('reportes.css?v=3.4.0');
+@import url('inventario.css?v=3.4.0');

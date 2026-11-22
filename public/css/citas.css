@@ -1,0 +1,1040 @@
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: springUpFade 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+  transition: background var(--transition-fast);
+  z-index: 3;
+}
+
+/* Pseudo-elemento de Spotlight para reflejo de luz sutil al pasar el cursor */
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 15% 15%,
+      var(--spotlight-color, transparent),
+      transparent 85%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stat-card:hover::after {
+  opacity: 0.85;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+.stat-card:nth-child(1) {
+  --spotlight-color: rgba(2, 132, 199, 0.065);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230284c7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2' ry='2'/><line x1='16' y1='2' x2='16' y2='6'/><line x1='8' y1='2' x2='8' y2='6'/><line x1='3' y1='10' x2='21' y2='10'/></svg>");
+  background-repeat: no-repeat;
+  background-position: calc(100% + 12px) calc(100% + 12px);
+  background-size: 80px;
+}
+
+.stat-card:nth-child(1):hover {
+  border-color: rgba(2, 132, 199, 0.3);
+  box-shadow: 0 12px 28px rgba(2, 132, 199, 0.06);
+  background-size: 86px;
+}
+
+.stat-card:nth-child(1)::before {
+  background: var(--primary);
+}
+
+.stat-card:nth-child(2) {
+  --spotlight-color: rgba(16, 185, 129, 0.065);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'/><polyline points='22 4 12 14.01 9 11.01'/></svg>");
+  background-repeat: no-repeat;
+  background-position: calc(100% + 12px) calc(100% + 12px);
+  background-size: 80px;
+}
+
+.stat-card:nth-child(2):hover {
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.06);
+  background-size: 86px;
+}
+
+.stat-card:nth-child(2)::before {
+  background: var(--success);
+}
+
+.stat-card:nth-child(3) {
+  --spotlight-color: rgba(245, 158, 11, 0.065);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><polyline points='12 6 12 12 16 14'/></svg>");
+  background-repeat: no-repeat;
+  background-position: calc(100% + 12px) calc(100% + 12px);
+  background-size: 80px;
+}
+
+.stat-card:nth-child(3):hover {
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.06);
+  background-size: 86px;
+}
+
+.stat-card:nth-child(3)::before {
+  background: hsl(38, 92%, 50%);
+}
+
+/* 4th and 5th cards (specifically for reports) */
+.stat-card:nth-child(4) {
+  --spotlight-color: rgba(59, 130, 246, 0.08);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2360a5fa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='23 6 13.5 15.5 8.5 10.5 1 18'/><polyline points='17 6 23 6 23 12'/></svg>");
+  background-repeat: no-repeat;
+  background-position: calc(100% + 12px) calc(100% + 12px);
+  background-size: 80px;
+}
+
+.stat-card:nth-child(4):hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 12px 28px rgba(59, 130, 246, 0.08);
+  background-size: 86px;
+}
+
+.stat-card:nth-child(4)::before {
+  background: #60a5fa;
+}
+
+.stat-card:nth-child(5) {
+  --spotlight-color: rgba(239, 68, 68, 0.08);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='8.5' cy='7' r='4'/><line x1='18' y1='8' x2='22' y2='12'/><line x1='22' y1='8' x2='18' y2='12'/></svg>");
+  background-repeat: no-repeat;
+  background-position: calc(100% + 12px) calc(100% + 12px);
+  background-size: 80px;
+}
+
+.stat-card:nth-child(5):hover {
+  border-color: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 12px 28px rgba(239, 68, 68, 0.08);
+  background-size: 86px;
+}
+
+.stat-card:nth-child(5)::before {
+  background: var(--danger);
+}
+
+
+.stat-label,
+.stat-value {
+  position: relative;
+  z-index: 2;
+}
+
+.stat-label {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.stat-value {
+  font-size: 38px;
+  font-weight: 800;
+  font-family: var(--font-display);
+  line-height: 1.1;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+/* Appointment List (Daily Agenda View) */
+.agenda-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.agenda-section h3 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-primary);
+  border-left: 3px solid var(--primary);
+  padding-left: 12px;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+
+.appointment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.appointment-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.015) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 4px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 16px 24px;
+  display: grid;
+  grid-template-columns: 95px minmax(0, 1.5fr) minmax(0, 1fr) 120px;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.appointment-card:hover {
+  transform: translateX(6px) translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.14);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+/* Status specific left border, spotlight color and hover shadows */
+.appointment-card.programada {
+  border-left-color: hsl(200, 95%, 45%);
+  --spotlight-color: rgba(2, 132, 199, 0.12);
+}
+
+.appointment-card.programada:hover {
+  border-color: rgba(2, 132, 199, 0.25);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), 0 0 12px rgba(2, 132, 199, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.appointment-card.en-espera {
+  border-left-color: hsl(38, 92%, 50%);
+  --spotlight-color: rgba(245, 158, 11, 0.12);
+}
+
+.appointment-card.en-espera:hover {
+  border-color: rgba(245, 158, 11, 0.25);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), 0 0 12px rgba(245, 158, 11, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.appointment-card.atendida {
+  border-left-color: var(--success);
+  --spotlight-color: rgba(16, 185, 129, 0.12);
+}
+
+.appointment-card.atendida:hover {
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), 0 0 12px rgba(16, 185, 129, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.appointment-card.ausente {
+  border-left-color: var(--danger);
+  --spotlight-color: rgba(239, 68, 68, 0.12);
+}
+
+.appointment-card.ausente:hover {
+  border-color: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3), 0 0 12px rgba(239, 68, 68, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+
+.app-time {
+  font-weight: 700;
+  color: hsl(200, 95%, 65%);
+  font-size: 13.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: rgba(2, 132, 199, 0.1);
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: fit-content;
+}
+
+.app-patient {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.app-treatment {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+/* Teléfono dentro del nombre: oculto por defecto, visible al pasar el cursor */
+.app-patient small {
+  display: none;
+}
+
+.appointment-card:hover .app-patient small {
+  display: inline;
+}
+
+.status-pill {
+  justify-self: end;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+.status-pill.confirmed {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+}
+
+.status-pill.pending {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: hsl(38, 92%, 50%);
+}
+
+/* ==========================================================================
+   Dashboard Header Actions (Agendar Cita Button)
+   ========================================================================== */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.agenda-controls {
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  padding: 6px 8px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.add-appointment-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, hsl(190, 80%, 45%) 0%, hsl(210, 85%, 55%) 100%);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 14px;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+  animation: pulse-btn 3s infinite;
+}
+
+@keyframes pulse-btn {
+  0%, 100% { box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4), inset 0 1px 0 rgba(255,255,255,0.3); }
+  50%      { box-shadow: 0 4px 25px rgba(2, 132, 199, 0.8), inset 0 1px 0 rgba(255,255,255,0.4); }
+}
+
+.add-appointment-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+  transform: skewX(-20deg);
+  transition: all 0.6s ease;
+}
+
+.add-appointment-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  background: linear-gradient(135deg, hsl(190, 80%, 50%) 0%, hsl(210, 85%, 60%) 100%);
+}
+
+.add-appointment-btn:hover::before {
+  left: 150%;
+}
+
+.add-appointment-btn svg {
+  transition: transform 0.3s ease;
+}
+
+
+.add-appointment-btn#btn-open-add-item:hover svg,
+#open-new-appointment-btn:hover svg {
+  transform: rotate(90deg);
+}
+
+.add-appointment-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Modal Overlay & Card (Glassmorphism)
+   ========================================================================== */
+/* ==========================================================================
+   Status-specific Color Coding (HU-005)
+   ========================================================================== */
+.status-pill.programada {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: hsl(217, 91%, 60%);
+}
+
+.status-pill.en-espera {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: hsl(38, 92%, 50%);
+}
+
+.status-pill.atendida {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+}
+
+.status-pill.ausente {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+}
+
+/* ==========================================================================
+/* Disabled actions for status-modal (HU-006) */
+.status-action-btn:disabled,
+.danger-outline-btn:disabled,
+#btn-edit-appointment:disabled {
+  opacity: 0.35;
+  cursor: not-allowed !important;
+  pointer-events: none;
+  filter: saturate(0.4) brightness(0.6);
+  box-shadow: none !important;
+  transform: none !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ==========================================================================
+   HU-007: Control de Estados de Atención (Cambio Rápido & Módulo Clínico)
+   ========================================================================== */
+
+/* Ajustar grilla de tarjetas dinámicas con 5 columnas (incluye botón clínico y select) */
+.appointment-card.dynamic {
+  grid-template-columns: 90px minmax(0, 1.2fr) minmax(0, 0.9fr) 130px 110px;
+  gap: 10px;
+  overflow: hidden;
+}
+
+/* Selector de estado estilizado (reemplazo de status-pill) */
+.status-select {
+  justify-self: end;
+  padding: 6px 28px 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  cursor: pointer;
+  outline: none;
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 9px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: dark;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+}
+
+.status-select:focus {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
+}
+
+.status-select option {
+  background-color: hsl(222, 47%, 9%);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 10px;
+}
+
+
+/* Colores de fondo y texto del select rápido según estado */
+.status-select.programada {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: hsl(217, 91%, 60%);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.status-select.programada:hover {
+  background-color: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.status-select.en-espera {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: hsl(38, 92%, 50%);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.status-select.en-espera:hover {
+  background-color: rgba(245, 158, 11, 0.25);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.status-select.atendida {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.status-select.atendida:hover {
+  background-color: rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.status-select.ausente {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.status-select.ausente:hover {
+  background-color: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Botón del Módulo Clínico (Registrar Tratamiento) */
+.clinical-btn {
+  justify-self: center;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid rgba(2, 132, 199, 0.35);
+  background: rgba(2, 132, 199, 0.1);
+  color: hsl(200, 95%, 70%);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.9) translateX(10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.clinical-btn:hover {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3) !important;
+  transform: scale(1.05) !important;
+}
+
+
+/* Mostrar botón interactivo solo para citas con estado "Atendida" */
+.appointment-card.atendida .clinical-btn {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1) translateX(0);
+}
+
+.clinical-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(2, 132, 199, 0.45);
+  filter: brightness(1.1);
+}
+
+.clinical-btn:active {
+  transform: translateY(1px);
+}
+
+.clinical-btn svg {
+  width: 13px;
+  height: 13px;
+  transition: transform var(--transition-fast);
+}
+
+.clinical-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   HU-010: Vista de Calendario Semanal Interactivo (Premium UX & Drag-and-Drop)
+   ========================================================================== */
+
+/* Selector de Vistas (Día / Semana) */
+.view-selector {
+  display: flex;
+  gap: 2px;
+  padding-right: 16px;
+  margin-right: 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.view-btn {
+  padding: 6px 16px;
+  background: none;
+  border: none;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.view-btn:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.view-btn.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, hsl(200, 75%, 42%) 0%, hsl(215, 70%, 38%) 100%);
+  box-shadow: 0 3px 8px rgba(2, 92, 140, 0.15);
+}
+
+
+/* Contenedor del Calendario */
+.calendar-wrapper {
+  background: rgba(17, 24, 39, 0.45);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow-x: auto;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: 70px repeat(7, minmax(110px, 1fr));
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Cabeceras del Calendario */
+.calendar-header-cell {
+  background-color: rgba(15, 23, 42, 0.85);
+  padding: 14px 10px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calendar-header-cell:nth-child(8n) {
+  border-right: none;
+}
+
+.calendar-header-cell .day-num {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 4px;
+  letter-spacing: -0.5px;
+}
+
+.calendar-header-cell.time-col-header {
+  background-color: rgba(15, 23, 42, 0.9);
+}
+
+.calendar-header-cell.today-header {
+  background: linear-gradient(to bottom, rgba(2, 132, 199, 0.15), rgba(15, 23, 42, 0.85));
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
+}
+
+.calendar-header-cell.today-header .day-num {
+  color: var(--primary);
+}
+
+/* Fila/Columna de Horas */
+.calendar-time-label-cell {
+  background-color: rgba(15, 23, 42, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px;
+  user-select: none;
+}
+
+/* Celdas del Calendario (Slots de 30min) */
+.calendar-cell {
+  position: relative;
+  min-height: 58px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  background-color: rgba(17, 24, 39, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  transition: background var(--transition-fast);
+}
+
+.calendar-cell:nth-child(8n) {
+  border-right: none;
+}
+
+.calendar-cell:hover:not(.non-working-slot) {
+  background-color: rgba(2, 132, 199, 0.04);
+}
+
+/* Celdas fuera de jornada (Recesos / Fuera de horario) */
+.calendar-cell.non-working-slot {
+  background-color: rgba(15, 23, 42, 0.5);
+  background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 8px, transparent 8px, transparent 16px);
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.calendar-cell.holiday-slot {
+  background-color: rgba(239, 68, 68, 0.05) !important;
+  background-image: repeating-linear-gradient(45deg, rgba(239, 68, 68, 0.03) 0px, rgba(239, 68, 68, 0.03) 8px, transparent 8px, transparent 16px) !important;
+  opacity: 0.8 !important;
+  cursor: not-allowed !important;
+  border-left: 1px dashed rgba(239, 68, 68, 0.25) !important;
+  border-right: 1px dashed rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Indicadores de Arrastre (Drag-and-Drop) */
+/* Indicadores de Arrastre (Drag-and-Drop) */
+.calendar-cell.drag-over {
+  background-color: rgba(34, 211, 238, 0.1) !important;
+  border: 2px dashed rgba(34, 211, 238, 0.6) !important;
+  box-shadow: inset 0 0 15px rgba(34, 211, 238, 0.15);
+}
+
+.appointment-card.dragging {
+  opacity: 0.6 !important;
+  transform: scale(0.95) rotate(2deg);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(34, 211, 238, 0.2) !important;
+  border: 1px solid rgba(34, 211, 238, 0.5) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Formateo de Tarjeta de Cita en Grid Semanal (Compacta Premium) */
+/* Formateo de Tarjeta de Cita en Grid Semanal (Compacta Premium) */
+.calendar-cell .appointment-card {
+  width: calc(100% - 6px);
+  margin: 3px auto;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  border-left-width: 4px;
+  cursor: grab;
+  user-select: none;
+  z-index: 10;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.calendar-cell .appointment-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+
+.calendar-cell .appointment-card:active {
+  cursor: grabbing;
+}
+
+/* Hilos de información compactos para el grid */
+.calendar-cell .appointment-card .app-time {
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: 0.4px;
+  margin-bottom: 1px;
+  text-transform: uppercase;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  max-width: none !important;
+  color: hsl(200, 95%, 65%) !important;
+}
+
+
+.calendar-cell .appointment-card .app-patient {
+  font-weight: 600;
+  font-size: 12px;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.calendar-cell .appointment-card .app-treatment {
+  font-size: 10px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* Ocultar selects rápidos y botones clínicos en el grid del calendario semanal */
+.calendar-cell .appointment-card .status-select,
+.calendar-cell .appointment-card .clinical-btn {
+  display: none !important;
+}
+
+/* Animación Snap-Back en Fallo de Validación */
+.appointment-card.snap-back {
+  animation: snapBack 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes snapBack {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+/* ==========================================================================
+   Ajustes de escala tipográfica para los KPI de Reportes y Analíticas (Evita saltos de línea)
+   ========================================================================== */
+#tab-reports-content .stat-value {
+  font-size: clamp(18px, 1.6vw, 25px) !important;
+}
+
+#tab-reports-content .stat-card {
+  padding: 20px 22px !important;
+  background-position: calc(100% + 10px) calc(100% + 10px) !important;
+  background-size: 68px !important;
+}
+
+#tab-reports-content .stat-card:hover {
+  background-size: 74px !important;
+}
+
+/* ==========================================================================
+   Tarjetas KPI Exclusivas de Pacientes (Estilo Propio, Cyan/Menta/Púrpura)
+   ========================================================================== */
+.pat-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+  margin-bottom: 24px;
+}
+
+.pat-kpi-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1), background-size 0.35s ease-out, background-position 0.35s ease-out;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.pat-kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  transition: background var(--transition-fast);
+  z-index: 3;
+}
+
+.pat-kpi-card::after,
+#tab-patients-content .inv-kpi-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 15% 15%,
+      var(--spotlight-color, transparent),
+      transparent 85%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pat-kpi-card:hover::after,
+#tab-patients-content .inv-kpi-card:hover::after {
+  opacity: 0.85;
+}
+
+.pat-kpi-card:hover,
+#tab-patients-content .inv-kpi-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+.pat-kpi-label {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  position: relative;
+  z-index: 2;
+}
+
+.pat-kpi-value {
+  font-size: 38px;
+  font-weight: 800;
+  font-family: var(--font-display);
+  line-height: 1.1;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 2;
+}
+
+body.light-theme .pat-kpi-value {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background-clip: unset !important;
+  color: #0f172a !important;
+}
+
+/* 1. Total Pacientes - Cyan / Turquesa Odontológico */
+#tab-patients-content .pat-kpi-cyan {
+  --spotlight-color: rgba(6, 182, 212, 0.08) !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2306b6d4' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: calc(100% + 12px) calc(100% + 12px) !important;
+  background-size: 80px !important;
+}
+#tab-patients-content .pat-kpi-cyan::before {
+  background: #06b6d4 !important;
+}
+#tab-patients-content .pat-kpi-cyan:hover {
+  border-color: rgba(6, 182, 212, 0.3) !important;
+  box-shadow: 0 12px 28px rgba(6, 182, 212, 0.07) !important;
+  background-size: 86px !important;
+}
+
+/* 2. Nuevos Este Mes - Verde Esmeralda / Menta */
+#tab-patients-content .pat-kpi-emerald {
+  --spotlight-color: rgba(16, 185, 129, 0.08) !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><line x1='19' y1='8' x2='19' y2='14'/><line x1='16' y1='11' x2='22' y2='11'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: calc(100% + 12px) calc(100% + 12px) !important;
+  background-size: 80px !important;
+}
+#tab-patients-content .pat-kpi-emerald::before {
+  background: #10b981 !important;
+}
+#tab-patients-content .pat-kpi-emerald:hover {
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.07) !important;
+  background-size: 86px !important;
+}
+
+/* 3. Fichas Activas - Púrpura / Índigo Clínico */
+#tab-patients-content .pat-kpi-purple {
+  --spotlight-color: rgba(139, 92, 246, 0.08) !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b5cf6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/><line x1='16' y1='13' x2='8' y2='13'/><line x1='16' y1='17' x2='8' y2='17'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: calc(100% + 12px) calc(100% + 12px) !important;
+  background-size: 80px !important;
+}
+#tab-patients-content .pat-kpi-purple::before {
+  background: #8b5cf6 !important;
+}
+#tab-patients-content .pat-kpi-purple:hover {
+  border-color: rgba(139, 92, 246, 0.3) !important;
+  box-shadow: 0 12px 28px rgba(139, 92, 246, 0.07) !important;
+  background-size: 86px !important;
+}

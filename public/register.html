@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Acceso seguro al sistema de agenda odontológica y gestión de pacientes del Consultorio Odontológico 'Cristo Rey'.">
+  <title>Crear Cuenta - Consultorio Odontológico "Cristo Rey"</title>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="login-page">
+
+  <div class="login-split-layout">
+
+    <!-- ===== PANEL IZQUIERDO: BRANDING HERO ===== -->
+    <aside class="login-brand-panel" aria-hidden="true">
+      <!-- Malla decorativa de fondo -->
+      <div class="brand-grid-overlay"></div>
+
+      <!-- Orbes de luz decorativos -->
+      <div class="brand-orb brand-orb-1"></div>
+      <div class="brand-orb brand-orb-2"></div>
+      <div class="brand-orb brand-orb-3"></div>
+
+      <div class="brand-content">
+        <!-- Logo Grande Hero -->
+        <div class="brand-logo-hero">
+          <div class="brand-logo-ring brand-logo-ring-outer"></div>
+          <div class="brand-logo-ring brand-logo-ring-inner"></div>
+          <div class="brand-logo-icon-wrap">
+            <!-- Logo Cristo Rey: Molar 4 cúspides + 2 raíces + swoosh premium -->
+            <svg viewBox="0 0 100 100" class="brand-tooth-svg" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- Cristal gradient 3-stop -->
+                <linearGradient id="hg-tooth" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0284c7" />
+                  <stop offset="50%" stop-color="#0d9488" />
+                  <stop offset="100%" stop-color="#22d3ee" />
+                </linearGradient>
+                <!-- Swooshes gradients -->
+                <linearGradient id="hg-swoosh" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#0d9488" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.05" />
+                </linearGradient>
+                <linearGradient id="hg-arc2" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.6" />
+                  <stop offset="100%" stop-color="#0d9488" stop-opacity="0.05" />
+                </linearGradient>
+                <!-- Degradado de Plata/Blanco para la Cruz (Premium) -->
+                <linearGradient id="hg-silver" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff" /> <!-- Blanco Brillante -->
+                  <stop offset="60%" stop-color="#f1f5f9" /> <!-- Slate Claro -->
+                  <stop offset="100%" stop-color="#cbd5e1" /> <!-- Plata Medio -->
+                </linearGradient>
+                <!-- Glass shine -->
+                <linearGradient id="hg-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5" />
+                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                </linearGradient>
+                <!-- Brillo ambiental de fondo -->
+                <radialGradient id="hg-ambient-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#0284c7" stop-opacity="0.16" />
+                  <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
+                </radialGradient>
+                <!-- Neon glow tooth -->
+                <filter id="hglow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="2.2" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <!-- Filtro de Resplandor Plateado (Neon Silver Glow) -->
+                <filter id="hg-silver-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="1.5" result="blur" />
+                  <feColorMatrix type="matrix" values="1 0 0 0 1   1 0 0 0 1   1 0 0 0 1  0 0 0 0.5 0" />
+                  <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <!-- Aura de fondo dorada para la Cruz -->
+                <radialGradient id="hg-cross-aura" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.32" />
+                  <stop offset="60%" stop-color="#fbbf24" stop-opacity="0.1" />
+                  <stop offset="100%" stop-color="#fbbf24" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <!-- Halo de Luz de Fondo (Ambient Glow) -->
+              <circle cx="50" cy="50" r="42" fill="url(#hg-ambient-glow)" />
+
+              <!-- Grupo de Orbitales Animados -->
+              <g class="logo-orbits">
+                <!-- Swoosh principal -->
+                <path class="logo-swoosh-primary" d="M 10 74 Q 2 44 20 18 Q 33 3 52 4" fill="none"
+                  stroke="url(#hg-swoosh)" stroke-width="5.5" stroke-linecap="round" filter="url(#hglow)" />
+                <!-- Swoosh secundario -->
+                <path class="logo-swoosh-secondary" d="M 74 80 Q 95 62 93 38" fill="none" stroke="url(#hg-arc2)"
+                  stroke-width="3" stroke-linecap="round" opacity="0.65" />
+                <!-- Círculo de órbita punteado de alta tecnología (NUEVO) -->
+                <circle cx="50" cy="50" r="41" fill="none" stroke="#22d3ee" stroke-width="0.75" stroke-dasharray="4, 12"
+                  stroke-linecap="round" opacity="0.4" class="logo-orbit-dash" />
+              </g>
+
+              <!-- Molar Outline -->
+              <path class="logo-tooth"
+                d="M 50 22 Q 59 19, 68 17 Q 76 16, 76 32 Q 76 43, 71 49 Q 69 66, 65 84 Q 62 88, 59 84 Q 57 70, 54 56 Q 50 48, 46 56 Q 43 70, 41 84 Q 38 88, 35 84 Q 31 66, 29 49 Q 24 43, 24 32 Q 24 16, 32 17 Q 41 19, 50 22 Z"
+                fill="rgba(13,148,136,0.08)" stroke="url(#hg-tooth)" stroke-width="3.2" stroke-linejoin="round"
+                stroke-linecap="round" filter="url(#hglow)" />
+
+              <!-- Delineado fino de alta definición para contraste -->
+              <path
+                d="M 50 22 Q 59 19, 68 17 Q 76 16, 76 32 Q 76 43, 71 49 Q 69 66, 65 84 Q 62 88, 59 84 Q 57 70, 54 56 Q 50 48, 46 56 Q 43 70, 41 84 Q 38 88, 35 84 Q 31 66, 29 49 Q 24 43, 24 32 Q 24 16, 32 17 Q 41 19, 50 22 Z"
+                fill="none" stroke="#ffffff" stroke-width="0.75" stroke-linejoin="round" stroke-linecap="round"
+                opacity="0.25" />
+
+              <!-- Glossy Shine -->
+              <path d="M 32 23 Q 45 20, 50 24 Q 55 20, 68 23 Q 50 28, 32 23 Z" fill="url(#hg-shine)" opacity="0.8" />
+
+              <!-- Aura de fondo para la Cruz -->
+              <circle cx="50" cy="35" r="16" fill="url(#hg-cross-aura)" />
+              <!-- Cruz de Plata/Blanco (†) con terminaciones redondeadas y brillo aureola -->
+              <path class="logo-cross"
+                d="M 48.5 25 A 1.5 1.5 0 0 1 51.5 25 L 51.5 30 L 56.5 30 A 1.5 1.5 0 0 1 56.5 33 L 51.5 33 L 51.5 48 A 1.5 1.5 0 0 1 48.5 48 L 48.5 33 L 43.5 33 A 1.5 1.5 0 0 1 43.5 30 L 48.5 30 Z"
+                fill="url(#hg-silver)" filter="url(#hg-silver-glow)" />
+
+              <!-- Destellos en estrella de 4 puntas de alta fidelidad -->
+              <path class="logo-sparkle logo-sparkle-1"
+                d="M 80 8.5 Q 80 14 85.5 14 Q 80 14 80 19.5 Q 80 14 74.5 14 Q 80 14 80 8.5 Z" fill="#22d3ee"
+                opacity="0.75" />
+              <path class="logo-sparkle logo-sparkle-2"
+                d="M 88 23.5 Q 88 27 91.5 27 Q 88 27 88 30.5 Q 88 27 84.5 27 Q 88 27 88 23.5 Z" fill="#22d3ee"
+                opacity="0.5" />
+              <path class="logo-sparkle logo-sparkle-3"
+                d="M 75 7.5 Q 75 10 77.5 10 Q 75 10 75 12.5 Q 75 10 72.5 10 Q 75 10 75 7.5 Z" fill="#0d9488"
+                opacity="0.55" />
+              <path class="logo-sparkle logo-sparkle-4"
+                d="M 16 14 Q 16 18 20 18 Q 16 18 16 22 Q 16 18 12 18 Q 16 18 16 14 Z" fill="#0d9488" opacity="0.45" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Texto de Marca -->
+        <div class="brand-text">
+          <h2 class="brand-name premium-tracking">Cristo Rey</h2>
+          <p class="brand-specialty">Consultorio Odontológico</p>
+          <div class="brand-divider"></div>
+          <p class="brand-tagline font-medium">Cuidamos tu sonrisa,<br>honramos tu confianza.</p>
+        </div>
+
+        <!-- Insignias de Confianza (Bento Box Chips) -->
+        <div class="brand-trust-badges bento-chips">
+          
+          <div class="trust-badge bento-chip">
+            <div class="chip-icon-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </div>
+            <span class="chip-text">Acceso Seguro</span>
+            <div class="status-pulse-green"></div>
+          </div>
+          
+          <div class="trust-badge bento-chip chip-online">
+            <div class="chip-icon-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <span class="chip-text">Disponible 24/7</span>
+            <div class="status-dot-online"></div>
+          </div>
+          
+          <div class="trust-badge bento-chip chip-version">
+            <div class="chip-icon-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+            </div>
+            <span class="chip-text">Sistema de Gestión</span>
+            <span class="version-tag">v2.0</span>
+          </div>
+          
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== PANEL DERECHO: FORMULARIO ===== -->
+    <main class="login-form-panel">
+      <div class="login-form-wrap">
+
+        <!-- Encabezado pequeño del formulario -->
+        <div class="form-header">
+          <div class="form-logo-small">
+            <!-- Logo Cristo Rey: Molar 4 cúspides (mini) -->
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- Cristal gradient 3-stop -->
+                <linearGradient id="fg-tooth" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0284c7" />
+                  <stop offset="50%" stop-color="#0d9488" />
+                  <stop offset="100%" stop-color="#22d3ee" />
+                </linearGradient>
+                <!-- Swooshes gradients -->
+                <linearGradient id="fg-swoosh" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#0d9488" stop-opacity="0.85" />
+                  <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.05" />
+                </linearGradient>
+                <linearGradient id="fg-arc2" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.6" />
+                  <stop offset="100%" stop-color="#0d9488" stop-opacity="0.05" />
+                </linearGradient>
+                <!-- Gold gradient -->
+                <!-- Degradado de Plata/Blanco para la Cruz (Premium) -->
+                <linearGradient id="fg-silver" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff" />
+                  <stop offset="60%" stop-color="#f1f5f9" />
+                  <stop offset="100%" stop-color="#cbd5e1" />
+                </linearGradient>
+                <!-- Glass shine -->
+                <linearGradient id="fg-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5" />
+                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                </linearGradient>
+                <!-- Neon glow tooth -->
+                <filter id="fg-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="2.2" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <!-- Filtro de Resplandor Plateado (Neon Silver Glow) -->
+                <filter id="fg-silver-glow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="1.2" result="blur" />
+                  <feColorMatrix type="matrix" values="1 0 0 0 1   1 0 0 0 1   1 0 0 0 1  0 0 0 0.45 0" />
+                  <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <!-- Aura de fondo dorada para la Cruz -->
+                <radialGradient id="fg-cross-aura" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.32" />
+                  <stop offset="60%" stop-color="#fbbf24" stop-opacity="0.1" />
+                  <stop offset="100%" stop-color="#fbbf24" stop-opacity="0" />
+                </radialGradient>
+                <!-- Brillo ambiental de fondo -->
+                <radialGradient id="fg-ambient-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#0284c7" stop-opacity="0.16" />
+                  <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <!-- Halo de Luz de Fondo (Ambient Glow) -->
+              <circle cx="50" cy="50" r="42" fill="url(#fg-ambient-glow)" />
+
+              <!-- Grupo de Orbitales Animados -->
+              <g class="logo-orbits">
+                <!-- Swoosh principal -->
+                <path class="logo-swoosh-primary" d="M 10 74 Q 2 44 20 18 Q 33 3 52 4" fill="none"
+                  stroke="url(#fg-swoosh)" stroke-width="5.5" stroke-linecap="round" filter="url(#fg-glow)" />
+                <!-- Swoosh secundario -->
+                <path class="logo-swoosh-secondary" d="M 74 80 Q 95 62 93 38" fill="none" stroke="url(#fg-arc2)"
+                  stroke-width="3" stroke-linecap="round" opacity="0.65" />
+                <!-- Círculo de órbita punteado de alta tecnología (NUEVO) -->
+                <circle cx="50" cy="50" r="41" fill="none" stroke="#22d3ee" stroke-width="0.75" stroke-dasharray="4, 12"
+                  stroke-linecap="round" opacity="0.4" class="logo-orbit-dash" />
+              </g>
+
+              <!-- Molar Outline -->
+              <path class="logo-tooth"
+                d="M 50 22 Q 59 19, 68 17 Q 76 16, 76 32 Q 76 43, 71 49 Q 69 66, 65 84 Q 62 88, 59 84 Q 57 70, 54 56 Q 50 48, 46 56 Q 43 70, 41 84 Q 38 88, 35 84 Q 31 66, 29 49 Q 24 43, 24 32 Q 24 16, 32 17 Q 41 19, 50 22 Z"
+                fill="rgba(13,148,136,0.08)" stroke="url(#fg-tooth)" stroke-width="3.2" stroke-linejoin="round"
+                stroke-linecap="round" filter="url(#fg-glow)" />
+
+              <!-- Delineado fino de alta definición para contraste -->
+              <path
+                d="M 50 22 Q 59 19, 68 17 Q 76 16, 76 32 Q 76 43, 71 49 Q 69 66, 65 84 Q 62 88, 59 84 Q 57 70, 54 56 Q 50 48, 46 56 Q 43 70, 41 84 Q 38 88, 35 84 Q 31 66, 29 49 Q 24 43, 24 32 Q 24 16, 32 17 Q 41 19, 50 22 Z"
+                fill="none" stroke="#ffffff" stroke-width="0.75" stroke-linejoin="round" stroke-linecap="round"
+                opacity="0.25" />
+
+              <!-- Glossy Shine -->
+              <path d="M 32 23 Q 45 20, 50 24 Q 55 20, 68 23 Q 50 28, 32 23 Z" fill="url(#fg-shine)" opacity="0.8" />
+
+              <!-- Aura de fondo para la Cruz -->
+              <circle cx="50" cy="35" r="16" fill="url(#fg-cross-aura)" />
+              <!-- Cruz de Plata/Blanco (†) con terminaciones redondeadas y brillo aureola -->
+              <path class="logo-cross"
+                d="M 48.5 25 A 1.5 1.5 0 0 1 51.5 25 L 51.5 30 L 56.5 30 A 1.5 1.5 0 0 1 56.5 33 L 51.5 33 L 51.5 48 A 1.5 1.5 0 0 1 48.5 48 L 48.5 33 L 43.5 33 A 1.5 1.5 0 0 1 43.5 30 L 48.5 30 Z"
+                fill="url(#fg-silver)" filter="url(#fg-silver-glow)" />
+
+              <!-- Destellos en estrella de 4 puntas de alta fidelidad -->
+              <path class="logo-sparkle logo-sparkle-1"
+                d="M 80 8.5 Q 80 14 85.5 14 Q 80 14 80 19.5 Q 80 14 74.5 14 Q 80 14 80 8.5 Z" fill="#22d3ee"
+                opacity="0.75" />
+              <path class="logo-sparkle logo-sparkle-2"
+                d="M 88 23.5 Q 88 27 91.5 27 Q 88 27 88 30.5 Q 88 27 84.5 27 Q 88 27 88 23.5 Z" fill="#22d3ee"
+                opacity="0.5" />
+              <path class="logo-sparkle logo-sparkle-3"
+                d="M 75 7.5 Q 75 10 77.5 10 Q 75 10 75 12.5 Q 75 10 72.5 10 Q 75 10 75 7.5 Z" fill="#0d9488"
+                opacity="0.55" />
+              <path class="logo-sparkle logo-sparkle-4"
+                d="M 16 14 Q 16 18 20 18 Q 16 18 16 22 Q 16 18 12 18 Q 16 18 16 14 Z" fill="#0d9488" opacity="0.45" />
+            </svg>
+          </div>
+          <div>
+            <h1 class="form-title font-extra-bold">Crear Nuevo Perfil</h1>
+            <p class="form-subtitle text-dimmer">Completa los datos del personal autorizado</p>
+          </div>
+        </div>
+
+        <!-- Alerta de Error/Éxito -->
+        <div id="register-alert" class="alert-banner" role="alert" aria-live="assertive" hidden>
+          <span class="alert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </span>
+          <span id="alert-text" class="alert-message">Error al registrar usuario</span>
+        </div>
+
+        <!-- Formulario de Registro -->
+        <form id="register-form" novalidate>
+          <!-- Campo: Nombre Completo -->
+          <div class="input-group">
+            <label for="name">Nombre Completo</label>
+            <div class="input-wrapper">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
+              <input type="text" id="name" placeholder="Dr. Juan Pérez" required autocomplete="name">
+            </div>
+            <span class="field-error" id="name-error" aria-live="polite"></span>
+          </div>
+          <!-- Campo: Correo Electrónico -->
+          <div class="input-group">
+            <label for="email">Correo Electrónico</label>
+            <div class="input-wrapper">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </span>
+              <input type="email" id="email" placeholder="ejemplo@clinica.com" required autocomplete="email">
+            </div>
+            <span class="field-error" id="email-error" aria-live="polite"></span>
+          </div>
+
+          <!-- Campo: Contraseña -->
+          <div class="input-group">
+            <div class="label-row">
+              <label for="password">Contraseña</label>
+            </div>
+            <div class="input-wrapper">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+              </span>
+              <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" id="toggle-password" class="toggle-password-btn" aria-label="Mostrar contraseña">
+                <svg id="eye-icon" class="eye-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
+            </div>
+            <span class="field-error" id="password-error" aria-live="polite"></span>
+          </div>
+
+          <!-- Campo: Rol / Cargo -->
+          <div class="input-group">
+            <label for="role">Rol / Cargo</label>
+            <div class="input-wrapper select-wrapper">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                  <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg>
+              </span>
+              <select id="role" required>
+                <option value="" disabled selected>Selecciona un rol</option>
+                <option value="odontologo">Odontólogo / Doctor</option>
+                <option value="recepcionista">Recepción / Asistente</option>
+              </select>
+              <div class="select-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
+            </div>
+            <span class="field-error" id="role-error" aria-live="polite"></span>
+          </div>
+
+          <!-- Botón de Envío -->
+          <button type="submit" id="btn-submit" class="submit-btn" style="margin-top: 8px;">
+            <span class="btn-text">Registrar Personal</span>
+            <span class="btn-arrow">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+            <span class="spinner" hidden></span>
+          </button>
+          
+          <div class="back-to-login">
+            <a href="index.html" class="forgot-link">¿Ya tienes una cuenta? Inicia sesión aquí</a>
+          </div>
+        </form>
+
+        <!-- Pie del formulario -->
+        <div class="login-footer">
+          <div class="footer-security">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <span>Acceso restringido · Creación de perfiles monitoreada</span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Script Frontend -->
+  <script src="js/toast.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

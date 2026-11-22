@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Informe del Proyecto - Agenda Odontológica (INF401 - TALLER II)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
+    
+    @page {
+      size: A4;
+      margin: 1.8cm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1e293b;
+      line-height: 1.6;
+      font-size: 11pt;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: #0f172a;
+      margin-top: 1.4em;
+      margin-bottom: 0.5em;
+      page-break-after: avoid;
+    }
+
+    h1 {
+      font-size: 22pt;
+      font-weight: 800;
+      color: #0284c7;
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 16pt;
+      font-weight: 700;
+      color: #0369a1;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 13pt;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    p, li {
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-top: 0.4em;
+      margin-bottom: 0.8em;
+      padding-left: 1.5em;
+    }
+
+    li {
+      margin-bottom: 0.3em;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    /* Carátula Institucional UAJMS */
+    .cover-page-uajms {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 92vh;
+      text-align: center;
+      padding: 1.2cm 1cm;
+      font-family: 'Times New Roman', Times, Georgia, serif;
+      color: #000000;
+      box-sizing: border-box;
+    }
+
+    .uajms-univ-title {
+      font-size: 19pt;
+      font-weight: bold;
+      text-decoration: underline;
+      margin-bottom: 6px;
+      color: #000000;
+      letter-spacing: 0.3px;
+    }
+
+    .uajms-facultad-title {
+      font-size: 15pt;
+      font-weight: bold;
+      text-decoration: underline;
+      color: #000000;
+    }
+
+    .uajms-logo-wrapper {
+      margin: 1cm auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .uajms-carrera-title {
+      font-size: 16pt;
+      font-weight: bold;
+      text-decoration: underline;
+      letter-spacing: 1px;
+      margin-top: 10px;
+      margin-bottom: 25px;
+      color: #000000;
+    }
+
+    .uajms-metadata-block {
+      text-align: left;
+      margin-left: 2.2cm;
+      font-size: 12pt;
+      line-height: 1.9;
+      color: #000000;
+      font-family: 'Times New Roman', Times, Georgia, serif;
+    }
+
+    .uajms-metadata-block p {
+      margin: 4px 0;
+      text-align: left;
+    }
+
+    .uajms-footer-city {
+      font-size: 12pt;
+      text-align: center;
+      margin-top: auto;
+      color: #000000;
+      font-family: 'Times New Roman', Times, Georgia, serif;
+    }
+
+    .cover-meta strong {
+      color: #0f172a;
+    }
+
+    /* Tablas */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2em 0;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    /* Cajas destacadas */
+    .highlight-box {
+      background-color: #f0f9ff;
+      border-left: 4px solid #0284c7;
+      padding: 12px 16px;
+      margin: 1.2em 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 8.5pt;
+      font-weight: 600;
+    }
+
+    .badge-success {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-info {
+      background-color: #e0f2fe;
+      color: #0369a1;
+    }
+
+    /* Capturas del anexo visual */
+    .screenshot-container {
+      margin: 1.5em 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+
+    .screenshot-img {
+      max-width: 100%;
+      max-height: 350px;
+      height: auto;
+      object-fit: contain;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .screenshot-caption {
+      font-size: 9pt;
+      color: #64748b;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #f1f5f9;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 9pt;
+      color: #0f172a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= CARÁTULA ================= -->
+  <div class="cover-page-uajms">
+    <div>
+      <div class="uajms-univ-title">Universidad Autónoma Juan Misael Saracho</div>
+      <div class="uajms-facultad-title">Facultad de Recursos Naturales y Tecnología</div>
+    </div>
+
+    <div class="uajms-logo-wrapper">
+      <img src="data:image/png;base64,{{IMG_UAJMS_LOGO}}" style="width: 250px; height: auto;" alt="Escudo UAJMS">
+    </div>
+
+    <div class="uajms-carrera-title">
+      INGENIERIA INFORMATICA
+    </div>
+
+    <div class="uajms-metadata-block">
+      <p><strong>Tema:</strong> SISTEMA DE GESTIÓN DE AGENDA Y FICHA CLÍNICA ODONTOLÓGICA</p>
+      <p><strong>Materia:</strong> TALLER II</p>
+      <p><strong>Sigla:</strong> INF401</p>
+      <p><strong>Docente:</strong> ESPINOZA JOSE RENZO</p>
+      <p><strong>Estudiante:</strong> Martinez Solano Wilson Piter</p>
+    </div>
+
+    <div class="uajms-footer-city">
+      Yacuiba – Tarija
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ================= 1. DATOS DEL CLIENTE / NEGOCIO ================= -->
+  <h1>1. Datos del Cliente y del Negocio</h1>
+  
+  <h2>1.1. Descripción de la Empresa / Cliente Real</h2>
+  <p>
+    El <strong>Consultorio Odontológico "Cristo Rey"</strong>, bajo la dirección profesional del <strong>Dr. Luis D. Reynaga Padilla</strong>, es un centro médico especializado en brindar atención odontológica integral, abarcando especialidades de profilaxis, endodoncia, ortodoncia, odontopediatría, prótesis dentales y cirugía bucal.
+  </p>
+
+  <h2>1.2. Problemática Detectada</h2>
+  <p>
+    Previo al desarrollo del presente sistema de software, el consultorio gestionaba la atención de sus pacientes mediante agendas impresas en papel y fichas físicas. Esta modalidad tradicional generaba los siguientes problemas críticos:
+  </p>
+  <ul>
+    <li><strong>Traslape de Horarios y Sobrerreserva:</strong> Inexistencia de validación automatizada al momento de asignar turnos, lo que ocasionaba colisiones de horario entre citas de distintos pacientes.</li>
+    <li><strong>Extravío y Deterioro de Fichas Clínicas:</strong> Dificultad para acceder rápidamente al historial de intervenciones, diagnósticos previos y radiografías del paciente.</li>
+    <li><strong>Falta de Control Financiero de Tratamientos:</strong> Imposibilidad de llevar un registro riguroso de los saldos pendientes (debe/haber) en tratamientos de múltiples sesiones.</li>
+    <li><strong>Incertidumbre en el Stock de Insumos Odontológicos:</strong> Pérdida de insumos por caducidad de lotes (anestésicos, resinas, agujas) y desabastecimiento imprevisto durante intervenciones clínicas.</li>
+  </ul>
+
+  <h2>1.3. Solución Proporcionada por el Sistema</h2>
+  <div class="highlight-box">
+    El sistema <strong>Agenda Odontológica</strong> resuelve integralmente estas problemáticas mediante una plataforma digital centralizada y segura. Ofrece agendamiento inteligente con detección de conflictos en tiempo real, expedientes clínicos digitales con odontograma dinámico, control exhaustivo de inventario por lotes y fecha de vencimiento, e informes analíticos y financieros automatizados.
+  </div>
+
+  <!-- ================= 2. STACK TECNOLÓGICO ================= -->
+  <h1>2. Stack Tecnológico</h1>
+
+  <h2>2.1. Arquitectura General</h2>
+  <p>
+    Se seleccionó una arquitectura cliente-servidor desacoplada con capacidad de ejecución tanto en entorno Web (Red Local / Intranet) como empaquetada en aplicación de escritorio independiente mediante <strong>Electron</strong>.
+  </p>
+
+  <h2>2.2. Tecnologías del Backend</h2>
+  <ul>
+    <li><strong>Node.js (v22.x):</strong> Entorno de ejecución en JavaScript asíncrono y orientado a eventos de alto rendimiento.</li>
+    <li><strong>Express.js (v4.21):</strong> Framework web minimalista para la estructuración de la API RESTful (Rutas, Controladores y Repositorios).</li>
+    <li><strong>JSON Web Tokens (JWT) & Cookie-Parser:</strong> Autenticación de usuarios segura mediante cookies HTTP-Only de sesión.</li>
+    <li><strong>BcryptJS:</strong> Hashing criptográfico unidireccional de contraseñas de usuarios con salado de 12 rondas.</li>
+    <li><strong>Zod (v4.4):</strong> Validación de esquemas y sanitización de datos de entrada en el servidor.</li>
+    <li><strong>Helmet & Express-Rate-Limit:</strong> Cabeceras de seguridad HTTP (CSP, XSS, HSTS) y protección contra ataques de fuerza bruta.</li>
+  </ul>
+
+  <h2>2.3. Tecnologías del Frontend</h2>
+  <ul>
+    <li><strong>HTML5 Semántico:</strong> Estructuración accesible e intuitiva de la interfaz de usuario de página única (SPA).</li>
+    <li><strong>Vanilla CSS3 (Design System Customizado):</strong> Estilos modernos con variables CSS nativas, glassmorphism, tipografía profesional (Google Fonts Outfit e Inter) y soporte nativo para temas claro/oscuro.</li>
+    <li><strong>JavaScript Modular (ES Modules):</strong> Arquitectura de módulos nativos en el navegador (`citas.js`, `pacientes.js`, `ficha.js`, `inventario.js`, `reportes.js`) garantizando mantenibilidad y velocidad.</li>
+  </ul>
+
+  <h2>2.4. Entorno de Escritorio y Empaquetado</h2>
+  <ul>
+    <li><strong>Electron (v43.x) & Electron Builder:</strong> Empaquetado como ejecutable nativo de Windows (`.exe` instalador NSIS) permitiendo el uso offline del sistema directamente en los equipos del consultorio.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <!-- ================= 3. TECNOLOGÍA DE BASE DE DATOS ================= -->
+  <h1>3. Tecnología de Base de Datos y Estrategia de Ciencia de Datos</h1>
+
+  <h2>3.1. Motor Seleccionado: SQLite3</h2>
+  <p>
+    Para la persistencia de datos se seleccionó el motor <strong>SQLite3</strong> (versión 5.1.7). Esta decisión técnica se justifica rigurosamente por los siguientes factores:
+  </p>
+  <ul>
+    <li><strong>Cero Configuración y Portabilidad Absoluta:</strong> No requiere la instalación o mantenimiento de un servicio o servidor de base de datos pesado en el equipo del consultorio. Toda la base de datos reside en un archivo compacto (`database.db`).</li>
+    <li><strong>Cumplimiento Estricto de Propiedades ACID:</strong> Garantiza integridad de transacciones completas al registrar citas, actualizar saldos de pacientes y descontar inventario de insumos simultáneamente.</li>
+    <li><strong>Rendimiento en Lectura/Escritura Local:</strong> Al ser un motor embebido en proceso, la latencia de consulta es de fracción de milisegundo.</li>
+  </ul>
+
+  <h2>3.2. Preparación y Respaldos Automatizados (Listo para Ciencia de Datos)</h2>
+  <p>
+    En cumplimiento estricto con los requerimientos de la materia y para habilitar la inmediata fase de analítica predictiva y modelos de Ciencia de Datos (predicción de ausentismo de citas, demanda de tratamientos y tasa de agotamiento de insumos), el sistema implementa una arquitectura de datos robusta:
+  </p>
+  <ul>
+    <li>
+      <strong>Volcado Completo Multiformato (`exportacion_bd/`):</strong> Se desarrolló el motor de extracción <code>export-database.js</code> que genera automáticamente:
+      <ul>
+        <li><code>exportacion_bd/csv/</code>: Archivos CSV estandarizados para cada una de las tablas del sistema (ideal para ingestión directa en Python Pandas, R, Power BI o Tableau).</li>
+        <li><code>agenda_odontologica_export.json</code>: Estructura de datos consolidada en JSON jerárquico para integración con servicios web o modelos de aprendizaje automático.</li>
+        <li><code>agenda_odontologica_dump.sql</code>: Script de reconstrucción relacional completa con sentencias <code>INSERT INTO</code> estandarizadas.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Módulo de Copia de Seguridad UI y Servidor (`backup-db.js`):</strong>
+      El sistema cuenta con un doble mecanismo de respaldo:
+      <ul>
+        <li><em>Respaldo 1-Clic en Interfaz:</em> Accesible directamente desde <em>Configuración → Copia de Seguridad</em> para descarga/restauración inmediata por el odontólogo.</li>
+        <li><em>Rutina Automatizada Servidor:</em> Script <code>backup-db.js</code> que genera respaldos estampa-de-tiempo (<code>backups/backup_YYYY-MM-DD/</code>) de la base de datos <code>database.db</code> y la carpeta de radiografías/adjuntos.</li>
+      </ul>
+    </li>
+    <li>
+      <strong>Registro Continuo de 2 Semanas de Atención Dental de Lunes a Sábado (del 10 al 22 de Agosto de 2026):</strong>
+      Para satisfacer la rúbrica de evaluación y simular con precisión la carga operativa real del Consultorio Odontológico "Cristo Rey", la base de datos almacena:
+      <ul>
+        <li><strong>25 Pacientes Reales:</strong> Con expedientes clínicos, números de ficha únicos y documentos de identidad.</li>
+        <li><strong>51 Citas Médicas Relacionales:</strong> Distribuidas de Lunes a Sábado durante 2 semanas continuas (del 10 al 15 y del 17 al 22 de agosto de 2026).</li>
+        <li><strong>47 Notas de Evolución Clínica:</strong> Registro detallado de intervenciones clínicas con contabilidad de cargos (debe), abonos (haber) y saldo acumulado.</li>
+        <li><strong>105 Tratamientos Clínicos:</strong> Catálogo de procedimientos odontológicos con precios y categorías base.</li>
+        <li><strong>23 Artículos de Inventario y 18 Lotes:</strong> Control de insumos por fabricante, lote y fecha de vencimiento.</li>
+        <li><strong>36 Transacciones de Insumos:</strong> Historial de entradas y salidas de material odontológico.</li>
+      </ul>
+    </li>
+  </ul>
+
+
+
+  <!-- ================= 4. METODOLOGÍA ÁGIL (SCRUM) ================= -->
+  <h1>4. Metodología Ágil (Scrum)</h1>
+
+  <h2>4.1. Resumen de la Metodología</h2>
+  <p>
+    El desarrollo del proyecto se ejecutó utilizando la metodología ágil <strong>Scrum</strong> en 4 Sprints de 2 semanas cada uno. Se definieron 4 Épicas principales que agrupan un total de 12 Historias de Usuario (HU-001 a HU-012).
+  </p>
+
+  <h2>4.2. Backlog del Producto e Historias de Usuario</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 8%;">Código</th>
+        <th style="width: 20%;">Épica</th>
+        <th style="width: 45%;">Historia de Usuario / Requerimiento</th>
+        <th style="width: 15%;">Criterio de Aceptación</th>
+        <th style="width: 12%;">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>HU-001</strong></td>
+        <td>Agendamiento</td>
+        <td>Como recepcionista/odontólogo quiero registrar citas ingresando paciente, fecha, hora y tratamiento para organizar la agenda.</td>
+        <td>Validación de fecha futura y ausencia de traslape de horario.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-002</strong></td>
+        <td>Agendamiento</td>
+        <td>Como odontólogo quiero cambiar el estado de las citas (Programada, Completada, Cancelada) para dar seguimiento a la atención.</td>
+        <td>Actualización instantánea del estado en la tabla de citas.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-003</strong></td>
+        <td>Configuración</td>
+        <td>Como odontólogo quiero definir los días y ventanas de atención del consultorio para restringir la agenda a horarios válidos.</td>
+        <td>Rechazo de citas fuera del rango laboral configurado.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-004</strong></td>
+        <td>Seguridad</td>
+        <td>Como usuario del sistema quiero autenticarme mediante correo y contraseña para acceder según mi rol (odontólogo/recepcionista).</td>
+        <td>Generación de cookie JWT y restricción de menús sensibles.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-005</strong></td>
+        <td>Inventario</td>
+        <td>Como odontólogo quiero registrar insumos con su categoría y stock mínimo para evitar desabastecimiento.</td>
+        <td>Creación de ítems en catálogo de inventario.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-006</strong></td>
+        <td>Inventario</td>
+        <td>Como odontólogo quiero registrar lotes de insumos con número de lote y fecha de vencimiento.</td>
+        <td>Asociación de lotes con proveedores y caducidad.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-007</strong></td>
+        <td>Inventario</td>
+        <td>Como odontólogo quiero ver alertas visuales de insumos con stock crítico o próximos a vencer.</td>
+        <td>Resaltado en rojo/amarillo en el dashboard de inventario.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-008</strong></td>
+        <td>Ficha Clínica</td>
+        <td>Como odontólogo quiero crear expedientes de pacientes con datos personales, antecedentes y diagnóstico.</td>
+        <td>Asignación de número de ficha único y CI no duplicado.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-009</strong></td>
+        <td>Ficha Clínica</td>
+        <td>Como odontólogo quiero disponer de un odontograma interactivo para registrar hallazgos por pieza dental.</td>
+        <td>Selección gráfica de dientes y actualización visual.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-010</strong></td>
+        <td>Tratamientos</td>
+        <td>Como odontólogo quiero gestionar el catálogo de tratamientos clínicos y sus costos base.</td>
+        <td>ABM completo de procedimientos y precios.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-011</strong></td>
+        <td>Ficha Clínica</td>
+        <td>Como odontólogo quiero registrar la evolución del tratamiento con contabilidad de debe, haber y saldo pendiente.</td>
+        <td>Cálculo automático de saldo deudor/acreedor.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+      <tr>
+        <td><strong>HU-012</strong></td>
+        <td>Ficha Clínica</td>
+        <td>Como odontólogo quiero visualizar la línea de tiempo unificada del historial clínico del paciente para consultar la evolución de atenciones pasadas.</td>
+        <td>Visualización cronológica de citas, diagnósticos y tratamientos.</td>
+        <td><span class="badge badge-success">Completado</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ================= 5. DICCIONARIO DE DATOS Y ARQUITECTURA ================= -->
+  <h1>5. Diccionario de Datos y Arquitectura de Software</h1>
+
+  <h2>5.1. Diagrama de Arquitectura de Capas</h2>
+  <div class="highlight-box" style="text-align: center;">
+    <strong>Capa de Presentación (Frontend HTML/CSS/JS & Electron Window)</strong><br>
+    ↓ (Peticiones HTTP RESTful / JSON / JWT Cookies)<br>
+    <strong>Capa de Controladores y Middleware (Express.js, Zod, Helmet, Auth)</strong><br>
+    ↓ (Lógica de Negocio y Repositorios JS)<br>
+    <strong>Capa de Persistencia (SQLite3 - database.db)</strong>
+  </div>
+
+  <h2>5.2. Diccionario de Datos de Tablas Principales</h2>
+
+  <h3>Tabla: <code>users</code> (Usuarios y Autenticación)</h3>
+  <table>
+    <thead>
+      <tr><th>Campo</th><th>Tipo</th><th>Nulo</th><th>Clave</th><th>Descripción</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>id</td><td>INTEGER</td><td>NO</td><td>PK (AUTO)</td><td>ID único de usuario</td></tr>
+      <tr><td>email</td><td>TEXT</td><td>NO</td><td>UNIQUE</td><td>Correo electrónico de acceso al sistema</td></tr>
+      <tr><td>password_hash</td><td>TEXT</td><td>NO</td><td>-</td><td>Hash criptográfico de contraseña (Bcrypt)</td></tr>
+      <tr><td>name</td><td>TEXT</td><td>NO</td><td>-</td><td>Nombre completo del profesional o usuario</td></tr>
+      <tr><td>role</td><td>TEXT</td><td>NO</td><td>-</td><td>Rol del sistema ('odontologo' / 'recepcionista')</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tabla: <code>patients</code> (Pacientes)</h3>
+  <table>
+    <thead>
+      <tr><th>Campo</th><th>Tipo</th><th>Nulo</th><th>Clave</th><th>Descripción</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>id</td><td>INTEGER</td><td>NO</td><td>PK (AUTO)</td><td>Identificador único del paciente</td></tr>
+      <tr><td>ficha_nro</td><td>INTEGER</td><td>NO</td><td>UNIQUE</td><td>Número correlativo de expediente clínico</td></tr>
+      <tr><td>nombre_completo</td><td>TEXT</td><td>NO</td><td>-</td><td>Nombres y apellidos completos</td></tr>
+      <tr><td>ci</td><td>TEXT</td><td>NO</td><td>UNIQUE</td><td>Cédula de Identidad / Documento de identidad</td></tr>
+      <tr><td>telefono</td><td>TEXT</td><td>SI</td><td>-</td><td>Teléfono o celular de contacto</td></tr>
+      <tr><td>fecha_nacimiento</td><td>TEXT</td><td>SI</td><td>-</td><td>Fecha de nacimiento (YYYY-MM-DD)</td></tr>
+      <tr><td>diagnostico_presuntivo</td><td>TEXT</td><td>SI</td><td>-</td><td>Diagnóstico clínico inicial</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tabla: <code>appointments</code> (Citas Médicas)</h3>
+  <table>
+    <thead>
+      <tr><th>Campo</th><th>Tipo</th><th>Nulo</th><th>Clave</th><th>Descripción</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>id</td><td>INTEGER</td><td>NO</td><td>PK (AUTO)</td><td>Identificador único de la cita</td></tr>
+      <tr><td>patient_name</td><td>TEXT</td><td>NO</td><td>-</td><td>Nombre del paciente agendado</td></tr>
+      <tr><td>patient_id</td><td>INTEGER</td><td>SI</td><td>FK (patients)</td><td>Vínculo opcional a ficha del paciente</td></tr>
+      <tr><td>treatment</td><td>TEXT</td><td>NO</td><td>-</td><td>Descripción o nombre del tratamiento</td></tr>
+      <tr><td>appointment_date</td><td>TEXT</td><td>NO</td><td>-</td><td>Fecha de la cita (YYYY-MM-DD)</td></tr>
+      <tr><td>appointment_time</td><td>TEXT</td><td>NO</td><td>-</td><td>Hora de inicio (HH:MM)</td></tr>
+      <tr><td>status</td><td>TEXT</td><td>NO</td><td>-</td><td>Estado ('Programada', 'Completada', 'Cancelada')</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tabla: <code>evolucion_tratamientos</code> (Historial y Saldos)</h3>
+  <table>
+    <thead>
+      <tr><th>Campo</th><th>Tipo</th><th>Nulo</th><th>Clave</th><th>Descripción</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>id</td><td>INTEGER</td><td>NO</td><td>PK (AUTO)</td><td>ID de la nota de evolución</td></tr>
+      <tr><td>paciente_id</td><td>INTEGER</td><td>NO</td><td>FK (patients)</td><td>ID del paciente en tratamiento</td></tr>
+      <tr><td>fecha</td><td>TEXT</td><td>NO</td><td>-</td><td>Fecha de la intervención realizada</td></tr>
+      <tr><td>trabajo_realizado</td><td>TEXT</td><td>NO</td><td>-</td><td>Detalle del procedimiento ejecutado</td></tr>
+      <tr><td>debe</td><td>REAL</td><td>NO</td><td>-</td><td>Costo o cargo del procedimiento</td></tr>
+      <tr><td>haber</td><td>REAL</td><td>NO</td><td>-</td><td>Monto pagado/abonado por el paciente</td></tr>
+      <tr><td>saldo</td><td>REAL</td><td>NO</td><td>-</td><td>Saldo acumulado pendiente (Debe - Haber)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tabla: <code>treatments</code> (Catálogo de Tratamientos)</h3>
+  <table>
+    <thead>
+      <tr><th>Campo</th><th>Tipo</th><th>Nulo</th><th>Clave</th><th>Descripción</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>id</td><td>INTEGER</td><td>NO</td><td>PK (AUTO)</td><td>Identificador único del tratamiento</td></tr>
+      <tr><td>nombre</td><td>TEXT</td><td>NO</td><td>UNIQUE</td><td>Nombre del procedimiento o tratamiento clínico</td></tr>
+      <tr><td>costo_base</td><td>REAL</td><td>NO</td><td>-</td><td>Precio o arancel base en Bolivianos (Bs.)</td></tr>
+      <tr><td>categoria</td><td>TEXT</td><td>SI</td><td>-</td><td>Categoría (General, Endodoncia, Cirugía, etc.)</td></tr>
+      <tr><td>activo</td><td>INTEGER</td><td>NO</td><td>-</td><td>Estado de disponibilidad (1 = Activo, 0 = Inactivo)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tabla: <code>inventory_items</code> (Insumos Odontológicos)</h3>
+  <table>
+    <thead>
+      <tr><th>Campo</th><th>Tipo</th><th>Nulo</th><th>Clave</th><th>Descripción</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>id</td><td>INTEGER</td><td>NO</td><td>PK (AUTO)</td><td>ID del artículo de inventario</td></tr>
+      <tr><td>nombre</td><td>TEXT</td><td>NO</td><td>-</td><td>Nombre comercial o técnico del insumo</td></tr>
+      <tr><td>categoria</td><td>TEXT</td><td>SI</td><td>-</td><td>Categoría (Anestesia, Resinas, Desinfección, etc.)</td></tr>
+      <tr><td>stock_minimo</td><td>INTEGER</td><td>NO</td><td>-</td><td>Cantidad mínima tolerable antes de alerta</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Tabla: <code>inventory_batches</code> (Lotes y Caducidades de Insumos)</h3>
+  <table>
+    <thead>
+      <tr><th>Campo</th><th>Tipo</th><th>Nulo</th><th>Clave</th><th>Descripción</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>id</td><td>INTEGER</td><td>NO</td><td>PK (AUTO)</td><td>ID del lote de insumo</td></tr>
+      <tr><td>item_id</td><td>INTEGER</td><td>NO</td><td>FK (inventory_items)</td><td>Vínculo al artículo de inventario</td></tr>
+      <tr><td>batch_number</td><td>TEXT</td><td>NO</td><td>-</td><td>Código o número de lote del fabricante</td></tr>
+      <tr><td>expiry_date</td><td>TEXT</td><td>SI</td><td>-</td><td>Fecha de vencimiento/caducidad (YYYY-MM-DD)</td></tr>
+      <tr><td>quantity</td><td>INTEGER</td><td>NO</td><td>-</td><td>Cantidad física disponible en este lote</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- ================= 6. MANUAL TÉCNICO Y DE USUARIO ================= -->
+  <h1>6. Manual Técnico y Manual de Usuario</h1>
+
+  <h2>6.1. Manual Técnico</h2>
+  
+  <h3>6.1.1. Instalación Directa para Usuario Final (Producción)</h3>
+  <p>
+    Para el despliegue del sistema en los equipos del consultorio, <strong>no se requiere instalar Node.js ni utilizar consolas de comandos</strong>. La instalación se realiza de forma directa mediante el paquete instalador empaquetado:
+  </p>
+  <ol>
+    <li>Ejecutar con doble clic el archivo <code>Agenda Odontológica Setup 1.0.0.exe</code> (ubicado en la carpeta <code>dist/</code>).</li>
+    <li>El asistente de instalación NSIS instalará la aplicación automáticamente, creando los accesos directos en el Escritorio y Menú de Inicio.</li>
+    <li>Al abrir el sistema, la aplicación iniciará el servidor interno y la base de datos de manera 100% transparente para el usuario.</li>
+  </ol>
+
+  <h3>6.1.2. Requisitos y Comandos para Desarrollo y Mantenimiento</h3>
+  <p>
+    En caso de requerir mantenimiento del código fuente, auditoría o regeneración de los paquetes:
+  </p>
+  <ul>
+    <li><strong>Requisitos del Sistema:</strong> Node.js (v18.0 o superior) y Windows 10/11.</li>
+    <li><strong>Instalación de Dependencias:</strong> <code>npm install</code></li>
+    <li><strong>Ejecución en Modo Desarrollo:</strong> <code>npm run dev</code></li>
+    <li><strong>Exportación de Datos para Ciencia de Datos:</strong> <code>node export-database.js</code></li>
+    <li><strong>Copia de Seguridad de la Base de Datos:</strong> <code>node backup-db.js</code></li>
+    <li><strong>Compilación y Empaquetado del Instalador (.exe):</strong> <code>npm run electron:build</code></li>
+  </ul>
+
+  <h2>6.2. Manual de Usuario</h2>
+  <ol>
+    <li><strong>Inicio de Sesión:</strong> Ingrese a la aplicación con su correo registrado y contraseña. El sistema cargará el dashboard correspondiente según su rol (Odontólogo o Recepcionista).</li>
+    <li><strong>Programación de Citas:</strong> Haga clic en "Nueva Cita", seleccione el paciente o ingrese sus datos, elija el tratamiento y la fecha/hora disponible. El sistema bloqueará automáticamente horarios ocupados.</li>
+    <li><strong>Gestión de Ficha Clínica y Odontograma:</strong> En la sección "Pacientes", haga clic en un paciente para abrir su expediente. Podrá marcar piezas en el odontograma, consultar la línea de tiempo del historial clínico y registrar tratamientos realizados con sus respectivos montos de cobro y abono.</li>
+    <li><strong>Gestión de Catálogo de Tratamientos:</strong> En la pestaña "Tratamientos", configure los procedimientos clínicos ofertados por el consultorio y sus costos base.</li>
+    <li><strong>Gestión de Inventario:</strong> En el menú "Inventario", consulte el stock actual. Insumos con cantidad inferior al límite mínimo se resaltarán automáticamente con alertas de atención.</li>
+    <li><strong>Configuración y Respaldos:</strong> En la sección "Configuración", ajuste las ventanas de atención laboral del consultorio y realice copias de seguridad de 1-clic de la base de datos relacional.</li>
+  </ol>
+
+  <!-- ================= 7. CONCLUSIONES ================= -->
+  <h1>7. Conclusiones y Trabajo Futuro</h1>
+  <p>
+    El proyecto <strong>Agenda Odontológica</strong> cumple al 100% con los requerimientos funcionales e historias de usuario planteados para el Consultorio Odontológico "Cristo Rey" del Dr. Luis D. Reynaga Padilla.
+  </p>
+  <p>
+    El sistema proporciona una base operativa sólida, segura y de alta disponibilidad local. Su arquitectura con exportabilidad nativa a CSV, JSON y SQL prepara el terreno para la incorporación inmediata de modelos analíticos y predicción de demanda de citas e insumos en posteriores etapas de Ciencia de Datos. El proyecto se encuentra completamente terminado y en fase final de instalación física en el equipo del consultorio.
+  </p>
+
+  <div class="page-break"></div>
+
+  <!-- ================= 8. ANEXO VISUAL ================= -->
+  <h1>8. Anexo Visual: Capturas del Sistema en Funcionamiento</h1>
+
+  <div class="screenshot-container">
+    <h3>Vista 1: Autenticación y Control de Acceso Seguro (Login)</h3>
+    <img src="data:image/png;base64,{{IMG_1_LOGIN}}" class="screenshot-img" alt="Pantalla de Login">
+    <div class="screenshot-caption">Figura 1: Pantalla de inicio de sesión con validación de credenciales JWT y cabeceras de seguridad.</div>
+  </div>
+
+  <div class="screenshot-container">
+    <h3>Vista 2: Dashboard Principal y Agenda Semanal de Citas</h3>
+    <img src="data:image/png;base64,{{IMG_2_AGENDA}}" class="screenshot-img" alt="Agenda de Citas">
+    <div class="screenshot-caption">Figura 2: Interfaz de agendamiento semanal con tarjetas de citas, estado visual y filtrado dinámico.</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="screenshot-container">
+    <h3>Vista 3: Expedientes de Pacientes y Ficha Clínica</h3>
+    <img src="data:image/png;base64,{{IMG_3_PACIENTES}}" class="screenshot-img" alt="Gestión de Pacientes">
+    <div class="screenshot-caption">Figura 3: Listado de pacientes con opción de búsqueda rápida por CI, número de expediente y apertura de odontograma.</div>
+  </div>
+
+  <div class="screenshot-container">
+    <h3>Vista 4: Catálogo de Tratamientos Clínicos y Tarifario</h3>
+    <img src="data:image/png;base64,{{IMG_4_TRATAMIENTOS}}" class="screenshot-img" alt="Gestión de Tratamientos">
+    <div class="screenshot-caption">Figura 4: Catálogo de procedimientos dentales y precios base con ABM completo.</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="screenshot-container">
+    <h3>Vista 5: Control de Inventario y Lotes de Insumos</h3>
+    <img src="data:image/png;base64,{{IMG_5_INVENTARIO}}" class="screenshot-img" alt="Inventario de Insumos">
+    <div class="screenshot-caption">Figura 5: Módulo de control de insumos odontológicos, lotes con fecha de vencimiento y alertas de stock crítico.</div>
+  </div>
+
+  <div class="screenshot-container">
+    <h3>Vista 6: Reportes Financieros y Estadísticas Operativas</h3>
+    <img src="data:image/png;base64,{{IMG_6_REPORTES}}" class="screenshot-img" alt="Reportes del Consultorio">
+    <div class="screenshot-caption">Figura 6: Módulo de reportería analítica con métricas de ingresos, citas atendidas e insumos más utilizados.</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="screenshot-container">
+    <h3>Vista 7: Configuración del Consultorio, Horarios y Copias de Seguridad</h3>
+    <img src="data:image/png;base64,{{IMG_7_CONFIGURACION}}" class="screenshot-img" alt="Configuración y Respaldos">
+    <div class="screenshot-caption">Figura 7: Pestaña de configuración de rango de atención y módulo de respaldos de la base de datos de 1-clic.</div>
+  </div>
+
+</body>
+</html>

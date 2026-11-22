@@ -1,0 +1,2789 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agenda diaria y gestión de turnos del Consultorio Odontológico 'Cristo Rey'.">
+  <title>Agenda Diaria - Consultorio Odontológico "Cristo Rey"</title>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="icon" href="favicon.ico">
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="css/base.css?v=19.0.0">
+  <link rel="stylesheet" href="css/sidebar.css?v=19.0.0">
+  <link rel="stylesheet" href="css/citas.css?v=19.0.0">
+  <link rel="stylesheet" href="css/modals.css?v=19.0.0">
+  <link rel="stylesheet" href="css/pacientes.css?v=19.0.0">
+  <link rel="stylesheet" href="css/ficha.css?v=19.0.0">
+  <link rel="stylesheet" href="css/settings.css?v=19.0.0">
+  <link rel="stylesheet" href="css/toast.css?v=19.0.0">
+  <link rel="stylesheet" href="css/reportes.css?v=19.0.3">
+  <link rel="stylesheet" href="css/inventario.css?v=19.0.1">
+  <style>
+    /* Premium Dashboard Load Animation */
+    body {
+      opacity: 1;
+      background-color: var(--bg-color);
+    }
+
+    body.loading {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Staggered Animations (Apple/iOS Bouncy Style) */
+    body:not(.loading) .sidebar {
+      animation: springInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    }
+
+    body:not(.loading) .header-row {
+      animation: springInDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards;
+    }
+
+    body:not(.loading) .main-content {
+      animation: springUpFade 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s backwards;
+    }
+
+    @keyframes springInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-80px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes springInDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes springUpFade {
+      0% {
+        opacity: 0;
+        transform: translateY(60px) scale(0.96);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body class="loading">
+  <!-- Evitar flash de color antes de inicializar JS principal -->
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light-theme');
+    }
+  </script>
+  <!-- Fondo decorativo -->
+  <div class="bg-decorations">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+  </div>
+
+  <div class="dashboard-layout">
+    <!-- Barra Lateral (Sidebar) -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-logo">
+          <!-- Logo Cristo Rey Opción 4: Molar teal + cruz + swoosh -->
+          <svg viewBox="0 0 100 100" class="sidebar-logo-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Degradado de cristal 3-stop para el Diente -->
+              <linearGradient id="sg-tooth" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0284c7" />
+                <stop offset="50%" stop-color="#0d9488" />
+                <stop offset="100%" stop-color="#22d3ee" />
+              </linearGradient>
+              <!-- Degradados de los orbitales -->
+              <linearGradient id="sg-swoosh" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0d9488" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.05" />
+              </linearGradient>
+              <linearGradient id="sg-arc2" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.6" />
+                <stop offset="100%" stop-color="#0d9488" stop-opacity="0.05" />
+              </linearGradient>
+              <!-- Degradado Plata/Blanco Brillante para la Cruz -->
+              <linearGradient id="sg-silver" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="100%" stop-color="#e0f2fe" />
+              </linearGradient>
+              <!-- Reflejo de brillo cristal (Gloss) -->
+              <linearGradient id="sg-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5" />
+                <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+              </linearGradient>
+              <!-- Brillo ambiental de fondo -->
+              <radialGradient id="sg-ambient-glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#0284c7" stop-opacity="0.16" />
+                <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
+              </radialGradient>
+              <!-- Filtro de neón para el Diente -->
+              <filter id="sg-glow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="2.2" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <!-- Filtro de brillo blanco/plata para la Cruz -->
+              <filter id="sg-silver-glow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="1.2" result="blur" />
+                <feColorMatrix type="matrix" values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.45 0" />
+                <feMerge>
+                  <feMergeNode />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Halo de Luz de Fondo (Ambient Glow) -->
+            <circle cx="50" cy="50" r="42" fill="url(#sg-ambient-glow)" />
+
+            <!-- Grupo de Orbitales Animados (Gira majestuosamente) -->
+            <g class="logo-orbits">
+              <!-- Swoosh principal -->
+              <path class="logo-swoosh-primary" d="M 10 74 Q 2 44 20 18 Q 33 3 52 4" fill="none"
+                stroke="url(#sg-swoosh)" stroke-width="5.5" stroke-linecap="round" filter="url(#sg-glow)" />
+              <!-- Swoosh secundario -->
+              <path class="logo-swoosh-secondary" d="M 74 80 Q 95 62 93 38" fill="none" stroke="url(#sg-arc2)"
+                stroke-width="3" stroke-linecap="round" opacity="0.65" />
+            </g>
+
+            <!-- Molar Base (Glow + crystal outline) -->
+            <path class="logo-tooth"
+              d="M 50 22 Q 59 19, 68 17 Q 76 16, 76 32 Q 76 43, 71 49 Q 69 66, 65 84 Q 62 88, 59 84 Q 57 70, 54 56 Q 50 48, 46 56 Q 43 70, 41 84 Q 38 88, 35 84 Q 31 66, 29 49 Q 24 43, 24 32 Q 24 16, 32 17 Q 41 19, 50 22 Z"
+              fill="rgba(13,148,136,0.08)" stroke="url(#sg-tooth)" stroke-width="3.2" stroke-linejoin="round"
+              stroke-linecap="round" filter="url(#sg-glow)" />
+
+            <!-- Delineado fino de alta definición para contraste -->
+            <path
+              d="M 50 22 Q 59 19, 68 17 Q 76 16, 76 32 Q 76 43, 71 49 Q 69 66, 65 84 Q 62 88, 59 84 Q 57 70, 54 56 Q 50 48, 46 56 Q 43 70, 41 84 Q 38 88, 35 84 Q 31 66, 29 49 Q 24 43, 24 32 Q 24 16, 32 17 Q 41 19, 50 22 Z"
+              fill="none" stroke="#ffffff" stroke-width="0.75" stroke-linejoin="round" stroke-linecap="round"
+              opacity="0.25" />
+
+            <!-- Capa de Brillo Glossy superior -->
+            <path d="M 32 23 Q 45 20, 50 24 Q 55 20, 68 23 Q 50 28, 32 23 Z" fill="url(#sg-shine)" opacity="0.8" />
+
+            <!-- Cruz de Plata/Blanco (†) con terminaciones redondeadas y brillo aureola -->
+            <path class="logo-cross"
+              d="M 48.5 25 A 1.5 1.5 0 0 1 51.5 25 L 51.5 30 L 56.5 30 A 1.5 1.5 0 0 1 56.5 33 L 51.5 33 L 51.5 48 A 1.5 1.5 0 0 1 48.5 48 L 48.5 33 L 43.5 33 A 1.5 1.5 0 0 1 43.5 30 L 48.5 30 Z"
+              fill="url(#sg-silver)" filter="url(#sg-silver-glow)" />
+
+            <!-- Destellos en estrella de 4 puntas de alta fidelidad -->
+            <path class="logo-sparkle logo-sparkle-1"
+              d="M 80 8.5 Q 80 14 85.5 14 Q 80 14 80 19.5 Q 80 14 74.5 14 Q 80 14 80 8.5 Z" fill="#22d3ee"
+              opacity="0.75" />
+            <path class="logo-sparkle logo-sparkle-2"
+              d="M 88 23.5 Q 88 27 91.5 27 Q 88 27 88 30.5 Q 88 27 84.5 27 Q 88 27 88 23.5 Z" fill="#22d3ee"
+              opacity="0.5" />
+            <path class="logo-sparkle logo-sparkle-3"
+              d="M 75 7.5 Q 75 10 77.5 10 Q 75 10 75 12.5 Q 75 10 72.5 10 Q 75 10 75 7.5 Z" fill="#0d9488"
+              opacity="0.55" />
+            <path class="logo-sparkle logo-sparkle-4"
+              d="M 16 14 Q 16 18 20 18 Q 16 18 16 22 Q 16 18 12 18 Q 16 18 16 14 Z" fill="#0d9488" opacity="0.45" />
+          </svg>
+          <div class="sidebar-logo-text">
+            <span>Cristo Rey</span>
+            <span class="sidebar-logo-subtitle">Odontología</span>
+          </div>
+        </div>
+        <!-- Separador gradiente -->
+        <div class="sidebar-logo-divider"></div>
+
+        <!-- Etiqueta de sección -->
+        <p class="nav-section-label">Menú Principal</p>
+
+        <ul class="nav-links">
+          <li class="nav-item active" id="nav-link-agenda">
+            <a href="#">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              <span>Agenda Diaria</span>
+            </a>
+          </li>
+          <li class="nav-item" id="nav-link-patients">
+            <a href="#">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              <span>Pacientes</span>
+            </a>
+          </li>
+
+
+          <li class="nav-item" id="nav-link-inventario" style="display: none;">
+            <a href="#">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                </path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+              <span>Inventario</span>
+            </a>
+          </li>
+
+          <li class="nav-item" id="nav-tratamientos" style="display: none;">
+            <a href="#">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              <span>Tratamientos</span>
+            </a>
+          </li>
+
+          <li class="nav-item" id="nav-link-reports" style="display: none;">
+            <a href="#">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10" />
+                <line x1="12" y1="20" x2="12" y2="4" />
+                <line x1="6" y1="20" x2="6" y2="14" />
+              </svg>
+              <span>Reportes</span>
+            </a>
+          </li>
+
+          <li class="nav-item" id="nav-settings" style="display: none;">
+            <a href="#">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+              <span>Configuración</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+
+      <!-- Datos de Perfil del Usuario Logueado -->
+      <div class="user-profile">
+        <div class="user-profile-card" id="btn-edit-profile" style="cursor: pointer;" title="Editar Perfil">
+          <div class="user-avatar-wrapper">
+            <div class="user-avatar-ring"></div>
+            <div class="user-avatar" id="avatar-initials">U</div>
+          </div>
+          <div class="user-info">
+            <span class="user-name" id="profile-name">Cargando...</span>
+            <span class="user-role-badge" id="profile-role">odontologo</span>
+          </div>
+        </div>
+        <div class="user-actions">
+          <button id="btn-theme-toggle" class="user-action-btn" title="Cambiar Tema Visual">
+            <svg id="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg id="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span class="user-action-label">Tema</span>
+          </button>
+          <button id="btn-logout" class="user-action-btn user-action-logout" title="Cerrar Sesión">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            <span class="user-action-label">Salir</span>
+          </button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+      <!-- Tab de Agenda Diaria -->
+      <div id="tab-agenda-content">
+        <div class="header-row section-header">
+          <div>
+            <h2 class="section-title" style="margin-bottom: 4px;">Agenda Diaria</h2>
+            <p class="section-subtitle" style="margin: 0; color: var(--text-muted); font-size: 14px;">Gestiona las citas
+              programadas del día</p>
+          </div>
+          <div class="header-actions">
+            <!-- Controles de Navegación Agrupados -->
+            <div class="agenda-controls">
+              <div id="view-selector" class="view-selector">
+                <button type="button" id="btn-view-day" class="view-btn active">Día</button>
+                <button type="button" id="btn-view-week" class="view-btn">Semana</button>
+              </div>
+              <div class="agenda-navigation">
+                <button id="btn-prev-day" class="nav-day-btn" title="Día Anterior">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </button>
+                <input type="date" id="agenda-date-picker" class="agenda-date-input">
+                <button id="btn-next-day" class="nav-day-btn" title="Siguiente Día">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
+              </div>
+              <span class="date-badge" id="current-date">Hoy</span>
+            </div>
+
+            <!-- Acción Principal -->
+            <button id="btn-open-modal" class="add-appointment-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Agendar Cita
+            </button>
+          </div>
+        </div>
+
+        <!-- Banner de Alerta Global de Agenda (HU-010 / Drag-and-Drop) -->
+        <div id="agenda-alert" class="alert-banner" role="alert" style="margin-bottom: 20px;" hidden>
+          <span class="alert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </span>
+          <span id="agenda-alert-text"></span>
+        </div>
+
+        <!-- Tarjetas de Estadísticas -->
+        <section class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">Citas Programadas</span>
+            <span class="stat-value" id="stats-total">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Confirmadas</span>
+            <span class="stat-value" id="stats-confirmed">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Pendientes</span>
+            <span class="stat-value" id="stats-pending">0</span>
+          </div>
+        </section>
+
+        <!-- Lista de Citas del Día -->
+        <section class="agenda-section">
+          <h3 id="agenda-section-title">Citas de Hoy</h3>
+          <div class="appointment-list">
+            <!-- Cargado dinámicamente -->
+          </div>
+        </section>
+
+        <!-- Vista de Calendario Semanal Interactivo (HU-010 / Drag-and-Drop) -->
+        <div id="calendar-view" class="calendar-wrapper" hidden>
+          <div class="calendar-grid" id="calendar-grid">
+            <!-- Generado dinámicamente -->
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-patients-content" hidden>
+        <div class="header-row section-header">
+          <div>
+            <h2 class="section-title" style="margin-bottom: 4px;">Fichas de Pacientes</h2>
+            <p class="section-subtitle" style="margin: 0; color: var(--text-muted); font-size: 14px;">Administra el
+              registro y los historiales clínicos</p>
+          </div>
+        </div>
+
+        <!-- Tarjetas KPI de Pacientes (Idénticas a Inventario) -->
+        <div class="inv-kpi-grid" style="margin-bottom: 24px;">
+          <div class="inv-kpi-card pat-kpi-card pat-kpi-cyan">
+            <span class="inv-kpi-label">TOTAL PACIENTES</span>
+            <span class="inv-kpi-value" id="kpi-total-patients">0</span>
+          </div>
+
+          <div class="inv-kpi-card pat-kpi-card pat-kpi-emerald">
+            <span class="inv-kpi-label">NUEVOS ESTE MES</span>
+            <span class="inv-kpi-value" id="kpi-month-patients">0</span>
+          </div>
+
+          <div class="inv-kpi-card pat-kpi-card pat-kpi-purple">
+            <span class="inv-kpi-label">FICHAS ACTIVAS</span>
+            <span class="inv-kpi-value" id="kpi-active-fichas">0</span>
+          </div>
+        </div>
+
+        <div class="patients-grid">
+          <!-- Columna Izquierda: Formulario de Registro -->
+          <div class="patient-form-card">
+            <h3>Registrar Paciente</h3>
+
+            <!-- Banner de Alerta (CI Duplicado / Error) -->
+            <div id="patient-alert" class="alert-banner" role="alert" hidden>
+              <span class="alert-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+              </span>
+              <span id="patient-alert-text"></span>
+            </div>
+
+            <!-- Banner de Éxito -->
+            <div id="patient-success" class="alert-banner success-banner" role="alert" hidden>
+              <span class="alert-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span id="patient-success-text">Paciente registrado con éxito.</span>
+            </div>
+
+            <form id="patient-form" novalidate>
+              <!-- Nombre Completo -->
+              <div class="input-group">
+                <label for="pat-name">Nombre Completo</label>
+                <div class="input-wrapper">
+                  <span class="field-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                  </span>
+                  <input type="text" id="pat-name" placeholder="Ej: Juan Pérez" required autocomplete="off">
+                </div>
+                <span class="field-error" id="pat-name-error"></span>
+              </div>
+
+              <!-- Teléfono -->
+              <div class="input-group">
+                <label for="pat-phone">Teléfono (opcional)</label>
+                <div class="input-wrapper">
+                  <span class="field-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                  </span>
+                  <input type="tel" id="pat-phone" placeholder="Ej: 555-0199" autocomplete="off">
+                </div>
+                <span class="field-error" id="pat-phone-error"></span>
+              </div>
+
+              <!-- CI (Cédula de Identidad) -->
+              <div class="input-group">
+                <label for="pat-ci">Cédula de Identidad (CI)</label>
+                <div class="input-wrapper">
+                  <span class="field-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                  </span>
+                  <input type="text" id="pat-ci" placeholder="Ej: 1234567" required autocomplete="off">
+                </div>
+                <span class="field-error" id="pat-ci-error"></span>
+              </div>
+
+              <!-- Notas Médicas Generales -->
+              <div class="input-group">
+                <label for="pat-notes">Notas Médicas Generales</label>
+                <div class="input-wrapper">
+                  <textarea id="pat-notes" placeholder="Antecedentes médicos, alergias, condiciones preexistentes, etc."
+                    rows="4" class="custom-textarea"></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="submit-btn" style="margin-top: 10px;">
+                <span class="btn-text">Registrar Paciente</span>
+                <span class="spinner" id="pat-spinner" hidden></span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Columna Derecha: Listado de Pacientes Registrados -->
+          <div class="patient-list-card">
+            <h3>Pacientes Registrados</h3>
+
+            <!-- Buscador de Pacientes en Tiempo Real -->
+            <div class="input-wrapper" style="margin-bottom: 16px;">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  style="width: 16px; height: 16px;">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </span>
+              <input type="text" id="search-patients-input" placeholder="Buscar paciente por nombre o CI..."
+                autocomplete="off">
+            </div>
+
+            <div id="patient-cards-container" class="patient-cards-list">
+              <!-- Cargado dinámicamente -->
+              <div class="empty-state">
+                <p>No hay pacientes registrados aún.<br>Utilice el formulario de registro para agregar uno.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Tab Inventario -->
+      <div id="tab-inventario-content" class="tab-pane" hidden>
+        <div class="header-row section-header" style="margin-bottom: 24px;">
+          <div>
+            <h2 class="section-title" style="margin-bottom: 4px;">Inventario de Clínica</h2>
+            <p class="section-subtitle" style="margin: 0; color: var(--text-muted); font-size: 14px;">Gestión de insumos
+              y materiales odontológicos</p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="add-appointment-btn" id="btn-open-suppliers-list">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              Proveedores
+            </button>
+            <button class="add-appointment-btn" id="btn-open-add-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Nuevo Artículo
+            </button>
+          </div>
+        </div>
+
+        <div class="inv-kpi-grid" style="margin-bottom: 24px;">
+          <div class="inv-kpi-card" id="inv-kpi-card-total" data-kpi-filter="" title="Ver todos los artículos">
+            <span class="inv-kpi-label">TOTAL ARTÍCULOS</span>
+            <span class="inv-kpi-value" id="inv-kpi-total">0</span>
+          </div>
+          <div class="inv-kpi-card" id="inv-kpi-card-low" data-kpi-filter="low" title="Filtrar insumos con stock bajo">
+            <span class="inv-kpi-label">STOCK BAJO</span>
+            <span class="inv-kpi-value" id="inv-kpi-low">0</span>
+          </div>
+          <div class="inv-kpi-card" id="inv-kpi-card-expiring" data-kpi-filter="expiring"
+            title="Filtrar insumos próximos a vencer">
+            <span class="inv-kpi-label">PRÓXIMOS A VENCER</span>
+            <span class="inv-kpi-value" id="inv-kpi-expiring">0</span>
+          </div>
+        </div>
+
+        <div class="inventory-controls" style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+          <div class="input-wrapper" style="flex: 1; min-width: 240px;">
+            <input type="text" id="inv-search-input" placeholder="Buscar por nombre, código o categoría..."
+              autocomplete="off">
+          </div>
+          <select id="inv-filter-categoria" class="custom-select" style="max-width: 200px;">
+            <option value="">Todas las categorías</option>
+            <option value="Material Restaurador">Material Restaurador</option>
+            <option value="Anestesia">Anestesia</option>
+            <option value="Instrumental">Instrumental</option>
+            <option value="Bioseguridad">Bioseguridad</option>
+            <option value="Impresiones">Impresiones</option>
+            <option value="Cirugía">Cirugía</option>
+            <option value="Ortodoncia">Ortodoncia</option>
+            <option value="Endodoncia">Endodoncia</option>
+            <option value="Desinfección">Desinfección</option>
+            <option value="Prótesis">Prótesis</option>
+            <option value="Estética">Estética</option>
+            <option value="Aislamiento">Aislamiento</option>
+            <option value="Otros">Otros</option>
+          </select>
+          <select id="inv-filter-estado" class="custom-select" style="max-width: 210px;">
+            <option value="">Todos los estados</option>
+            <option value="expiring">⚠️ Próximos a Vencer (30 días)</option>
+            <option value="low">▲ Stock Bajo</option>
+            <option value="critical">● Agotados</option>
+          </select>
+        </div>
+
+        <div class="inv-table-wrapper">
+          <table class="inv-table">
+            <thead>
+              <tr>
+                <th>ARTÍCULO</th>
+                <th>CATEGORÍA</th>
+                <th>UNIDAD</th>
+                <th>STOCK TOTAL</th>
+                <th>MÍNIMO</th>
+                <th>ESTADO</th>
+                <th style="text-align: right;">ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody id="inv-table-body">
+              <!-- Cargado dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- Tab Tratamientos -->
+      <div id="tab-tratamientos-content" class="tab-pane" hidden>
+        <div class="header-row section-header" style="margin-bottom: 24px;">
+          <div>
+            <h2 class="section-title" style="margin-bottom: 4px;">Catálogo de Tratamientos</h2>
+            <p class="section-subtitle" style="margin: 0; color: var(--text-muted); font-size: 14px;">Gestión del
+              catálogo de procedimientos odontológicos</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="add-appointment-btn" id="btn-open-add-treatment">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Nuevo Tratamiento
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjetas KPI de Tratamientos -->
+        <div class="inv-kpi-grid" style="margin-bottom: 24px;">
+          <div class="inv-kpi-card trat-kpi-blue">
+            <span class="inv-kpi-label">TOTAL TRATAMIENTOS</span>
+            <span class="inv-kpi-value" id="trat-kpi-total">0</span>
+          </div>
+          <div class="inv-kpi-card trat-kpi-green">
+            <span class="inv-kpi-label">ACTIVOS</span>
+            <span class="inv-kpi-value" id="trat-kpi-activos">0</span>
+          </div>
+          <div class="inv-kpi-card trat-kpi-violet">
+            <span class="inv-kpi-label">CATEGORÍAS</span>
+            <span class="inv-kpi-value" id="trat-kpi-categorias">0</span>
+          </div>
+        </div>
+
+        <div class="inventory-controls" style="display: flex; gap: 15px; margin-bottom: 20px;">
+          <div class="input-wrapper" style="flex: 1;">
+            <input type="text" id="search-treatments-input" placeholder="Buscar por nombre o categoría..."
+              autocomplete="off">
+          </div>
+          <select id="treatments-filter-categoria" class="custom-select" style="max-width: 200px;">
+            <option value="">Todas las categorías</option>
+            <option value="Preventiva">Preventiva</option>
+            <option value="Restauración">Restauración</option>
+            <option value="Endodoncia">Endodoncia</option>
+            <option value="Cirugía">Cirugía</option>
+            <option value="Periodoncia">Periodoncia</option>
+            <option value="Prótesis">Prótesis</option>
+            <option value="Ortodoncia">Ortodoncia</option>
+            <option value="Estética">Estética</option>
+          </select>
+        </div>
+
+        <div class="inv-table-wrapper">
+          <table class="inv-table">
+            <thead>
+              <tr>
+                <th>TRATAMIENTO</th>
+                <th>CATEGORÍA</th>
+                <th>COSTO BASE</th>
+                <th>ESTADO</th>
+                <th style="text-align: right;">ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody id="tratamientos-table-body">
+              <!-- Cargado dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab de Configuración de Horarios (HU-003) -->
+      <div id="tab-settings-content" hidden>
+        <div class="section-header">
+          <h2 class="section-title">Configuración de la Clínica</h2>
+          <p class="section-subtitle">Gestiona horarios, tratamientos y excepciones</p>
+        </div>
+
+        <div class="settings-container">
+          <!-- Navegación por Pestañas -->
+          <div class="settings-tabs-nav">
+            <button class="settings-tab-btn active" data-target="tab-horarios">
+              <span class="tab-icon">🕒</span> Horarios
+            </button>
+            <button class="settings-tab-btn" data-target="tab-feriados">
+              <span class="tab-icon">🏖️</span> Feriados
+            </button>
+            <button class="settings-tab-btn" data-target="tab-backup">
+              <span class="tab-icon">💾</span> Copia de Seguridad (Backup)
+            </button>
+          </div>
+
+          <div class="settings-tabs-content">
+            <!-- PANEL 1: HORARIOS -->
+            <div id="tab-horarios" class="settings-tab-pane active">
+              <!-- Panel de Gestión de Horarios de Atención -->
+              <div class="treatment-form-card" style="max-width: 800px; margin: 0 auto;">
+                <h3 style="margin-bottom: 8px;">Horario de Atención Semanal</h3>
+                <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 24px;">Establece los días y los
+                  rangos
+                  de atención permitidos para agendar citas.</p>
+
+                <!-- Alerta de Configuración -->
+                <div id="settings-alert" class="alert-banner" role="alert" style="margin-bottom: 16px;" hidden>
+                  <span class="alert-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                  </span>
+                  <span id="settings-alert-text"></span>
+                </div>
+
+                <!-- Éxito de Configuración -->
+                <div id="settings-success" class="alert-banner success-banner" role="alert" style="margin-bottom: 16px;"
+                  hidden>
+                  <span class="alert-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <span id="settings-success-text">Configuración guardada correctamente.</span>
+                </div>
+
+                <form id="settings-form" novalidate>
+                  <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <!-- Cabecera de la tabla de horarios -->
+                    <div
+                      style="display: grid; grid-template-columns: 140px 100px 1fr 1fr; gap: 16px; font-weight: 600; font-size: 13px; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--card-border); padding-bottom: 8px;">
+                      <div>Día</div>
+                      <div>Estado</div>
+                      <div>Turno Mañana</div>
+                      <div>Turno Tarde</div>
+                    </div>
+
+                    <!-- Domingo -->
+                    <div class="settings-day-row" data-day="0"
+                      style="display: grid; grid-template-columns: 140px 100px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                      <div style="font-weight: 500;">Domingo</div>
+                      <div>
+                        <input type="checkbox" id="settings-day-active-0" class="custom-checkbox">
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-m-start-0" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-m-end-0" class="custom-input" disabled>
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-t-start-0" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-t-end-0" class="custom-input" disabled>
+                      </div>
+                    </div>
+
+                    <!-- Lunes -->
+                    <div class="settings-day-row" data-day="1"
+                      style="display: grid; grid-template-columns: 140px 100px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                      <div style="font-weight: 500;">Lunes</div>
+                      <div>
+                        <input type="checkbox" id="settings-day-active-1" class="custom-checkbox">
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-m-start-1" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-m-end-1" class="custom-input" disabled>
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-t-start-1" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-t-end-1" class="custom-input" disabled>
+                      </div>
+                    </div>
+
+                    <!-- Martes -->
+                    <div class="settings-day-row" data-day="2"
+                      style="display: grid; grid-template-columns: 140px 100px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                      <div style="font-weight: 500;">Martes</div>
+                      <div>
+                        <input type="checkbox" id="settings-day-active-2" class="custom-checkbox">
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-m-start-2" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-m-end-2" class="custom-input" disabled>
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-t-start-2" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-t-end-2" class="custom-input" disabled>
+                      </div>
+                    </div>
+
+                    <!-- Miércoles -->
+                    <div class="settings-day-row" data-day="3"
+                      style="display: grid; grid-template-columns: 140px 100px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                      <div style="font-weight: 500;">Miércoles</div>
+                      <div>
+                        <input type="checkbox" id="settings-day-active-3" class="custom-checkbox">
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-m-start-3" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-m-end-3" class="custom-input" disabled>
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-t-start-3" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-t-end-3" class="custom-input" disabled>
+                      </div>
+                    </div>
+
+                    <!-- Jueves -->
+                    <div class="settings-day-row" data-day="4"
+                      style="display: grid; grid-template-columns: 140px 100px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                      <div style="font-weight: 500;">Jueves</div>
+                      <div>
+                        <input type="checkbox" id="settings-day-active-4" class="custom-checkbox">
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-m-start-4" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-m-end-4" class="custom-input" disabled>
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-t-start-4" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-t-end-4" class="custom-input" disabled>
+                      </div>
+                    </div>
+
+                    <!-- Viernes -->
+                    <div class="settings-day-row" data-day="5"
+                      style="display: grid; grid-template-columns: 140px 100px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                      <div style="font-weight: 500;">Viernes</div>
+                      <div>
+                        <input type="checkbox" id="settings-day-active-5" class="custom-checkbox">
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-m-start-5" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-m-end-5" class="custom-input" disabled>
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-t-start-5" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-t-end-5" class="custom-input" disabled>
+                      </div>
+                    </div>
+
+                    <!-- Sábado -->
+                    <div class="settings-day-row" data-day="6"
+                      style="display: grid; grid-template-columns: 140px 100px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                      <div style="font-weight: 500;">Sábado</div>
+                      <div>
+                        <input type="checkbox" id="settings-day-active-6" class="custom-checkbox">
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-m-start-6" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-m-end-6" class="custom-input" disabled>
+                      </div>
+                      <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" id="settings-day-t-start-6" class="custom-input" disabled>
+                        <span>a</span>
+                        <input type="time" id="settings-day-t-end-6" class="custom-input" disabled>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; justify-content: flex-end; margin-top: 24px;">
+                    <button type="submit" class="submit-btn" style="max-width: 200px;">
+                      <span class="btn-text">Guardar Configuración</span>
+                      <span class="spinner" id="settings-spinner" hidden></span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- PANEL 3: FERIADOS -->
+            <div id="tab-feriados" class="settings-tab-pane">
+              <!-- Panel de Gestión de Feriados y Días No Laborables (Jornada Excepcional) -->
+              <div class="treatment-form-card" style="max-width: 800px; margin: 0 auto;">
+                <h3 style="margin-bottom: 8px;">Feriados y Excepciones de Horario</h3>
+                <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 24px;">Registra los días
+                  excepcionales en los que el consultorio estará cerrado (capacitación, feriado nacional, vacaciones).
+                </p>
+
+                <!-- Alerta de excepciones -->
+                <div id="exceptions-alert" class="alert-banner" role="alert" style="margin-bottom: 16px;" hidden>
+                  <span class="alert-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                  </span>
+                  <span id="exceptions-alert-text"></span>
+                </div>
+
+                <div class="exceptions-grid-layout">
+                  <!-- Formulario de Registro de Excepción -->
+                  <form id="exceptions-form" class="exceptions-form-panel">
+                    <h4 id="exception-form-title"
+                      style="margin-top: 0; margin-bottom: 6px; font-size: 14.5px; font-weight: 700; color: var(--text-primary);">
+                      Registrar Cierre</h4>
+                    <div class="input-group">
+                      <label for="exception-date"
+                        style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Fecha de Cierre</label>
+                      <input type="date" id="exception-date" class="custom-input"
+                        style="padding: 10px 14px; font-size: 14px;" required>
+                    </div>
+                    <div class="input-group">
+                      <label for="exception-description"
+                        style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Motivo /
+                        Descripción</label>
+                      <input type="text" id="exception-description" class="custom-input"
+                        placeholder="Ej: Feriado de Año Nuevo" style="padding: 10px 14px; font-size: 14px;" required>
+                    </div>
+                    <div class="checkbox-group"
+                      style="display: flex; flex-direction: row; align-items: center; gap: 8px; margin-top: 4px; margin-bottom: 4px;">
+                      <input type="checkbox" id="exception-recurring"
+                        style="width: 16px; height: 16px; cursor: pointer; accent-color: var(--success); margin: 0;">
+                      <label for="exception-recurring"
+                        style="font-size: 13px; font-weight: 600; color: var(--text-secondary); cursor: pointer; user-select: none; margin: 0;">Repetir
+                        todos los años (Feriado Anual)</label>
+                    </div>
+                    <div style="display: flex; gap: 10px; width: 100%; margin-top: 8px;">
+                      <button type="button" id="btn-cancel-exception" class="cancel-btn"
+                        style="flex: 1; display: none; padding: 10px 14px; height: 42px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-primary); border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: all var(--transition-fast);">
+                        Cancelar
+                      </button>
+                      <button type="submit" id="btn-add-exception" class="submit-btn"
+                        style="flex: 1.5; padding: 10px 14px; height: 42px; margin-top: 0;">
+                        <span class="btn-text">Registrar Cierre</span>
+                        <span class="spinner" id="exception-spinner" hidden></span>
+                      </button>
+                    </div>
+                  </form>
+
+                  <!-- Listado de Excepciones -->
+                  <div class="exceptions-list-panel">
+                    <div class="exceptions-table-title">Días Registrados de Cierre</div>
+                    <div class="table-wrapper" style="margin-top: 0; max-height: 240px; overflow-y: auto;">
+                      <table class="ledger-table" style="font-size: 13.5px; width: 100%;">
+                        <thead>
+                          <tr>
+                            <th style="padding: 10px 12px;">Fecha</th>
+                            <th style="padding: 10px 12px;">Descripción / Motivo</th>
+                            <th style="text-align: center; width: 70px; padding: 10px 12px;">Acción</th>
+                          </tr>
+                        </thead>
+                        <tbody id="exceptions-table-body">
+                          <tr>
+                            <td colspan="3"
+                              style="text-align: center; padding: 30px; color: var(--text-muted); font-style: italic;">
+                              No hay feriados o excepciones registradas.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 3: COPIA DE SEGURIDAD (BACKUP) -->
+            <div id="tab-backup" class="settings-tab-pane">
+              <div class="treatment-form-card" style="max-width: 800px; margin: 0 auto;">
+                <h3 style="margin-bottom: 8px;">Copia de Seguridad y Respaldo (Backup)</h3>
+                <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 24px;">
+                  Exporta e importa respaldos completos de la base de datos de tu clínica (pacientes, historial médico, citas e inventario).
+                </p>
+
+                <!-- Tarjetas de Estadísticas de la BD -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+                  <div class="backup-stat-card">
+                    <div class="backup-stat-label">Tamaño de BD</div>
+                    <div id="backup-stat-size" class="backup-stat-val" style="color: var(--primary);">—</div>
+                  </div>
+                  <div class="backup-stat-card">
+                    <div class="backup-stat-label">Pacientes Guardados</div>
+                    <div id="backup-stat-patients" class="backup-stat-val" style="color: var(--success);">—</div>
+                  </div>
+                  <div class="backup-stat-card">
+                    <div class="backup-stat-label">Citas Registradas</div>
+                    <div id="backup-stat-appts" class="backup-stat-val" style="color: #0284c7;">—</div>
+                  </div>
+                </div>
+
+                <!-- Acciones de Backup -->
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                  <!-- Descargar Respaldo -->
+                  <div class="backup-action-card">
+                    <div>
+                      <h4 style="margin: 0 0 4px 0; font-size: 15px; font-weight: 700; color: var(--text-primary);">📥 Descargar Copia de Seguridad Completa</h4>
+                      <p style="margin: 0; font-size: 13px; color: var(--text-muted);">Descarga el archivo database.db oficial para guardarlo en un pendrive o disco externo.</p>
+                    </div>
+                    <button type="button" id="btn-download-backup" class="submit-btn" style="height: 42px; padding: 0 20px; font-size: 13px; font-weight: 700; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      <span style="vertical-align: middle;">Descargar Respaldo (.db)</span>
+                    </button>
+                  </div>
+
+                  <!-- Restaurar Respaldo -->
+                  <div class="backup-action-card">
+                    <div>
+                      <h4 style="margin: 0 0 4px 0; font-size: 15px; font-weight: 700; color: var(--text-primary);">📤 Restaurar Respaldo de la Clínica</h4>
+                      <p style="margin: 0; font-size: 13px; color: var(--text-muted);">Carga un archivo .db previamente descargado para sobrescribir y actualizar los datos.</p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <input type="file" id="input-restore-backup" accept=".db" style="display: none;">
+                      <button type="button" id="btn-trigger-restore-backup" class="submit-btn" style="height: 42px; padding: 0 20px; font-size: 13px; font-weight: 700; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border: none; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <span style="vertical-align: middle;">Cargar Archivo .db</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Tab de Reportes y Analíticas (Dashboard Financiero) -->
+      <!-- Tab de Reportes y Analíticas (Dashboard Financiero) -->
+
+      <!-- Tab de Reportes y Analíticas (Dashboard Financiero) -->
+      <div id="tab-reports-content" hidden>
+        <div class="header-row section-header">
+          <div>
+            <h2 class="section-title" style="margin-bottom: 4px;">Reportes y Analíticas Financieras</h2>
+            <p class="section-subtitle" style="margin: 0; color: var(--text-muted); font-size: 14px;">Monitoriza los
+              ingresos y el rendimiento de la clínica</p>
+          </div>
+          <div class="actions">
+            <div class="custom-date-dropdown" id="reports-custom-dropdown">
+              <button class="custom-date-btn" id="reports-dropdown-btn">
+                <span>📅 Filtro: Este Mes</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <div class="custom-date-menu" id="reports-dropdown-menu">
+                <div class="custom-date-option" data-period="hoy">Hoy</div>
+                <div class="custom-date-option" data-period="esta_semana">Esta Semana</div>
+                <div class="custom-date-option active" data-period="este_mes">Este Mes</div>
+                <div class="custom-date-option" data-period="mes_pasado">Mes Pasado</div>
+                <div class="custom-date-option" data-period="ultimos_3_meses">Últimos 3 Meses</div>
+                <div class="custom-date-option" data-period="ultimos_6_meses">Últimos 6 Meses</div>
+                <div class="custom-date-option" data-period="este_anio">Este Año</div>
+                <div class="custom-date-option" data-period="historico">Histórico Total</div>
+                <div class="custom-date-option" data-period="custom">Rango Personalizado...</div>
+
+                <div class="custom-date-range-box" id="reports-custom-range-box">
+                  <label
+                    style="display: block; margin-bottom: 6px; font-size: 12px; color: var(--text-secondary);">Desde:
+                    <input type="date" id="reports-start-date" class="custom-input"
+                      style="width: 100%; margin-top: 2px;">
+                  </label>
+                  <label
+                    style="display: block; margin-bottom: 8px; font-size: 12px; color: var(--text-secondary);">Hasta:
+                    <input type="date" id="reports-end-date" class="custom-input" style="width: 100%; margin-top: 2px;">
+                  </label>
+                  <button id="reports-apply-custom-btn" class="submit-btn"
+                    style="height: 34px; width: 100%; font-size: 12px;">Aplicar Rango</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjetas de KPIs -->
+        <section class="stats-grid" style="margin-top: 24px; grid-template-columns: repeat(5, 1fr);">
+          <div class="stat-card">
+            <span class="stat-label">Ingresos Totales (Cobrado)</span>
+            <span class="stat-value" id="reports-total-income">0.00 Bs.</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Total Facturado</span>
+            <span class="stat-value" id="reports-total-billed">0.00 Bs.</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Deuda Global Pendiente</span>
+            <span class="stat-value" id="reports-total-debt">0.00 Bs.</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Eficiencia de Agenda</span>
+            <span class="stat-value" id="reports-agenda-efficiency">0%</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Tasa de Ausentismo</span>
+            <span class="stat-value" id="reports-absenteeism-rate">0%</span>
+          </div>
+        </section>
+
+        <!-- Gráficos Fila 1: Evolución Mensual + Estado de Citas de la Agenda -->
+        <div class="reports-charts-container"
+          style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 24px; margin-top: 24px; align-items: start;">
+          <!-- Evolución Mensual (Gráfico de Barras) -->
+          <div class="report-chart-card"
+            style="background: rgba(17, 24, 39, 0.55); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 24px;">
+            <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">Evolución de
+              Ingresos Mensuales</h3>
+            <div style="position: relative; height: 300px; width: 100%;">
+              <canvas id="chart-monthly-income"></canvas>
+            </div>
+          </div>
+
+          <!-- Estado de Citas de la Agenda (Gráfico de Dona) -->
+          <div class="report-chart-card"
+            style="background: rgba(17, 24, 39, 0.55); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0;">Estado de Citas de
+                la Agenda</h3>
+              <span style="font-size: 11px; color: var(--text-muted);">Proporción por estado</span>
+            </div>
+            <div style="position: relative; height: 300px; width: 100%;">
+              <canvas id="chart-appointment-status"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pacientes con Mayor Deuda Pendiente — Fila 2 Ancho Completo -->
+        <div class="report-chart-card"
+          style="margin-top: 24px; background: rgba(17, 24, 39, 0.55); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 28px;">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px;">
+            <div>
+              <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0 0 4px 0;">
+                Pacientes con Mayor Deuda Pendiente</h3>
+              <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Ranking Top 10 pacientes con saldo
+                pendiente de pago</p>
+            </div>
+          </div>
+          <div class="table-wrapper" style="overflow-x: auto;">
+            <table class="inv-table">
+              <thead>
+                <tr>
+                  <th>PACIENTE</th>
+                  <th>CI</th>
+                  <th>TELÉFONO</th>
+                  <th>ÚLTIMA ATENCIÓN</th>
+                  <th style="text-align: right;">TOTAL FACTURADO</th>
+                  <th style="text-align: right;">DEUDA PENDIENTE</th>
+                </tr>
+              </thead>
+              <tbody id="reports-debtors-table-body">
+                <!-- Cargado dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Ranking de Tratamientos Más Realizados — Fila 3 Ancho completo -->
+        <div class="report-chart-card"
+          style="margin-top: 24px; background: rgba(17, 24, 39, 0.55); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 28px;">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px;">
+            <div>
+              <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0 0 4px 0;">
+                Tratamientos Más Realizados</h3>
+              <p style="font-size: 12px; color: var(--text-muted); margin: 0;">Ranking por frecuencia e ingresos
+                generados</p>
+            </div>
+            <div style="display: flex; gap: 20px; align-items: center;">
+              <div style="text-align: right;">
+                <div id="reports-treat-total-count"
+                  style="font-size: 22px; font-weight: 700; color: var(--text-primary);">—</div>
+                <div
+                  style="font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">
+                  Procedimientos</div>
+              </div>
+              <div style="width: 1px; height: 36px; background: rgba(255,255,255,0.07); flex-shrink: 0;"></div>
+              <div style="text-align: right;">
+                <div id="reports-treat-total-revenue" style="font-size: 22px; font-weight: 700; color: var(--success);">
+                  —</div>
+                <div
+                  style="font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">
+                  Total Bs.</div>
+              </div>
+            </div>
+          </div>
+          <div id="reports-treatments-table-body" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+
+        <section id="prediction-card" class="report-chart-card prediction-card" aria-labelledby="prediction-title">
+          <div class="prediction-header">
+            <div>
+              <h3 id="prediction-title">Predicción</h3>
+            </div>
+          </div>
+
+          <form id="prediction-form">
+            <div class="prediction-form-grid">
+              <div class="prediction-patient-lookup">
+                <label class="prediction-field" for="prediction-patient-search">
+                  <span>Buscar paciente registrado (opcional)</span>
+                  <input
+                    class="prediction-input"
+                    id="prediction-patient-search"
+                    type="search"
+                    autocomplete="off"
+                    placeholder="Escriba al menos 3 letras del nombre">
+                </label>
+                <div id="prediction-patient-results" class="prediction-patient-results" role="group" aria-label="Resultados de pacientes" hidden></div>
+                <p id="prediction-selected-patient" class="prediction-selected-patient" aria-live="polite"></p>
+                <button id="prediction-clear-patient" class="prediction-clear-patient" type="button" hidden>Quitar selección y completar manualmente</button>
+              </div>
+              <label class="prediction-field" for="prediction-date">
+                <span>Fecha de la cita</span>
+                <input class="prediction-input" id="prediction-date" name="appointmentDate" type="date" required>
+              </label>
+              <label class="prediction-field" for="prediction-time">
+                <span>Hora de la cita</span>
+                <input class="prediction-input" id="prediction-time" name="appointmentTime" type="time" value="09:30" required>
+              </label>
+              <label class="prediction-field" for="prediction-treatment">
+                <span>Tratamiento</span>
+                <select class="prediction-input" id="prediction-treatment" name="treatmentId" required>
+                  <option value="">Cargando tratamientos...</option>
+                </select>
+              </label>
+              <label class="prediction-field" for="prediction-sex">
+                <span>Sexo registrado</span>
+                <select class="prediction-input" id="prediction-sex" name="sex" required>
+                  <option value="">Seleccione el sexo</option>
+                  <option value="M">M</option>
+                  <option value="F">F</option>
+                  <option value="Otro">Otro</option>
+                </select>
+              </label>
+              <label class="prediction-field" for="prediction-age">
+                <span>Edad</span>
+                <input class="prediction-input" id="prediction-age" name="age" type="number" min="1" max="120" value="30" required>
+              </label>
+              <label class="prediction-field" for="prediction-previous-appointments">
+                <span>Citas previas</span>
+                <input class="prediction-input" id="prediction-previous-appointments" name="previousAppointments" type="number" min="0" max="500" value="0" required>
+              </label>
+              <label class="prediction-field" for="prediction-previous-absences">
+                <span>Ausencias previas</span>
+                <input class="prediction-input" id="prediction-previous-absences" name="previousAbsences" type="number" min="0" max="500" value="0" required>
+              </label>
+              <label class="prediction-field" for="prediction-previous-attendances">
+                <span>Atenciones previas</span>
+                <input class="prediction-input" id="prediction-previous-attendances" name="previousAttendances" type="number" min="0" max="500" value="0" required>
+              </label>
+              <label class="prediction-field" for="prediction-days-since-previous">
+                <span>Días desde la cita anterior</span>
+                <input class="prediction-input" id="prediction-days-since-previous" name="daysSincePrevious" type="number" min="0" max="3650" value="0" required>
+              </label>
+              <label class="prediction-field" for="prediction-cost">
+                <span>Costo (0 usa costo base)</span>
+                <input class="prediction-input" id="prediction-cost" name="cost" type="number" min="0" max="100000" step="0.01" value="0" required>
+              </label>
+            </div>
+
+            <div class="prediction-actions">
+              <p id="prediction-form-status" role="status" aria-live="polite"></p>
+              <button id="prediction-submit" class="submit-btn" type="submit">
+                <span id="prediction-submit-label">Calcular predicción</span>
+                <span id="prediction-spinner" class="spinner" hidden></span>
+              </button>
+            </div>
+          </form>
+
+          <div id="prediction-result" class="prediction-result" aria-live="polite" hidden>
+            <h4>Resultado estimado</h4>
+            <strong id="prediction-label"></strong>
+            <div class="prediction-probabilities">
+              <div>
+                <span>Probabilidad de atención</span>
+                <b id="prediction-attendance-value"></b>
+                <div class="prediction-track"><span id="prediction-attendance-bar"></span></div>
+              </div>
+              <div>
+                <span>Probabilidad de ausencia</span>
+                <b id="prediction-absence-value"></b>
+                <div class="prediction-track"><span id="prediction-absence-bar"></span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+
+    </main>
+  </div>
+
+  <!-- Modal para Agendar Nueva Cita -->
+  <div id="appointment-modal" class="modal-overlay" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <h3 id="modal-title">Nueva Cita</h3>
+        <button id="btn-close-modal" class="modal-close-btn" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Alerta de error del modal -->
+      <div id="modal-alert" class="alert-banner" role="alert" hidden>
+        <span class="alert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        </span>
+        <span id="modal-alert-text"></span>
+      </div>
+
+      <form id="appointment-form" novalidate>
+        <div class="modal-body">
+          <!-- Nombre del Paciente (con Autocompletado Inteligente) -->
+          <div class="input-group">
+            <label for="appt-patient">Nombre del Paciente</label>
+            <div class="autocomplete-container" style="position: relative;">
+              <div class="input-wrapper">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </span>
+                <input type="text" id="appt-patient" placeholder="Escribe 3 letras para buscar..." required
+                  autocomplete="off" style="padding-right: 44px;">
+                <!-- Botón rápido para registrar paciente si no existe -->
+                <button type="button" id="btn-quick-add-patient" class="quick-add-patient-btn"
+                  title="Registrar nuevo paciente" hidden>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" style="width: 16px; height: 16px;">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="8.5" cy="7" r="4" />
+                    <line x1="20" y1="8" x2="20" y2="14" />
+                    <line x1="23" y1="11" x2="17" y2="11" />
+                  </svg>
+                </button>
+              </div>
+              <!-- Dropdown flotante de sugerencias -->
+              <div id="appt-patient-suggestions" class="autocomplete-suggestions" hidden></div>
+            </div>
+            <span class="field-error" id="appt-patient-error"></span>
+          </div>
+
+          <!-- Teléfono del Paciente -->
+          <div class="input-group">
+            <label for="appt-phone">Teléfono (opcional)</label>
+            <div class="input-wrapper">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </span>
+              <input type="tel" id="appt-phone" placeholder="Ej: 300 123 4567" autocomplete="off">
+            </div>
+            <span class="field-error" id="appt-phone-error"></span>
+          </div>
+
+          <!-- Tratamiento -->
+          <div class="input-group">
+            <label for="appt-treatment">Tratamiento</label>
+            <div class="autocomplete-container" style="position: relative;">
+              <div class="input-wrapper">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                      d="M12 2C8 2 6 5 6 9c0 4 2 6 4 9 1 1.5 1 2.5 1 3a1 1 0 0 0 2 0c0-.5 0-1.5 1-3 2-3 4-5 4-9 0-4-2-7-6-7z" />
+                  </svg>
+                </span>
+                <input type="text" id="appt-treatment" placeholder="Ej: Profilaxis y Limpieza" required
+                  autocomplete="off">
+              </div>
+              <div id="appt-treatment-suggestions" class="autocomplete-suggestions" hidden></div>
+            </div>
+            <span class="field-error" id="appt-treatment-error"></span>
+          </div>
+
+          <!-- Fecha y Hora (en fila) -->
+          <div class="modal-row">
+            <div class="input-group">
+              <label for="appt-date">Fecha</label>
+              <div class="input-wrapper">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                </span>
+                <input type="date" id="appt-date" required>
+              </div>
+              <span class="field-error" id="appt-date-error"></span>
+            </div>
+
+            <div class="input-group">
+              <label for="appt-time">Hora</label>
+              <div class="input-wrapper">
+                <span class="field-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </span>
+                <input type="time" id="appt-time" required>
+              </div>
+              <span class="field-error" id="appt-time-error"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="btn-cancel-modal" class="cancel-btn">Cancelar</button>
+          <button type="submit" id="btn-save-appt" class="submit-btn" style="flex:1;">
+            <span class="btn-text">Guardar Cita</span>
+            <span class="spinner" hidden></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para Gestionar Estado de Cita (HU-005 / Premium UX) -->
+  <div id="status-modal" class="modal-overlay" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="status-modal-title">
+      <div class="modal-header">
+        <h3 id="status-modal-title">Gestionar Cita</h3>
+        <button id="btn-close-status-modal" class="modal-close-btn" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Alerta de error del modal de estado -->
+      <div id="status-modal-alert" class="alert-banner" role="alert" style="margin: 0 28px; margin-top: 16px;" hidden>
+        <span class="alert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        </span>
+        <span id="status-modal-alert-text"></span>
+      </div>
+
+      <!-- Aviso de cita del pasado (Lectura obligatoria) -->
+      <div id="status-modal-past-notice" class="alert-banner warning" style="margin: 0 28px; margin-top: 16px;" hidden>
+        <span class="alert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        </span>
+        <span>Las citas pasadas no se pueden modificar ni cancelar.</span>
+      </div>
+
+      <div class="modal-body">
+        <!-- Tarjeta de resumen de cita -->
+        <div class="appointment-summary-card">
+          <div class="summary-row">
+            <span class="summary-label">Paciente:</span>
+            <span class="summary-value" id="status-patient-name">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Tratamiento:</span>
+            <span class="summary-value" id="status-treatment-name">-</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Horario:</span>
+            <span class="summary-value" id="status-time-value">-</span>
+          </div>
+          <div class="summary-row" id="status-phone-row" hidden>
+            <span class="summary-label">Teléfono:</span>
+            <span class="summary-value" id="status-phone-value">-</span>
+          </div>
+        </div>
+
+        <!-- Grid de acciones de estado -->
+        <div class="status-actions-grid">
+          <button type="button" class="status-action-btn status-prog" data-status="Programada">
+            <span class="status-dot dot-prog"></span>
+            Programada
+          </button>
+          <button type="button" class="status-action-btn status-wait" data-status="En Espera">
+            <span class="status-dot dot-wait"></span>
+            En Espera
+          </button>
+          <button type="button" class="status-action-btn status-done" data-status="Atendida">
+            <span class="status-dot dot-done"></span>
+            Atendida
+          </button>
+          <button type="button" class="status-action-btn status-abs" data-status="Ausente">
+            <span class="status-dot dot-abs"></span>
+            Ausente
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="flex-direction: column; gap: 12px; align-items: stretch;">
+        <button type="button" id="btn-edit-appointment" class="submit-btn"
+          style="width: 100%; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); color: #ffffff;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"
+            style="display: inline-block; vertical-align: middle; margin-right: 6px;">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          Editar Cita
+        </button>
+        <button type="button" id="btn-cancel-appointment" class="danger-outline-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"
+            style="display: inline-block; vertical-align: middle; margin-right: 6px;">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          Cancelar Cita
+        </button>
+        <button type="button" id="btn-close-status-modal-footer" class="cancel-btn"
+          style="text-align: center; width: 100%;">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmación Genérico (Premium UX) -->
+  <div id="confirm-modal" class="modal-overlay" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="confirm-title" style="max-width: 440px;">
+      <div class="modal-header" style="padding: 20px 28px;">
+        <h3 id="confirm-title">Confirmar Acción</h3>
+      </div>
+      <div class="modal-body" style="padding: 20px 28px; text-align: center;">
+        <p id="confirm-message" style="color: var(--text-secondary); font-size: 15px; line-height: 1.5;"></p>
+      </div>
+      <div class="modal-footer" style="padding: 20px 28px; justify-content: flex-end; gap: 12px;">
+        <button type="button" id="btn-confirm-cancel" class="cancel-btn" style="padding: 10px 16px;">Cancelar</button>
+        <button type="button" id="btn-confirm-accept" class="submit-btn"
+          style="width: auto; padding: 10px 20px; color: #ffffff;">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Registro Rápido de Paciente (HU-009 / Contexto Agendamiento) -->
+  <div id="quick-patient-modal" class="modal-overlay" style="z-index: 110;" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="quick-pat-modal-title"
+      style="max-width: 460px;">
+      <div class="modal-header">
+        <h3 id="quick-pat-modal-title">Registrar Nuevo Paciente</h3>
+        <button type="button" id="btn-close-quick-pat-modal" class="modal-close-btn" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Alerta de error del modal de registro rápido -->
+      <div id="quick-pat-alert" class="alert-banner" role="alert" style="margin: 16px 28px 0 28px;" hidden>
+        <span class="alert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        </span>
+        <span id="quick-pat-alert-text"></span>
+      </div>
+
+      <form id="quick-patient-form" novalidate>
+        <div class="modal-body" style="padding-top: 16px;">
+          <!-- Nombre Completo -->
+          <div class="input-group">
+            <label for="quick-pat-name">Nombre Completo</label>
+            <div class="input-wrapper">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </span>
+              <input type="text" id="quick-pat-name" placeholder="Ej: Carlos Mendoza" required autocomplete="off">
+            </div>
+            <span class="field-error" id="quick-pat-name-error"></span>
+          </div>
+
+          <!-- CI -->
+          <div class="input-group">
+            <label for="quick-pat-ci">Cédula de Identidad (CI)</label>
+            <div class="input-wrapper">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+              </span>
+              <input type="text" id="quick-pat-ci" placeholder="Ej: 1234567" required autocomplete="off">
+            </div>
+            <span class="field-error" id="quick-pat-ci-error"></span>
+          </div>
+
+          <!-- Teléfono -->
+          <div class="input-group">
+            <label for="quick-pat-phone">Teléfono (opcional)</label>
+            <div class="input-wrapper">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </span>
+              <input type="tel" id="quick-pat-phone" placeholder="Ej: 555-0199" autocomplete="off">
+            </div>
+            <span class="field-error" id="quick-pat-phone-error"></span>
+          </div>
+
+          <!-- Notas Médicas -->
+          <div class="input-group">
+            <label for="quick-pat-notes">Notas Médicas</label>
+            <div class="input-wrapper">
+              <textarea id="quick-pat-notes" placeholder="Condiciones, alergias, etc." rows="3"
+                class="custom-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="btn-cancel-quick-pat" class="cancel-btn">Cancelar</button>
+          <button type="submit" class="submit-btn" style="flex: 1;">
+            <span class="btn-text">Registrar y Seleccionar</span>
+            <span class="spinner" id="quick-pat-spinner" hidden></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para Módulo Clínico / Registro de Historial Clínico (HU-011) -->
+  <div id="clinical-modal" class="modal-overlay" style="z-index: 105;" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="clinical-modal-title"
+      style="max-width: 550px;">
+      <div class="modal-header">
+        <h3 id="clinical-modal-title">Ficha Clínica — Registrar Historial</h3>
+        <button type="button" id="btn-close-clinical-modal" class="modal-close-btn" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Alerta de error del modal clínico -->
+      <div id="clinical-alert" class="alert-banner" role="alert" style="margin: 16px 28px 0 28px;" hidden>
+        <span class="alert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        </span>
+        <span id="clinical-alert-text"></span>
+      </div>
+
+      <form id="clinical-form" novalidate>
+        <div class="modal-body" style="padding-top: 16px; display: flex; flex-direction: column; gap: 16px;">
+          <div class="appointment-summary-card" style="padding: 14px 18px; margin-bottom: 0;">
+            <div class="summary-row">
+              <span class="summary-label">Paciente:</span>
+              <span class="summary-value" id="clinical-patient-name">-</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Cita ID / Fecha:</span>
+              <span class="summary-value" id="clinical-appt-info">-</span>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label style="font-weight: 600; margin-bottom: 8px;">Tratamientos Realizados (Catálogo de Servicios)</label>
+            <div id="clinical-treatments-list"
+              style="display: flex; flex-direction: column; gap: 10px; max-height: 160px; overflow-y: auto; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--card-border);">
+              <!-- Renderizado dinámico -->
+              <p style="color: var(--text-muted); font-size: 13px; margin: 0;">Cargando tratamientos...</p>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="clinical-observations" style="font-weight: 600;">Observaciones Clínicas y Anotaciones
+              Médicas</label>
+            <div class="input-wrapper">
+              <textarea id="clinical-observations"
+                placeholder="Escriba aquí los detalles del procedimiento realizado, evolución del paciente, medicación recetada, etc."
+                rows="5" class="custom-textarea" required></textarea>
+            </div>
+            <span class="field-error" id="clinical-observations-error"></span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="btn-cancel-clinical" class="cancel-btn">Cancelar</button>
+          <button type="submit" class="submit-btn" style="flex: 1;">
+            <span class="btn-text">Guardar Historial Clínico</span>
+            <span class="spinner" id="clinical-spinner" hidden></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal para Visualización de Línea de Tiempo del Paciente (HU-012) -->
+  <div id="timeline-modal" class="modal-overlay" style="z-index: 104;" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="timeline-modal-title"
+      style="max-width: 650px; width: 90%;">
+      <div class="modal-header">
+        <div>
+          <h3 id="timeline-modal-title" style="margin-bottom: 2px;">Expediente Clínico</h3>
+          <p id="timeline-modal-subtitle" style="font-size: 13px; color: var(--text-muted); margin: 0;"></p>
+        </div>
+        <button type="button" id="btn-close-timeline-modal" class="modal-close-btn" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body" style="padding-top: 16px; max-height: 70vh; overflow-y: auto;">
+        <!-- Resumen de Notas Médicas del Paciente -->
+        <div id="timeline-patient-notes-container" class="appointment-summary-card"
+          style="padding: 14px 18px; margin-bottom: 20px;" hidden>
+          <div style="font-weight: 600; margin-bottom: 6px; font-size: 14px; color: var(--text-heading);">Notas Médicas
+            Generales:</div>
+          <p id="timeline-patient-notes-text"
+            style="margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.5; white-space: pre-wrap;"></p>
+        </div>
+
+        <!-- Contenedor de Carga / Spinner -->
+        <div id="timeline-loading"
+          style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 0;">
+          <span class="spinner"
+            style="border-width: 3px; width: 30px; height: 30px; border-color: rgba(255,255,255,0.1); border-top-color: var(--primary); display: inline-block;"></span>
+          <p style="margin-top: 12px; color: var(--text-muted); font-size: 14px;">Cargando historial clínico...</p>
+        </div>
+
+        <!-- Alerta de error -->
+        <div id="timeline-alert" class="alert-banner" role="alert" style="margin: 0 0 16px 0;" hidden>
+          <span class="alert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </span>
+          <span id="timeline-alert-text"></span>
+        </div>
+
+        <!-- Contenedor de la Línea de Tiempo -->
+        <div id="timeline-container" class="timeline-container" hidden>
+          <!-- Se llenará dinámicamente -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btn-close-timeline-footer" class="cancel-btn" style="width: 100%;">Cerrar
+          Expediente</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Ficha Clínica y Odontograma Digital (HU-008) -->
+  <div id="ficha-clinica-modal" class="modal-overlay" style="z-index: 103;" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="ficha-modal-title"
+      style="max-width: 1100px; width: 95%;">
+      <div class="modal-header">
+        <div style="flex-grow: 1;">
+          <div class="clinic-header-branding"
+            style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; margin-bottom: 8px; text-align: center;">
+            <h1 id="ficha-print-header-title"
+              style="font-family: var(--font-display); font-size: 20px; font-weight: 800; text-transform: uppercase; color: #ffffff; letter-spacing: 1px; margin: 0;">
+              Consultorio Odontológico "Cristo Rey"</h1>
+            <h2 id="ficha-print-header-slogan"
+              style="font-size: 13px; color: var(--success); font-weight: 600; margin: 2px 0 0 0;">Consultorio
+              Odontológico Especializado</h2>
+            <p id="ficha-print-header-details" style="font-size: 11px; color: var(--text-muted); margin: 1px 0 0 0;">Av.
+              Las Américas N° 45, Yacuiba • Tel: +591 70000000</p>
+          </div>
+          <h3 id="ficha-modal-title" style="margin: 0; font-size: 18px; color: #ffffff;">Ficha Clínica & Odontograma
+          </h3>
+          <p id="ficha-modal-subtitle" style="font-size: 13px; color: var(--text-secondary); margin: 2px 0 0 0;">
+            Paciente: - | CI: -</p>
+        </div>
+        <button type="button" id="btn-close-ficha-modal" class="modal-close-btn" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Alerta General en Ficha -->
+      <div id="ficha-alert" class="alert-banner" role="alert" style="margin: 12px 28px 0 28px;" hidden>
+        <span class="alert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+        </span>
+        <span id="ficha-alert-text"></span>
+      </div>
+
+      <!-- Alerta de Deuda Pendiente (Premium CSS Pulse) -->
+      <div id="ficha-debt-banner" class="alert-banner danger-banner" role="alert"
+        style="margin: 12px 28px 0 28px; animation: pulse 2s infinite;" hidden>
+        <span class="alert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+        </span>
+        <span id="ficha-debt-text" style="font-weight: 700;">Paciente con Saldo Pendiente: 0.00 Bs.</span>
+      </div>
+
+      <div class="modal-body"
+        style="max-height: 70vh; overflow-y: auto; padding: 20px 28px; display: flex; flex-direction: column; gap: 24px;">
+        <div class="ficha-grid">
+
+          <!-- Lado Izquierdo: Formulario de Datos Clínicos y Demográficos -->
+          <div class="ficha-left-card">
+            <h4
+              style="margin: 0 0 16px 0; color: var(--success); font-family: var(--font-display); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+              I. Ficha Clínica y Antecedentes</h4>
+
+            <form id="ficha-details-form" style="display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 12px;">
+                <div class="input-group">
+                  <label for="ficha-nro-val" style="font-size: 12px; font-weight: 600;">N° de Ficha Física</label>
+                  <div style="display: flex; gap: 6px; align-items: center;">
+                    <input type="number" id="ficha-nro-val" class="custom-input" placeholder="Ej: 154"
+                      style="padding: 8px 12px; flex-grow: 1;">
+                    <button type="button" id="btn-suggest-ficha-nro" class="submit-btn"
+                      style="padding: 0 10px; font-size: 11px; height: 38px; width: auto; white-space: nowrap; margin-top: 0;"
+                      title="Sugerir siguiente número de ficha">
+                      Sugerir N°
+                    </button>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="ficha-profesion" style="font-size: 12px; font-weight: 600;">Profesión / Ocupación</label>
+                  <input type="text" id="ficha-profesion" class="custom-input" placeholder="Ej: Ingeniero"
+                    style="padding: 8px 12px;">
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1.5fr 0.8fr 1fr; gap: 12px;">
+                <div class="input-group">
+                  <label for="ficha-fnac" style="font-size: 12px; font-weight: 600;">Fecha de Nacimiento</label>
+                  <input type="date" id="ficha-fnac" class="custom-input" style="padding: 8px 12px;">
+                </div>
+                <div class="input-group">
+                  <label for="ficha-edad" style="font-size: 12px; font-weight: 600;">Edad</label>
+                  <input type="number" id="ficha-edad" class="custom-input" placeholder="Ej: 28"
+                    style="padding: 8px 12px;">
+                </div>
+                <div class="input-group">
+                  <label for="ficha-sexo" style="font-size: 12px; font-weight: 600;">Sexo</label>
+                  <select id="ficha-sexo" class="custom-input" style="padding: 8px 12px; height: 38px;">
+                    <option value="">Seleccione</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px;">
+                <div class="input-group">
+                  <label for="ficha-domicilio" style="font-size: 12px; font-weight: 600;">Domicilio</label>
+                  <input type="text" id="ficha-domicilio" class="custom-input" placeholder="Ej: Av. Las Américas N° 45"
+                    style="padding: 8px 12px;">
+                </div>
+                <div class="input-group">
+                  <label for="ficha-ciudad" style="font-size: 12px; font-weight: 600;">Ciudad / Localidad</label>
+                  <input type="text" id="ficha-ciudad" class="custom-input" placeholder="Ej: Yacuiba"
+                    style="padding: 8px 12px;">
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label for="ficha-examen-extra" style="font-size: 12px; font-weight: 600;">Examen Extraoral</label>
+                <textarea id="ficha-examen-extra" class="custom-textarea" rows="2"
+                  placeholder="Describa el examen extraoral de cabeza y cuello..."></textarea>
+              </div>
+
+              <div class="input-group">
+                <label for="ficha-diagnostico" style="font-size: 12px; font-weight: 600;">Diagnóstico Presuntivo</label>
+                <textarea id="ficha-diagnostico" class="custom-textarea" rows="2"
+                  placeholder="Escriba el diagnóstico presuntivo..."></textarea>
+              </div>
+
+              <button type="submit" id="btn-save-ficha-details" class="submit-btn"
+                style="margin-top: 6px; padding: 10px 16px;">
+                <span class="btn-text">Guardar Ficha Clínica</span>
+                <span class="spinner" id="ficha-save-spinner" hidden></span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Lado Derecho: Odontograma FDI Interactivo -->
+          <div class="ficha-right-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h4
+                style="margin: 0; color: var(--success); font-family: var(--font-display); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+                II. Odontograma Interactivo FDI</h4>
+              <button type="button" id="btn-reset-odontograma" class="cancel-btn"
+                style="padding: 4px 8px; font-size: 11px;">Restaurar</button>
+            </div>
+
+            <!-- Barra de Herramientas de Diagnóstico Odontológico (Odontograma Toolbar) -->
+            <div class="odontograma-toolbar"
+              style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; justify-content: center; align-items: center;">
+              <button type="button" class="tool-btn active" data-tool="sano"
+                title="Selección / Visualización (Sin herramienta activa)">
+                <span class="tool-dot" style="background: #334155; border: 1px solid rgba(255,255,255,0.2);"></span>
+                Sano / Limpiar
+              </button>
+              <button type="button" class="tool-btn" data-tool="caries" title="Marcar Caries (Superficie)">
+                <span class="tool-dot" style="background: var(--danger);"></span>
+                Caries
+              </button>
+              <button type="button" class="tool-btn" data-tool="obturado"
+                title="Marcar Obturación / Resina (Superficie)">
+                <span class="tool-dot" style="background: #3b82f6;"></span>
+                Obturado
+              </button>
+              <button type="button" class="tool-btn" data-tool="extraido" title="Marcar Pieza Extraída (Cruz)">
+                <span class="tool-dot" style="background: #000000; border: 1px solid rgba(255,255,255,0.3);"></span>
+                Extraído
+              </button>
+              <button type="button" class="tool-btn" data-tool="corona"
+                title="Marcar Corona Provisoria o Definitiva (Borde Dorado)">
+                <span class="tool-dot" style="border: 2px solid #fbbf24; background: transparent;"></span>
+                Corona
+              </button>
+              <button type="button" class="tool-btn" data-tool="endodoncia"
+                title="Marcar Tratamiento de Conducto (Endodoncia)">
+                <span class="tool-dot" style="background: #ef4444; border-radius: 50%;"></span>
+                Endodoncia
+              </button>
+              <button type="button" class="tool-btn" data-tool="implante" title="Marcar Implante Dental (IMP)">
+                <span class="tool-dot"
+                  style="background: #94a3b8; font-size: 7px; color: #000; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;">IMP</span>
+                Implante
+              </button>
+            </div>
+
+            <!-- Contenedor del Odontograma con Scroll Horizontal si es necesario -->
+            <div class="odontograma-container">
+
+              <!-- Arcada Superior (Cuadrantes 1 y 2) -->
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div
+                  style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-align: center; text-transform: uppercase; letter-spacing: 0.5px;">
+                  Arcada Superior</div>
+                <div class="arcada-row">
+
+                  <!-- Cuadrante 1 (Permanentes y deciduos) -->
+                  <div class="cuadrante-wrapper right-align">
+                    <div style="font-size: 9px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">
+                      Cuadrante 1 (D)</div>
+                    <!-- Permanentes 18-11 -->
+                    <div id="quad-1-perm" class="quadrant-teeth-row"></div>
+                    <!-- Deciduos 55-51 -->
+                    <div id="quad-1-dec" class="quadrant-teeth-row"></div>
+                  </div>
+
+                  <!-- Cuadrante 2 (Permanentes y deciduos) -->
+                  <div class="cuadrante-wrapper left-align">
+                    <div style="font-size: 9px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">
+                      Cuadrante 2 (I)</div>
+                    <!-- Permanentes 21-28 -->
+                    <div id="quad-2-perm" class="quadrant-teeth-row"></div>
+                    <!-- Deciduos 61-65 -->
+                    <div id="quad-2-dec" class="quadrant-teeth-row"></div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Arcada Inferior (Cuadrantes 4 y 3) -->
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px;">
+                <div class="arcada-row">
+
+                  <!-- Cuadrante 4 (Permanentes y deciduos) -->
+                  <div class="cuadrante-wrapper right-align">
+                    <!-- Deciduos 85-81 -->
+                    <div id="quad-4-dec" class="quadrant-teeth-row"></div>
+                    <!-- Permanentes 48-41 -->
+                    <div id="quad-4-perm" class="quadrant-teeth-row"></div>
+                    <div
+                      style="font-size: 9px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">
+                      Cuadrante 4 (D)</div>
+                  </div>
+
+                  <!-- Cuadrante 3 (Permanentes y deciduos) -->
+                  <div class="cuadrante-wrapper left-align">
+                    <!-- Deciduos 71-75 -->
+                    <div id="quad-3-dec" class="quadrant-teeth-row"></div>
+                    <!-- Permanentes 31-38 -->
+                    <div id="quad-3-perm" class="quadrant-teeth-row"></div>
+                    <div
+                      style="font-size: 9px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-top: 4px;">
+                      Cuadrante 3 (I)</div>
+                  </div>
+
+                </div>
+                <div
+                  style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-align: center; text-transform: uppercase; letter-spacing: 0.5px;">
+                  Arcada Inferior</div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Parte Inferior: Libro Mayor Financiero y Registro de Evolución -->
+        <div class="ficha-bottom-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h4
+              style="margin: 0; color: var(--success); font-family: var(--font-display); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+              III. Control de Tratamientos y Evolución Financiera</h4>
+            <div id="ficha-filter-badge" class="filter-badge"
+              style="display: none; align-items: center; gap: 8px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); padding: 4px 10px; border-radius: 6px; font-size: 12px; color: #60a5fa;">
+              <span>Filtro activo: Pieza <strong id="ficha-filter-tooth-id"></strong></span>
+              <button type="button" id="btn-clear-ficha-filter"
+                style="background: none; border: none; color: #f43f5e; cursor: pointer; font-weight: bold; font-size: 14px; padding: 0; display: flex; align-items: center; line-height: 1;"
+                title="Quitar filtro de diente">&times;</button>
+            </div>
+          </div>
+
+          <!-- Formulario para Agregar Registro de Evolución -->
+          <form id="ficha-evolucion-form" style="position: relative; z-index: 999;">
+            <div class="input-group" style="margin-bottom: 0;">
+              <label for="evo-fecha"
+                style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Fecha</label>
+              <input type="date" id="evo-fecha" class="custom-input" required
+                style="padding: 8px 10px; font-size: 13px;">
+            </div>
+
+            <div class="input-group" style="margin-bottom: 0;">
+              <label for="evo-diente"
+                style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Pieza
+                FDI</label>
+              <input type="number" id="evo-diente" class="custom-input" placeholder="Ej: 48"
+                style="padding: 8px 10px; font-size: 13px;">
+            </div>
+
+            <div class="input-group" style="margin-bottom: 0;">
+              <label for="evo-rx"
+                style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Radiografía
+                (Rx)</label>
+              <input type="text" id="evo-rx" class="custom-input" placeholder="Ej: Periapical"
+                style="padding: 8px 10px; font-size: 13px;">
+            </div>
+
+            <div class="input-group" style="margin-bottom: 0;">
+              <label for="evo-trabajo"
+                style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Trabajo
+                Realizado</label>
+              <div class="autocomplete-container" style="position: relative; width: 100%;">
+                <input type="text" id="evo-trabajo" class="custom-input" required
+                  placeholder="Ej: Tratamiento de conducto" style="padding: 8px 10px; font-size: 13px;"
+                  autocomplete="off">
+                <div id="evo-trabajo-suggestions" class="autocomplete-suggestions" hidden></div>
+              </div>
+            </div>
+
+            <div class="input-group" style="margin-bottom: 0;">
+              <label for="evo-debe"
+                style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Debe
+                (Costo Bs.)</label>
+              <input type="number" id="evo-debe" class="custom-input" step="0.01" value="0.00"
+                style="padding: 8px 10px; font-size: 13px;">
+            </div>
+
+            <div class="input-group" style="margin-bottom: 0;">
+              <label for="evo-haber"
+                style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary);">Haber
+                (Abono Bs.)</label>
+              <input type="number" id="evo-haber" class="custom-input" step="0.01" value="0.00"
+                style="padding: 8px 10px; font-size: 13px;">
+            </div>
+
+            <button type="submit" id="btn-add-evo" class="submit-btn"
+              style="padding: 8px 12px; font-size: 13px; font-weight: 700; height: 38px;">
+              <span class="btn-text">Agregar</span>
+              <span class="spinner" id="evo-spinner" hidden></span>
+            </button>
+          </form>
+
+          <!-- Tabla de Historial Clínico Financiero -->
+          <div class="table-wrapper" style="position: relative; z-index: 1;">
+            <table class="ledger-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Pieza FDI</th>
+                  <th>Rx</th>
+                  <th>Trabajo Realizado</th>
+                  <th style="text-align: right; color: var(--danger);">Debe (Bs.)</th>
+                  <th style="text-align: right; color: var(--success);">Haber (Bs.)</th>
+                  <th style="text-align: right; color: #60a5fa;">Saldo (Bs.)</th>
+                  <th style="text-align: center;">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="ficha-evolucion-table-body">
+                <tr>
+                  <td colspan="8"
+                    style="text-align: center; padding: 20px; color: var(--text-muted); font-style: italic;">No hay
+                    evoluciones de tratamiento registradas.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Parte IV: Historial de Radiografías y Archivos Adjuntos -->
+        <div class="ficha-attachments-card" style="margin-top: 12px;">
+          <h4
+            style="margin: 0 0 16px 0; color: var(--success); font-family: var(--font-display); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+            </svg>
+            IV. Historial de Radiografías y Archivos Adjuntos
+          </h4>
+
+          <div class="attachments-grid-layout">
+            <!-- Formulario de carga de archivos -->
+            <form id="ficha-attachments-form"
+              style="display: flex; flex-direction: column; gap: 12px; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); padding: 16px; border-radius: var(--radius-sm);">
+              <div class="input-group">
+                <label for="attach-file"
+                  style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">Seleccionar Archivo (Imagen o
+                  PDF)</label>
+                <input type="file" id="attach-file" accept="image/*,application/pdf" class="custom-input"
+                  style="padding: 6px; font-size: 13px;" required>
+              </div>
+              <div class="input-group">
+                <label for="attach-description"
+                  style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">Descripción / Notas</label>
+                <input type="text" id="attach-description" class="custom-input"
+                  placeholder="Ej: Radiografía panorámica inicial" style="padding: 8px 12px;" required>
+              </div>
+              <button type="submit" id="btn-add-attachment" class="submit-btn"
+                style="padding: 10px 16px; margin-top: 6px; height: 38px;">
+                <span class="btn-text">Subir Archivo</span>
+                <span class="spinner" id="attach-spinner" hidden></span>
+              </button>
+            </form>
+
+            <!-- Lista de archivos adjuntos -->
+            <div class="ficha-attachments-list-panel"
+              style="background: rgba(15, 23, 42, 0.35); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 8px; padding: 16px; min-height: 180px; display: flex; flex-direction: column;">
+              <div class="ficha-attachments-list-title"
+                style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 8px; margin-bottom: 12px;">
+                Archivos Guardados</div>
+              <div id="ficha-attachments-list" class="attachments-list-container">
+                <!-- Cargado dinámicamente -->
+                <p
+                  style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-style: italic; font-size: 13px; padding: 40px 0; margin: 0; width: 100%;">
+                  No hay archivos adjuntos en esta ficha.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btn-close-ficha-footer" class="cancel-btn" style="flex: 1; height: 42px;">Cerrar Ficha
+          Clínica</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Mi Perfil -->
+  <div class="modal-overlay" id="modal-profile" hidden>
+    <div class="modal-card" style="max-width: 400px;">
+      <div class="modal-header">
+        <div class="modal-title-wrapper" style="display: flex; align-items: center; gap: 10px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <h3 class="modal-title" style="margin: 0; color: var(--text-primary);">Mi Perfil</h3>
+        </div>
+        <button type="button" class="modal-close-btn" id="btn-close-profile" title="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="profile-form" novalidate>
+        <div class="modal-body" style="padding-top: 16px;">
+          <!-- Nombre Completo -->
+          <div class="input-group">
+            <label for="profile-name-input">Nombre Completo</label>
+            <div class="input-wrapper">
+              <input type="text" id="profile-name-input" class="custom-input" style="padding-left: 14px;"
+                placeholder="Ej: Dr. Juan Pérez" required>
+            </div>
+            <span class="field-error" id="profile-name-error"></span>
+          </div>
+
+          <!-- Correo -->
+          <div class="input-group">
+            <label for="profile-email-input">Correo Electrónico</label>
+            <div class="input-wrapper">
+              <input type="email" id="profile-email-input" class="custom-input" style="padding-left: 14px;"
+                placeholder="ejemplo@clinica.com" required>
+            </div>
+            <span class="field-error" id="profile-email-error"></span>
+          </div>
+
+          <!-- Contraseña -->
+          <div class="input-group">
+            <label for="profile-password-input">Nueva Contraseña (Opcional)</label>
+            <div class="input-wrapper">
+              <input type="password" id="profile-password-input" class="custom-input" style="padding-left: 14px;"
+                placeholder="Dejar vacío para no cambiar">
+              <button type="button" id="toggle-profile-password" class="toggle-password-btn"
+                aria-label="Mostrar contraseña">
+                <svg id="profile-eye-icon" class="eye-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
+            </div>
+            <span class="field-error" id="profile-password-error"></span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btn-cancel-profile" class="cancel-btn">Cancelar</button>
+          <button type="submit" class="submit-btn" style="flex: 1;">
+            <span class="btn-text">Guardar Cambios</span>
+            <span class="spinner" id="profile-spinner" hidden></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script Frontend Dashboard -->
+  <script src="js/toast.js?v=2.0.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="js/dashboard.js?v=27.2.3"></script>
+
+  <!-- MODAL INVENTARIO: NUEVO ARTÍCULO -->
+  <div class="modal-overlay" id="modal-add-item" hidden>
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 id="modal-add-item-title">Registrar Nuevo Artículo</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-modal-add-item">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="form-add-item" novalidate style="display: flex; flex-direction: column; height: 100%;">
+        <div class="modal-body">
+          <div id="add-item-alert" class="alert-banner" role="alert" hidden><span id="add-item-alert-text"></span></div>
+
+          <div class="input-group">
+            <label for="item-nombre">Nombre del Artículo *</label>
+            <div class="input-wrapper">
+              <input type="text" id="item-nombre" class="custom-input" placeholder="Ej: Resina Fotocurable A2" required
+                autocomplete="off">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="item-categoria">Categoría *</label>
+            <div class="input-wrapper">
+              <select id="item-categoria" class="custom-select" required>
+                <option value="">Sin categoría</option>
+                <option value="Material Restaurador">Material Restaurador</option>
+                <option value="Anestesia">Anestesia</option>
+                <option value="Instrumental">Instrumental</option>
+                <option value="Bioseguridad">Bioseguridad</option>
+                <option value="Impresiones">Impresiones</option>
+                <option value="Cirugía">Cirugía</option>
+                <option value="Ortodoncia">Ortodoncia</option>
+                <option value="Endodoncia">Endodoncia</option>
+                <option value="Desinfección">Desinfección</option>
+                <option value="Prótesis">Prótesis</option>
+                <option value="Estética">Estética</option>
+                <option value="Aislamiento">Aislamiento</option>
+                <option value="Otros">Otros</option>
+                <option value="Otra">+ Nueva Categoría...</option>
+              </select>
+            </div>
+            <div id="item-categoria-new-wrapper" style="display: none; margin-top: 8px;">
+              <label for="item-categoria-new" style="font-size: 12px; color: var(--text-secondary);">Especifique Nueva
+                Categoría *</label>
+              <div class="input-wrapper" style="margin-top: 4px;">
+                <input type="text" id="item-categoria-new" class="custom-input" placeholder="Ej: Periodoncia">
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <div class="input-group" style="flex: 1;">
+              <label for="item-unidad">Unidad de Medida</label>
+              <div class="input-wrapper">
+                <input type="text" id="item-unidad" class="custom-input" placeholder="Ej: Cajas, Unidades"
+                  autocomplete="off">
+              </div>
+            </div>
+            <div class="input-group" style="flex: 1;">
+              <label for="item-stock-min">Stock Mínimo</label>
+              <div class="input-wrapper">
+                <input type="number" id="item-stock-min" class="custom-input" min="0" value="0" autocomplete="off">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="submit-btn" style="flex: 1; height: 42px;">
+            <span class="btn-text">Guardar Artículo</span>
+            <span class="spinner" id="add-item-spinner" hidden></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL INVENTARIO: REGISTRAR MOVIMIENTO (ENTRADA / SALIDA) -->
+  <div class="modal-overlay" id="modal-mov" hidden>
+    <div class="modal-card" style="max-width: 520px;">
+      <div class="modal-header">
+        <h3 id="modal-mov-title">Registrar Entrada / Salida</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-mov">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="form-mov" novalidate style="display: flex; flex-direction: column; height: 100%;">
+        <div class="modal-body">
+          <div id="mov-alert" class="alert-banner" role="alert" hidden><span id="mov-alert-text"></span></div>
+          <input type="hidden" id="mov-item-id">
+          <p style="color: var(--text-secondary); margin-bottom: 16px; font-size: 14px;">
+            Insumo: <strong id="mov-item-nombre" style="color: var(--text-primary);">-</strong>
+          </p>
+
+          <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+            <div class="input-group" style="flex: 1;">
+              <label for="mov-tipo">Tipo de Movimiento *</label>
+              <div class="input-wrapper">
+                <select id="mov-tipo" class="custom-select" required>
+                  <option value="ENTRADA">📦 Entrada (Compra / Stock)</option>
+                  <option value="SALIDA">📤 Salida (Uso / Merma)</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group" style="flex: 1;">
+              <label for="mov-cantidad">Cantidad *</label>
+              <div class="input-wrapper">
+                <input type="number" id="mov-cantidad" class="custom-input" min="1" value="1" required
+                  autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <div id="mov-costo-fields" class="input-group" style="margin-bottom: 16px;">
+            <label for="mov-costo">Costo Unitario (Bs)</label>
+            <div class="input-wrapper">
+              <input type="number" id="mov-costo" class="custom-input" step="0.01" min="0" placeholder="Ej: 15.50"
+                autocomplete="off">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+            <div id="mov-lote-fields" class="input-group" style="flex: 1;">
+              <label for="mov-numero-lote">Nº de Lote (Opcional)</label>
+              <div class="input-wrapper">
+                <input type="text" id="mov-numero-lote" class="custom-input" placeholder="Ej: LOTE-2026-A"
+                  autocomplete="off">
+              </div>
+            </div>
+            <div id="mov-cad-fields" class="input-group" style="flex: 1;">
+              <label for="mov-fecha-cad">Fecha de Vencimiento (Opcional)</label>
+              <div class="input-wrapper">
+                <input type="date" id="mov-fecha-cad" class="custom-input">
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="mov-motivo">Motivo / Notas</label>
+            <div class="input-wrapper">
+              <input type="text" id="mov-motivo" class="custom-input"
+                placeholder="Ej: Compra mensual a proveedor / Uso en procedimiento" autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="display: flex; gap: 12px; margin-top: 16px;">
+          <button type="button" id="btn-cancel-mov" class="cancel-btn" style="height: 42px;">Cancelar</button>
+          <button type="submit" class="submit-btn" style="flex: 1; height: 42px;">
+            <span class="btn-text">Registrar Movimiento</span>
+            <span class="spinner" id="mov-spinner" hidden></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL INVENTARIO: NUEVO PROVEEDOR -->
+  <div class="modal-overlay" id="modal-add-supplier" style="z-index: 1000005 !important;" hidden>
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 id="modal-supplier-title">Registrar Nuevo Proveedor</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-modal-supplier">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="form-add-supplier" novalidate style="display: flex; flex-direction: column; height: 100%;">
+        <div class="modal-body">
+          <div id="supplier-alert" class="alert-banner" role="alert" hidden><span id="supplier-alert-text"></span></div>
+
+          <div class="input-group">
+            <label for="supplier-nombre">Nombre de la Empresa / Proveedor *</label>
+            <div class="input-wrapper">
+              <input type="text" id="supplier-nombre" class="custom-input" placeholder="Ej: Dental Bolivia S.R.L."
+                required autocomplete="off">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <div class="input-group" style="flex: 1;">
+              <label for="supplier-contacto">Persona de Contacto</label>
+              <div class="input-wrapper">
+                <input type="text" id="supplier-contacto" class="custom-input" placeholder="Ej: Juan Perez"
+                  autocomplete="off">
+              </div>
+            </div>
+            <div class="input-group" style="flex: 1;">
+              <label for="supplier-telefono">Teléfono</label>
+              <div class="input-wrapper">
+                <input type="text" id="supplier-telefono" class="custom-input" placeholder="Ej: 77712345"
+                  autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="supplier-email">Correo Electrónico</label>
+            <div class="input-wrapper">
+              <input type="email" id="supplier-email" class="custom-input" placeholder="ventas@dentalbolivia.com"
+                autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="submit-btn" style="flex: 1; height: 42px;">
+            <span class="btn-text">Guardar Proveedor</span>
+            <span class="spinner" id="supplier-spinner" hidden></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL INVENTARIO: DIRECTORIO DE PROVEEDORES -->
+  <div class="modal-overlay" id="modal-suppliers-list" hidden>
+    <div class="modal-card" style="max-width: 950px; width: 95%;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <h3 style="margin: 0; color: var(--text-primary);">Directorio de Proveedores</h3>
+        </div>
+        <button type="button" class="modal-close-btn" id="btn-close-modal-suppliers-list">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body" style="padding: 20px;">
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+          <span style="font-size: 13px; color: var(--text-secondary);">Lista de empresas y proveedores registrados para
+            compras de insumos</span>
+          <button type="button" id="btn-open-add-supplier-inner" class="submit-btn"
+            style="width: auto; padding: 6px 14px; font-size: 12px; height: 36px;">
+            + Registrar Nuevo Proveedor
+          </button>
+        </div>
+
+        <div class="table-wrapper" style="max-height: 350px; overflow-y: auto;">
+          <table class="inv-table">
+            <thead>
+              <tr>
+                <th>EMPRESA / PROVEEDOR</th>
+                <th>CONTACTO</th>
+                <th>TELÉFONO</th>
+                <th>CORREO ELECTRÓNICO</th>
+                <th style="text-align: right;">ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody id="suppliers-table-body">
+              <!-- Renderizado dinámico -->
+              <tr>
+                <td colspan="5" style="text-align: center; padding: 20px; color: var(--text-muted);">Cargando
+                  proveedores...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-close-suppliers-list-footer" class="cancel-btn"
+          style="width: 100%;">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL TRATAMIENTOS: REGISTRAR/EDITAR TRATAMIENTO -->
+  <div class="modal-overlay" id="modal-treatment" hidden>
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 id="treatment-form-title">Registrar Tratamiento</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-treatment">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <form id="treatment-form" novalidate style="display: flex; flex-direction: column; height: 100%;">
+        <div class="modal-body">
+          <div id="treatment-alert" class="alert-banner" role="alert" hidden><span id="treatment-alert-text"></span>
+          </div>
+
+          <div class="input-group">
+            <label for="treatment-name">Nombre del Tratamiento *</label>
+            <div class="input-wrapper">
+              <input type="text" id="treatment-name" class="custom-input" placeholder="Ej: Curación con Resina" required
+                autocomplete="off">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="treatment-category">Categoría *</label>
+            <div class="input-wrapper">
+              <select id="treatment-category" class="custom-select" required>
+                <option value="">Seleccione categoría</option>
+                <option value="Preventiva">Preventiva</option>
+                <option value="Restauración">Restauración</option>
+                <option value="Endodoncia">Endodoncia</option>
+                <option value="Cirugía">Cirugía</option>
+                <option value="Periodoncia">Periodoncia</option>
+                <option value="Prótesis">Prótesis</option>
+                <option value="Ortodoncia">Ortodoncia</option>
+                <option value="Estética">Estética</option>
+                <option value="Otra">+ Nueva Categoría...</option>
+              </select>
+            </div>
+            <div id="new-category-wrapper" style="display: none; margin-top: 8px;">
+              <label for="treatment-category-new" style="font-size: 12px; color: var(--text-secondary);">Especifique
+                Nueva Categoría *</label>
+              <div class="input-wrapper" style="margin-top: 4px;">
+                <input type="text" id="treatment-category-new" class="custom-input" placeholder="Ej: Odontopediatría">
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="treatment-cost">Costo Base (Bs) *</label>
+            <div class="input-wrapper">
+              <input type="number" id="treatment-cost" class="custom-input" step="0.01" min="0" placeholder="Ej: 150.00"
+                required autocomplete="off">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="treatment-description">Descripción (Opcional)</label>
+            <div class="input-wrapper">
+              <textarea id="treatment-description" class="custom-textarea" rows="3"
+                placeholder="Detalles del procedimiento..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="submit-btn" style="flex: 1; height: 42px;">
+            <span class="btn-text">Guardar Tratamiento</span>
+            <span class="spinner" id="treatment-spinner" hidden></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL VISOR DE RADIOGRAFÍAS Y ARCHIVOS (LIGHTBOX) -->
+  <div class="modal-overlay" id="modal-image-viewer" style="z-index: 1000010 !important;" hidden>
+    <div class="modal-card"
+      style="max-width: 900px; width: 95%; background: rgba(15, 23, 42, 0.95); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
+      <div class="modal-header"
+        style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+          <div>
+            <h3 id="image-viewer-title" style="margin: 0; color: var(--text-primary); font-size: 16px;">Visor de
+              Radiografía</h3>
+            <p id="image-viewer-subtitle" style="margin: 2px 0 0 0; color: var(--text-muted); font-size: 12px;"></p>
+          </div>
+        </div>
+        <button type="button" class="modal-close-btn" id="btn-close-image-viewer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 350px; max-height: 70vh; overflow: auto; background: #020617; border-radius: var(--radius-md); padding: 16px;">
+        <img id="image-viewer-img" src="" alt="Radiografía"
+          style="max-width: 100%; max-height: 65vh; object-fit: contain; border-radius: 6px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);"
+          hidden />
+        <iframe id="image-viewer-pdf" src="" style="width: 100%; height: 65vh; border: none; border-radius: 6px;"
+          hidden></iframe>
+      </div>
+      <div class="modal-footer"
+        style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center;">
+        <a id="image-viewer-download" href="#" download="" class="submit-btn"
+          style="width: auto; padding: 8px 16px; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Descargar Archivo
+        </a>
+        <button type="button" id="btn-close-image-viewer-footer" class="cancel-btn"
+          style="width: auto; padding: 8px 20px;">Cerrar Visor</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

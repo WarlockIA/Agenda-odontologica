@@ -1,0 +1,788 @@
+@media print {
+  #ficha-clinica-modal .modal-close-btn,
+  #ficha-clinica-modal .modal-footer,
+  #ficha-clinica-modal #btn-save-ficha-details,
+  #ficha-clinica-modal #btn-reset-odontograma,
+  #ficha-clinica-modal #ficha-evolucion-form,
+  #ficha-clinica-modal .btn-delete-evo {
+    display: none !important;
+  }
+
+
+  /* Membrete del consultorio en negro/verde de alta legibilidad */
+  #ficha-clinica-modal .clinic-header-branding {
+    border-bottom: 2px solid #059669 !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 16px !important;
+  }
+
+  #ficha-clinica-modal .clinic-header-branding h1 {
+    color: #000000 !important;
+    font-size: 22px !important;
+  }
+
+  #ficha-clinica-modal .clinic-header-branding h2 {
+    color: #059669 !important;
+    font-size: 14px !important;
+  }
+
+  #ficha-clinica-modal .clinic-header-branding p {
+    color: #4b5563 !important;
+    font-size: 11px !important;
+  }
+
+  #ficha-clinica-modal h3#ficha-modal-title {
+    color: #000000 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+  }
+
+  #ficha-clinica-modal p#ficha-modal-subtitle {
+    color: #374151 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+  }
+
+  /* Formatear Alerta de Deuda Pendiente */
+  #ficha-debt-banner {
+    animation: none !important;
+    background: #fef2f2 !important;
+    border: 1px solid #fee2e2 !important;
+    padding: 10px 14px !important;
+    border-radius: 6px !important;
+    margin: 10px 0 !important;
+  }
+
+  #ficha-debt-text {
+    color: #991b1b !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+  }
+
+  /* Grid en impresión */
+  .ficha-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Formatear tarjetas como secciones de papel impreso */
+  .ficha-left-card,
+  .ficha-right-card,
+  .ficha-bottom-card {
+    background: transparent !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    color: #000000 !important;
+    page-break-inside: avoid !important;
+  }
+
+  .ficha-left-card h4,
+  .ficha-right-card h4,
+  .ficha-bottom-card h4 {
+    color: #059669 !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    padding-bottom: 6px !important;
+    margin-bottom: 12px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+  }
+
+  /* Aplanar campos de entrada a formato papel */
+  #ficha-clinica-modal input,
+  #ficha-clinica-modal select,
+  #ficha-clinica-modal textarea {
+    border: none !important;
+    border-bottom: 1px dashed #94a3b8 !important;
+    background: transparent !important;
+    color: #000000 !important;
+    padding: 4px 0 !important;
+    box-shadow: none !important;
+    appearance: none !important;
+    border-radius: 0 !important;
+    font-size: 13px !important;
+    width: 100% !important;
+    height: auto !important;
+    resize: none !important;
+  }
+
+  #ficha-clinica-modal select {
+    background-image: none !important;
+  }
+
+  /* Odontograma FDI en Impresión */
+  .odontograma-container {
+    background: transparent !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 8px !important;
+    overflow: visible !important;
+  }
+
+  .diente-svg-item {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .diente-svg-item span.pieza-label {
+    color: #000000 !important;
+  }
+
+  /* Dibujar los polígonos del odontograma basados en el dataset.state */
+  #ficha-clinica-modal .diente-svg-item polygon {
+    stroke: #000000 !important;
+    stroke-width: 1px !important;
+  }
+
+  #ficha-clinica-modal .diente-svg-item polygon[data-state="caries"] {
+    fill: #ef4444 !important;
+  }
+
+  #ficha-clinica-modal .diente-svg-item polygon[data-state="obturado"] {
+    fill: #3b82f6 !important;
+  }
+
+  #ficha-clinica-modal .diente-svg-item polygon[data-state="sano"],
+  #ficha-clinica-modal .diente-svg-item polygon:not([data-state]) {
+    fill: #ffffff !important;
+  }
+
+  /* Formatear Tabla Financiera de Evolución */
+  #ficha-clinica-modal .table-wrapper {
+    overflow: visible !important;
+    border: none !important;
+  }
+
+  #ficha-clinica-modal table.ledger-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-top: 10px !important;
+  }
+
+  #ficha-clinica-modal table.ledger-table th,
+  #ficha-clinica-modal table.ledger-table td {
+    border: 1px solid #cbd5e1 !important;
+    padding: 8px 10px !important;
+    background: transparent !important;
+    font-size: 12px !important;
+  }
+
+  #ficha-clinica-modal table.ledger-table th {
+    background: #f8fafc !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+  }
+
+  /* Ocultar la última columna de acciones (eliminar) */
+  #ficha-clinica-modal table.ledger-table th:last-child,
+  #ficha-clinica-modal table.ledger-table td:last-child {
+    display: none !important;
+  }
+
+  /* Colorear Debe, Haber y Saldo con tonos oscuros de alta legibilidad sobre blanco */
+  #ficha-clinica-modal table.ledger-table td[style*="var(--danger)"],
+  #ficha-clinica-modal table.ledger-table td[style*="danger"] {
+    color: #b91c1c !important;
+    font-weight: 600 !important;
+  }
+
+  #ficha-clinica-modal table.ledger-table td[style*="var(--success)"],
+  #ficha-clinica-modal table.ledger-table td[style*="success"] {
+    color: #166534 !important;
+    font-weight: 600 !important;
+  }
+
+  #ficha-clinica-modal table.ledger-table td[style*="color: #60a5fa"],
+  #ficha-clinica-modal table.ledger-table td[style*="color: rgb(96, 165, 250)"] {
+    color: #1d4ed8 !important;
+    font-weight: 600 !important;
+  }
+
+  /* Corregir texto de trabajos realizados que en pantalla es blanco */
+  #ficha-clinica-modal table.ledger-table td[style*="color: #ffffff"],
+  #ficha-clinica-modal table.ledger-table td[style*="color: rgb(255, 255, 255)"] {
+    color: #000000 !important;
+  }
+
+  /* Forzar colores de fondo e impresiones en navegadores Chrome, Safari y Edge */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ==========================================================================
+   Micro-interacciones y Animaciones del Logo del Diente
+   ========================================================================== */
+.logo-tooth {
+  transition: filter 0.4s ease, transform 0.4s ease, fill-opacity 0.4s ease;
+  transform-origin: 50px 50px;
+}
+
+/* Efectos al pasar el mouse por encima del contenedor del logo o del sidebar */
+.brand-logo-hero:hover .logo-tooth,
+.form-logo-small:hover .logo-tooth,
+.sidebar-logo:hover .logo-tooth {
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.55)) drop-shadow(0 0 15px rgba(13, 148, 136, 0.3));
+  transform: scale(1.03) rotate(-1deg);
+}
+
+.logo-swoosh-primary {
+  transition: stroke-width 0.4s ease, filter 0.4s ease;
+}
+
+.brand-logo-hero:hover .logo-swoosh-primary,
+.form-logo-small:hover .logo-swoosh-primary,
+.sidebar-logo:hover .logo-swoosh-primary {
+  stroke-width: 6px;
+  filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.4));
+}
+
+.logo-swoosh-secondary {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+  transform-origin: 50px 50px;
+}
+
+.brand-logo-hero:hover .logo-swoosh-secondary {
+  transform: rotate(6deg) scale(1.04);
+  opacity: 0.9;
+}
+
+.logo-cross {
+  transition: filter 0.4s ease, fill 0.4s ease;
+}
+
+.brand-logo-hero:hover .logo-cross,
+.form-logo-small:hover .logo-cross,
+.sidebar-logo:hover .logo-cross {
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
+}
+
+.logo-sparkle {
+  transform-origin: center;
+  animation: sparkle-twinkle 4s ease-in-out infinite;
+}
+
+.logo-sparkle-1 { animation-delay: 0s; animation-duration: 3s; }
+.logo-sparkle-2 { animation-delay: 0.8s; animation-duration: 4.5s; }
+.logo-sparkle-3 { animation-delay: 1.5s; animation-duration: 3.5s; }
+.logo-sparkle-4 { animation-delay: 2.2s; animation-duration: 4.2s; }
+
+@keyframes sparkle-twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.15);
+  }
+}
+
+/* Acelerar destellos y aumentar brillo en hover */
+.brand-logo-hero:hover .logo-sparkle,
+.form-logo-small:hover .logo-sparkle,
+.sidebar-logo:hover .logo-sparkle {
+  animation-duration: 1.6s;
+  opacity: 1;
+}
+
+/* Rotación majestuosa y lenta de los orbitales */
+.logo-orbits {
+  transform-origin: 50px 50px;
+  animation: orbit-rotate 25s linear infinite;
+}
+
+@keyframes orbit-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo-orbit-dash {
+  transform-origin: 50px 50px;
+  animation: orbit-rotate-reverse 35s linear infinite;
+}
+
+@keyframes orbit-rotate-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+ /* ==========================================================================
+   SCROLLBAR DE TABLA DE REPORTES
+   ========================================================================== */
+.table-wrapper::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+body.light-theme .table-wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(15, 23, 42, 0.15) !important;
+}
+body.light-theme .table-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(15, 23, 42, 0.25) !important;
+}
+
+/* ==========================================================================
+   REPORT CHART CARDS HOVER EFFECTS
+   ========================================================================== */
+.report-chart-card {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.report-chart-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.light-theme .report-chart-card:hover {
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* ==========================================================================
+   ANIMACIONES TABLA DE TRATAMIENTOS
+   ========================================================================== */
+@keyframes treatFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  70% {
+    transform: translateY(-2px) scale(1.005);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes barSlide {
+  from {
+    width: 0% !important;
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes barShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes rankBadgePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+/* ── BASE ITEM DE RANKING DE TRATAMIENTOS (MODO OSCURO PREDETERMINADO) ── */
+.treatment-rank-card-item {
+  display: grid;
+  grid-template-columns: 48px 1fr auto auto;
+  gap: 20px;
+  align-items: center;
+  padding: 16px 20px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--item-color-1a, rgba(2, 132, 199, 0.1)) 0%, rgba(15, 23, 42, 0.55) 65%);
+  border: 1px solid var(--item-color-33, rgba(2, 132, 199, 0.2));
+  border-left: 5px solid var(--item-color-d9, #0284c7);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease !important;
+  animation: treatFadeIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.treatment-rank-card-item:hover {
+  transform: translateY(-5px) translateX(4px) !important;
+  box-shadow: 0 14px 32px var(--item-color-33), 0 0 20px var(--item-color-1a) !important;
+  border-color: var(--item-color-d9) !important;
+  background: linear-gradient(135deg, var(--item-color-33) 0%, rgba(15, 23, 42, 0.8) 65%) !important;
+}
+
+.treatment-rank-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.treatment-rank-bar-bg {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── ADAPTACION MODO CLARO (ÚNICAMENTE EN LIGHT THEME) ── */
+body.light-theme .treatment-rank-card-item {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  border-left: 5px solid var(--item-color-d9, #0284c7) !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.light-theme .treatment-rank-card-item:hover {
+  transform: translateY(-4px) translateX(4px) !important;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08), 0 0 15px var(--item-color-1a) !important;
+  border-color: var(--item-color-d9) !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%) !important;
+}
+
+body.light-theme .treatment-rank-bar-bg {
+  background: rgba(15, 23, 42, 0.06) !important;
+}
+
+/* ==========================================================================
+   PREDICCION
+   ========================================================================== */
+.prediction-card {
+  margin-top: 24px;
+  padding: 28px;
+}
+
+.prediction-header h3 {
+  margin: 0 0 5px;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.prediction-header p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.prediction-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 20px 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(15, 23, 42, 0.35));
+  color: var(--text-secondary);
+}
+
+.prediction-warning > span {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  font-weight: 800;
+}
+
+.prediction-warning p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.prediction-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.prediction-patient-lookup {
+  position: relative;
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 8px;
+  min-width: 0;
+}
+
+.prediction-patient-lookup[hidden],
+.prediction-patient-results[hidden] {
+  display: none;
+}
+
+.prediction-patient-results {
+  display: grid;
+  gap: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  background: var(--bg-color, #0f172a);
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.25);
+}
+
+.prediction-patient-results button {
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.prediction-patient-results button:hover,
+.prediction-patient-results button:focus-visible {
+  outline: none;
+  background: var(--primary-glow);
+  transform: translateX(2px);
+}
+
+.prediction-selected-patient {
+  margin: 0;
+  color: var(--primary);
+  font-size: 12px;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.prediction-selected-patient:empty {
+  display: none;
+}
+
+.prediction-clear-patient {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.prediction-clear-patient[hidden] {
+  display: none;
+}
+
+.prediction-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.prediction-input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  background: rgba(15, 23, 42, 0.55);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: normal;
+  text-transform: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.prediction-input:focus {
+  transform: translateY(-1px);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.prediction-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.prediction-input:read-only {
+  opacity: 0.8;
+}
+
+.prediction-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.prediction-actions p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.prediction-actions p.is-error {
+  color: var(--danger);
+}
+
+.prediction-result {
+  margin-top: 22px;
+  padding: 20px;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(15, 23, 42, 0.4));
+}
+
+.prediction-result.is-visible {
+  animation: treatFadeIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.prediction-result[hidden] {
+  display: none;
+}
+
+.prediction-result h4 {
+  margin: 0 0 8px;
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.prediction-result > strong {
+  color: var(--text-primary);
+  font-size: 20px;
+}
+
+.prediction-probabilities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.prediction-probabilities > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.prediction-probabilities b {
+  color: var(--text-primary);
+}
+
+.prediction-track {
+  grid-column: 1 / -1;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: rgba(148, 163, 184, 0.18);
+}
+
+.prediction-track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0ea5e9, #14b8a6);
+  transition: width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#prediction-absence-bar {
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
+}
+
+body.light-theme .prediction-warning {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), #ffffff);
+}
+
+body.light-theme .prediction-input {
+  background: #ffffff;
+}
+
+body.light-theme .prediction-result {
+  background: linear-gradient(135deg, #ffffff, #f1f5f9);
+}
+
+@media (max-width: 900px) {
+  .prediction-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .prediction-patient-lookup {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .prediction-card {
+    padding: 18px;
+  }
+
+  .prediction-form-grid,
+  .prediction-probabilities {
+    grid-template-columns: 1fr;
+  }
+
+  .prediction-patient-lookup {
+    grid-column: auto;
+  }
+
+  .prediction-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .prediction-actions .submit-btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prediction-result.is-visible,
+  .prediction-track span {
+    animation: none !important;
+    transition: none !important;
+  }
+}

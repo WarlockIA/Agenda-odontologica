@@ -1,0 +1,19 @@
+﻿,accuracy,balanced_accuracy,precision,recall,f1,roc_auc,confusion_matrix,classification_report
+regresion_logistica,0.5833333333333334,0.47,0.14285714285714285,0.3,0.1935483870967742,0.46799999999999997,"[[32, 18], [7, 3]]","              precision    recall  f1-score   support
+
+    Atendida       0.82      0.64      0.72        50
+     Ausente       0.14      0.30      0.19        10
+
+    accuracy                           0.58        60
+   macro avg       0.48      0.47      0.46        60
+weighted avg       0.71      0.58      0.63        60
+"
+random_forest,0.8333333333333334,0.5,0.0,0.0,0.0,0.494,"[[50, 0], [10, 0]]","              precision    recall  f1-score   support
+
+    Atendida       0.83      1.00      0.91        50
+     Ausente       0.00      0.00      0.00        10
+
+    accuracy                           0.83        60
+   macro avg       0.42      0.50      0.45        60
+weighted avg       0.69      0.83      0.76        60
+"
