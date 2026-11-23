@@ -11,6 +11,41 @@ evolucion clinica e inventario del Consultorio Odontologico Cristo Rey.
 - HTML, CSS y JavaScript
 - Python, pandas, Matplotlib y scikit-learn
 
+## Ejecución con Docker Compose
+
+La aplicación está completamente dockerizada en 3 servicios independientes:
+- **`frontend`**: Servidor Nginx que sirve la interfaz web estática, optimiza caché y actúa como reverse proxy hacia la API y los adjuntos protegidos.
+- **`backend`**: Servidor Node.js / Express con la API REST, autenticación JWT y el modelo predictivo de ausentismo integrado.
+- **`db`**: Gestor de base de datos SQLite con verificación de integridad continua (`PRAGMA quick_check;`) y respaldos automáticos programados.
+
+### Iniciar todos los servicios:
+
+```bash
+docker compose up -d --build
+```
+O mediante npm:
+```bash
+npm run docker:up
+```
+
+Luego acceda desde el navegador a:
+```text
+http://localhost
+```
+
+### Ver estado y registros de los contenedores:
+
+```bash
+docker compose ps
+docker compose logs -f
+```
+
+### Detener los servicios:
+
+```bash
+docker compose down
+```
+
 ## Requisitos
 
 - Windows 10 o Windows 11

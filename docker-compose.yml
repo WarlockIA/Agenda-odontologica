@@ -1,0 +1,96 @@
+services:
+  # -------------------------------------------------------------
+  # Servicio DB: Gestor de Base de Datos SQLite, Integridad y Backups
+  # -------------------------------------------------------------
+  db:
+    build:
+      context: .
+      dockerfile: docker/db/Dockerfile
+    container_name: agenda_db
+    restart: unless-stopped
+    volumes:
+      - db_data:/data
+      - db_backups:/backups
+      - ./schema.sql:/schema.sql:ro
+    environment:
+      - DB_FILE=/data/database.db
+      - SCHEMA_FILE=/schema.sql
+      - BACKUP_DIR=/backups
+      - BACKUP_INTERVAL=${BACKUP_INTERVAL:-21600}
+    healthcheck:
+      test: ["CMD-SHELL", "sqlite3 /data/database.db 'PRAGMA quick_check;' | grep -q 'ok' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 3s
+    networks:
+      agenda_net:
+        aliases:
+          - db
+          - DB
+
+  # -------------------------------------------------------------
+  # Servicio Backend: API REST Node.js / Express y Modelo Predictivo
+  # -------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: agenda_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - IS_DOCKER=true
+      - HOST=0.0.0.0
+      - PORT=${BACKEND_PORT:-3000}
+      - TRUST_PROXY=true
+      - DB_PATH=${DB_PATH:-/app/data/database.db}
+      - UPLOAD_PATH=${UPLOAD_PATH:-/app/uploads}
+      - JWT_SECRET=${JWT_SECRET:-c8f5d1e2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0}
+      - SEED_DEFAULT_USERS=${SEED_DEFAULT_USERS:-true}
+    volumes:
+      - db_data:/app/data
+      - uploads_data:/app/uploads
+    expose:
+      - "${BACKEND_PORT:-3000}"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:3000/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - agenda_net
+
+  # -------------------------------------------------------------
+  # Servicio Frontend: Servidor Nginx y Reverse Proxy
+  # -------------------------------------------------------------
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    container_name: agenda_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${PORT:-80}:80"
+    networks:
+      - agenda_net
+
+volumes:
+  db_data:
+    name: agenda_db_data
+  uploads_data:
+    name: agenda_uploads_data
+  db_backups:
+    name: agenda_db_backups
+
+networks:
+  agenda_net:
+    name: agenda_network
+    driver: bridge

@@ -340,7 +340,7 @@ function initializeDatabase() {
       if (err) {
         console.error('Error al ejecutar el esquema de base de datos:', err.message);
       } else {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== 'production' || process.env.SEED_DEFAULT_USERS === 'true') {
           db.exec(developmentUserSeeds, (seedErr) => {
             if (seedErr) {
               console.error('Error al crear los usuarios de desarrollo:', seedErr.message);

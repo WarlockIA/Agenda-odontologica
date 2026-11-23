@@ -10,6 +10,10 @@ const configuracionRoutes = require('./configuracion.routes');
 const reportesRoutes = require('./reportes.routes');
 const inventarioRoutes = require('./inventario.routes');
 
+router.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', uptime: process.uptime() });
+});
+
 router.use('/auth', authRoutes);
 router.use('/settings', settingsRoutes);
 router.use('/pacientes', pacientesRoutes);

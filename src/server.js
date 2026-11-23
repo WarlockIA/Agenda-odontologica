@@ -8,13 +8,20 @@ const mountProtectedUploads = require('./middleware/protectedUploads');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || '127.0.0.1';
+const HOST = process.env.HOST || (process.env.IS_DOCKER === 'true' ? '0.0.0.0' : '127.0.0.1');
 
 if (require.main === module) {
   validateProductionConfig(process.env);
 }
 
-app.set('trust proxy', process.env.TRUST_PROXY === 'loopback' ? 'loopback' : false);
+app.set(
+  'trust proxy',
+  process.env.TRUST_PROXY === 'loopback'
+    ? 'loopback'
+    : (process.env.TRUST_PROXY === 'true' || process.env.TRUST_PROXY === '1')
+      ? true
+      : false
+);
 
 // 1. Configurar Cabeceras de Seguridad (Helmet)
 // Permitimos estilos desde Google Fonts en el Content Security Policy (CSP)

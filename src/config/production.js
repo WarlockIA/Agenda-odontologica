@@ -7,12 +7,24 @@ function validateProductionConfig(env = process.env) {
     throw new Error('Production requires a unique JWT_SECRET of at least 64 characters.');
   }
 
-  if (env.TRUST_PROXY !== 'loopback') {
-    throw new Error('Production requires TRUST_PROXY=loopback for the local Nginx proxy.');
-  }
+  const isDocker = env.IS_DOCKER === 'true' || env.DOCKER === 'true';
 
-  if (env.HOST && env.HOST !== '127.0.0.1') {
-    throw new Error('Production must bind HOST to 127.0.0.1 behind Nginx.');
+  if (isDocker) {
+    if (env.TRUST_PROXY !== 'loopback' && env.TRUST_PROXY !== 'true' && env.TRUST_PROXY !== '1') {
+      throw new Error('Production in Docker requires TRUST_PROXY (true, 1 or loopback) for the reverse proxy.');
+    }
+
+    if (env.HOST && env.HOST !== '0.0.0.0' && env.HOST !== '::') {
+      throw new Error('Production in Docker must bind HOST to 0.0.0.0.');
+    }
+  } else {
+    if (env.TRUST_PROXY !== 'loopback') {
+      throw new Error('Production requires TRUST_PROXY=loopback for the local Nginx proxy.');
+    }
+
+    if (env.HOST && env.HOST !== '127.0.0.1') {
+      throw new Error('Production must bind HOST to 127.0.0.1 behind Nginx.');
+    }
   }
 }
 

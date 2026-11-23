@@ -12,7 +12,11 @@
     "electron:build": "electron-builder",
     "test": "node --test tests/ausentismoPrediction.test.js tests/patientPredictionFeatures.test.js tests/predictionForm.test.js tests/productionConfig.test.js tests/protectedUploads.test.js",
     "clean:db": "node clean-db.js",
-    "admin:create": "node scripts/create-admin.js"
+    "admin:create": "node scripts/create-admin.js",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "docker:ps": "docker compose ps"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

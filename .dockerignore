@@ -1,0 +1,12 @@
+.git
+.gitignore
+node_modules/
+dist/
+build/
+*.bak*
+*.log
+Entrega_Taller_II_Preparacion/
+report_assets/
+*.docx
+convert_icon.py
+customSign.js

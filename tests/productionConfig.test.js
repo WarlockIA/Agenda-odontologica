@@ -19,3 +19,17 @@ test('production requires a unique secret and a local reverse proxy', () => {
   assert.throws(() => validateProductionConfig({ ...baseConfig, TRUST_PROXY: '' }), /TRUST_PROXY/);
   assert.throws(() => validateProductionConfig({ ...baseConfig, HOST: '0.0.0.0' }), /HOST/);
 });
+
+test('production in Docker allows HOST=0.0.0.0 and trusted proxy', () => {
+  const dockerConfig = {
+    NODE_ENV: 'production',
+    IS_DOCKER: 'true',
+    JWT_SECRET: 'a'.repeat(64),
+    TRUST_PROXY: 'true',
+    HOST: '0.0.0.0'
+  };
+
+  assert.doesNotThrow(() => validateProductionConfig(dockerConfig));
+  assert.throws(() => validateProductionConfig({ ...dockerConfig, TRUST_PROXY: '' }), /TRUST_PROXY/);
+  assert.throws(() => validateProductionConfig({ ...dockerConfig, HOST: '127.0.0.1' }), /HOST/);
+});
