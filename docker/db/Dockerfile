@@ -10,6 +10,7 @@ RUN apk add --no-cache \
 WORKDIR /data
 
 COPY schema.sql /schema.sql
+COPY database.db /initial_data/database.db
 COPY docker/db/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

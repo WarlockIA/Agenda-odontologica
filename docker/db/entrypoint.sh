@@ -21,15 +21,19 @@ echo " [DB SERVICE] Gestor de Base de Datos SQLite Activo"
 echo " Archivo de base de datos: $DB_FILE"
 echo "==================================================="
 
-# Si el archivo de base de datos no existe, inicializarlo con el esquema
+# Si el archivo de base de datos no existe, inicializarlo con datos previos o esquema
 if [ ! -f "$DB_FILE" ] || [ ! -s "$DB_FILE" ]; then
-    echo "[DB SERVICE] No se encontro base de datos previa. Inicializando desde $SCHEMA_FILE..."
-    if [ -f "$SCHEMA_FILE" ]; then
+    echo "[DB SERVICE] No se encontro base de datos previa. Inicializando..."
+    if [ -f "/initial_data/database.db" ]; then
+        cp "/initial_data/database.db" "$DB_FILE"
+        chmod 666 "$DB_FILE"
+        echo "[DB SERVICE] Base de datos restaurada con exito desde copia inicial."
+    elif [ -f "$SCHEMA_FILE" ]; then
         sqlite3 "$DB_FILE" < "$SCHEMA_FILE"
         chmod 666 "$DB_FILE"
         echo "[DB SERVICE] Esquema inicial cargado exitosamente."
     else
-        echo "[DB SERVICE] Advertencia: No se encontro $SCHEMA_FILE. Creando base vacia."
+        echo "[DB SERVICE] Advertencia: No se encontro archivo inicial. Creando base vacia."
         sqlite3 "$DB_FILE" "VACUUM;"
         chmod 666 "$DB_FILE"
     fi

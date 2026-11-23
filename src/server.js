@@ -19,7 +19,7 @@ app.set(
   process.env.TRUST_PROXY === 'loopback'
     ? 'loopback'
     : (process.env.TRUST_PROXY === 'true' || process.env.TRUST_PROXY === '1')
-      ? true
+      ? 1
       : false
 );
 

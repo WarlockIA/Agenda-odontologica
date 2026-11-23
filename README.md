@@ -1,50 +1,131 @@
-# Agenda Odontologica - Consultorio Cristo Rey
+# Agenda Odontológica - Consultorio Cristo Rey
 
-Aplicacion de escritorio para gestionar usuarios, citas, pacientes, tratamientos,
-evolucion clinica e inventario del Consultorio Odontologico Cristo Rey.
+Sistema integral para gestionar usuarios, citas, pacientes, tratamientos,
+evolución clínica, odontograma e inventario del Consultorio Odontológico Cristo Rey,
+con módulo predictivo de ausentismo basado en Machine Learning.
 
-## Tecnologias
+---
 
-- Electron
-- Node.js y Express
-- SQLite
-- HTML, CSS y JavaScript
-- Python, pandas, Matplotlib y scikit-learn
+## Tecnologías
 
-## Ejecución con Docker Compose
+- **Contenedores:** Docker & Docker Compose
+- **Frontend Web:** HTML5, CSS3, JavaScript modular (ES Modules), Nginx
+- **Backend API:** Node.js (v20) y Express 4
+- **Base de Datos:** SQLite 3 (relacional, portable y persistida en volúmenes Docker)
+- **Escritorio:** Electron (v43) y electron-builder
+- **Ciencia de Datos / IA:** Python (pandas, Matplotlib, scikit-learn) para entrenamiento y artefacto JSON para inferencia determinista en Node.js
 
-La aplicación está completamente dockerizada en 3 servicios independientes:
-- **`frontend`**: Servidor Nginx que sirve la interfaz web estática, optimiza caché y actúa como reverse proxy hacia la API y los adjuntos protegidos.
-- **`backend`**: Servidor Node.js / Express con la API REST, autenticación JWT y el modelo predictivo de ausentismo integrado.
-- **`db`**: Gestor de base de datos SQLite con verificación de integridad continua (`PRAGMA quick_check;`) y respaldos automáticos programados.
+---
 
-### Iniciar todos los servicios:
+## Guía de Instalación y Despliegue con Docker (Recomendado)
+
+El proyecto está completamente preparado para levantarse con **Docker Compose** en una arquitectura de microservicios compuesta por 3 contenedores:
+
+- **`frontend`**: Servidor web **Nginx** (puerto 80). Entrega la interfaz de usuario, aplica compresión gzip, gestiona el almacenamiento en caché y actúa como proxy inverso hacia la API y los archivos protegidos.
+- **`backend`**: Servidor de API **Node.js / Express** (puerto interno 3000). Procesa la autenticación JWT, las reglas de negocio, la validación de esquemas (Zod) y la inferencia predictiva de ausentismo.
+- **`db`** (alias **`DB`**): Gestor de persistencia **SQLite 3**. Controla la inicialización de esquemas, migraciones iniciales, verificación continua de integridad (`PRAGMA quick_check;`) y respaldos automáticos rotativos.
+
+### Requisitos previos
+
+- **Docker Desktop** (en Windows o macOS) con el motor iniciado, o **Docker Engine + Docker Compose v2** (en Linux).
+
+---
+
+### Paso 1: Configurar Variables de Entorno
+
+El proyecto incluye un archivo de plantilla con configuraciones listas para usar. Si no tienes un archivo `.env`, créalo copiando el archivo de ejemplo:
+
+```bash
+# En PowerShell / CMD:
+copy .env.example .env
+
+# En Bash / Linux / macOS:
+cp .env.example .env
+```
+
+Variables principales en `.env`:
+* `PORT=80`: Puerto público de acceso en el host (Frontend).
+* `BACKEND_PORT=3000`: Puerto interno del backend.
+* `JWT_SECRET`: Secreto criptográfico para firma de tokens (mínimo 64 caracteres en producción).
+* `SEED_DEFAULT_USERS=true`: Inicializa automáticamente los usuarios de prueba si la base de datos está vacía.
+* `BACKUP_INTERVAL=21600`: Frecuencia de respaldos automáticos del contenedor `db` en segundos (por defecto cada 6 horas).
+
+---
+
+### Paso 2: Base de Datos, Inicialización y Migraciones
+
+La persistencia de datos se maneja a través de volúmenes de Docker (`agenda_db_data`, `agenda_uploads_data` y `agenda_db_backups`), por lo que los datos no se pierden al reiniciar o detener contenedores.
+
+* **Inicialización:** Al iniciar por primera vez, el servicio `db` detecta si existe un archivo `database.db` en el repositorio para restaurarlo con datos completos. Si se arranca desde cero, ejecuta automáticamente [`schema.sql`](schema.sql) creando la estructura normalizada de tablas, claves foráneas e índices.
+* **Migraciones automáticas:** Cada vez que el contenedor `backend` se inicia, valida el esquema y ejecuta automáticamente las migraciones DDL necesarias (añadir columnas faltantes de odontograma, historial clínico, tablas intermedias de consumibles de inventario, etc.).
+* **Población de datos iniciales (Opcional):**
+  Si inicias con una base vacía y deseas cargar pacientes ficticios o catálogo de insumos de prueba, puedes ejecutar:
+  ```bash
+  # Cargar citas y pacientes de simulación:
+  docker compose exec backend node seed-demo-data.js
+
+  # Cargar catálogo de proveedores e insumos de inventario:
+  docker compose exec backend node seed-inventory-data.js
+  ```
+
+---
+
+### Paso 3: Iniciar los Servicios con Docker Compose
+
+Ejecuta el siguiente comando en la terminal desde la carpeta raíz del proyecto:
 
 ```bash
 docker compose up -d --build
 ```
-O mediante npm:
+
+*(O si utilizas npm en tu máquina local)*:
 ```bash
 npm run docker:up
 ```
 
-Luego acceda desde el navegador a:
+#### Comprobar el estado de los servicios:
+```bash
+docker compose ps
+```
+Los servicios `agenda_db` y `agenda_backend` deben figurar como **`(healthy)`**, y `agenda_frontend` como **`Up`**.
+
+---
+
+### Paso 4: Acceso a la Aplicación y Credenciales
+
+Abre tu navegador web e ingresa a:
 ```text
 http://localhost
 ```
+*(o `http://localhost:<PORT>` si modificaste el puerto en `.env`)*.
 
-### Ver estado y registros de los contenedores:
+#### Credenciales predeterminadas para pruebas:
 
-```bash
-docker compose ps
-docker compose logs -f
-```
+| Rol | Correo Electrónico | Contraseña |
+| :--- | :--- | :--- |
+| **Odontólogo (Administrador)** | `admin@agenda.com` | `Admin123*` |
+| **Odontólogo (Alternativo)** | `admin@agendaodontologica.com` | `Admin123*` |
+| **Recepcionista** | `recepcion@agenda.com` | `Admin123*` |
 
-### Detener los servicios:
+---
 
-```bash
-docker compose down
-```
+### Paso 5: Comandos de Mantenimiento y Operación Útiles
+
+| Tarea | Comando Docker |
+| :--- | :--- |
+| **Ver registros (logs) en tiempo real** | `docker compose logs -f` |
+| **Ver registros únicamente del backend** | `docker compose logs backend -f` |
+| **Crear nuevo odontólogo interactivo** | `docker compose exec backend node scripts/create-admin.js` |
+| **Limpiar citas y pacientes (mantener catálogo)** | `docker compose exec backend node clean-db.js` |
+| **Acceder a la consola SQLite interactiva** | `docker compose exec db sqlite3 /data/database.db` |
+| **Detener los servicios (conservando datos)** | `docker compose down` |
+| **Detener y reiniciar desde cero (borrar datos)** | `docker compose down -v` |
+
+---
+
+## Ejecución en Modo Desarrollo Local (Sin Docker)
+
+Si prefieres ejecutar el proyecto directamente en el sistema operativo host:
 
 ## Requisitos
 

@@ -8,7 +8,7 @@ const { verifyToken, checkRole } = require('../middleware/auth');
 // Limitador de intentos para la ruta de Login (Prevención de Fuerza Bruta)
 const loginLimiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minuto
-  max: 5, // Limita cada IP a 5 intentos de login por 'windowMs'
+  max: 10, // Limita cada IP a 10 intentos de login por 'windowMs'
   handler: (req, res) => {
     res.status(429).json({
       error: 'Demasiados intentos de inicio de sesión. Por favor, intente de nuevo en un minuto.'
@@ -16,6 +16,7 @@ const loginLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { trustProxy: false },
 });
 
 const validateSchema = require('../middleware/validate');
