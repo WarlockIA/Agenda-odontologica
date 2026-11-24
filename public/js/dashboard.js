@@ -2,7 +2,7 @@
 import { dom } from './modules/dom.js';
 import { state } from './modules/state.js';
 import { api } from './modules/api.js';
-import { verifySession, setupProfileHandlers } from './modules/session.js';
+import { verifySession, setupProfileHandlers } from './modules/session.js?v=27.2.6';
 import { showToast, showConfirmModal } from './modules/ui.js';
 import {
   initAgendaDate,
@@ -20,11 +20,11 @@ import {
 import { loadPatients, setupPatientHandlers } from './modules/pacientes.js?v=27.2.1';
 import { loadAndRenderTreatments, setupTreatmentsHandlers } from './modules/tratamientos.js?v=27.2.1';
 import { initOdontogramaUI, openClinicalModal, setupFichaHandlers } from './modules/ficha.js?v=27.2.1';
-import { setupSettingsHandlers, loadSettings } from './modules/settings.js?v=27.2.1';
+import { setupSettingsHandlers, loadSettings } from './modules/settings.js?v=27.2.2';
 import { loadFinancialReports, setupReportsHandlers } from './modules/reportes.js?v=27.2.1';
 import { loadTreatments } from './modules/tratamientos.js?v=27.2.1';
 import { loadInventario, initInventarioHandlers } from './modules/inventario.js?v=27.2.1';
-import { setupPredictionHandlers } from './modules/prediction.js?v=27.2.3';
+import { setupPredictionHandlers } from './modules/prediction.js?v=27.2.4';
 
 
 // Exponer loadAppointments en window para que ficha.js pueda refrescar la agenda tras guardar historial
@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
     await loadAppointments();
   });
 
+  const navLinkPrediction = document.getElementById('nav-link-prediction');
+  const tabPredictionContent = document.getElementById('tab-prediction-content');
+
   // Helper para activar pestaña
   function activateTab(targetTab) {
     const tabs = [
@@ -62,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dom.tabPatientsContent,
       dom.tabSettingsContent,
       dom.tabReportsContent,
+      tabPredictionContent,
       dom.tabInventarioContent,
       dom.tabTratamientosContent
     ];
@@ -89,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dom.navLinkPatients?.classList.remove('active');
     dom.navLinkSettings?.classList.remove('active');
     dom.navLinkReports?.classList.remove('active');
+    navLinkPrediction?.classList.remove('active');
     dom.navLinkInventario?.classList.remove('active');
     dom.navLinkTratamientos?.classList.remove('active');
     dom.navLinkAgenda.classList.add('active');
@@ -100,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dom.navLinkAgenda?.classList.remove('active');
     dom.navLinkSettings?.classList.remove('active');
     dom.navLinkReports?.classList.remove('active');
+    navLinkPrediction?.classList.remove('active');
     dom.navLinkInventario?.classList.remove('active');
     dom.navLinkTratamientos?.classList.remove('active');
     dom.navLinkPatients.classList.add('active');
@@ -113,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dom.navLinkAgenda?.classList.remove('active');
     dom.navLinkPatients?.classList.remove('active');
     dom.navLinkReports?.classList.remove('active');
+    navLinkPrediction?.classList.remove('active');
     dom.navLinkInventario?.classList.remove('active');
     dom.navLinkTratamientos?.classList.remove('active');
     dom.navLinkSettings.classList.add('active');
@@ -126,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dom.navLinkAgenda?.classList.remove('active');
     dom.navLinkPatients?.classList.remove('active');
     dom.navLinkSettings?.classList.remove('active');
+    navLinkPrediction?.classList.remove('active');
     dom.navLinkInventario?.classList.remove('active');
     dom.navLinkTratamientos?.classList.remove('active');
     dom.navLinkReports.classList.add('active');
@@ -134,12 +142,25 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'instant' });
   });
 
+  navLinkPrediction?.addEventListener('click', (e) => {
+    e.preventDefault();
+    dom.navLinkAgenda?.classList.remove('active');
+    dom.navLinkPatients?.classList.remove('active');
+    dom.navLinkSettings?.classList.remove('active');
+    dom.navLinkReports?.classList.remove('active');
+    dom.navLinkInventario?.classList.remove('active');
+    dom.navLinkTratamientos?.classList.remove('active');
+    navLinkPrediction.classList.add('active');
+    activateTab(tabPredictionContent);
+  });
+
   dom.navLinkTratamientos?.addEventListener('click', async (e) => {
     e.preventDefault();
     dom.navLinkAgenda?.classList.remove('active');
     dom.navLinkPatients?.classList.remove('active');
     dom.navLinkSettings?.classList.remove('active');
     dom.navLinkReports?.classList.remove('active');
+    navLinkPrediction?.classList.remove('active');
     dom.navLinkInventario?.classList.remove('active');
     dom.navLinkTratamientos.classList.add('active');
     activateTab(dom.tabTratamientosContent);
@@ -154,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     dom.navLinkPatients?.classList.remove('active');
     dom.navLinkSettings?.classList.remove('active');
     dom.navLinkReports?.classList.remove('active');
+    navLinkPrediction?.classList.remove('active');
     dom.navLinkTratamientos?.classList.remove('active');
     dom.navLinkInventario.classList.add('active');
     activateTab(dom.tabInventarioContent);

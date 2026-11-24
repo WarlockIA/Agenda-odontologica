@@ -15,6 +15,10 @@ export function setupUserProfile(user) {
   if (dom.navLinkReports) {
     dom.navLinkReports.style.display = user.role === 'odontologo' ? 'block' : 'none';
   }
+  const navLinkPrediction = document.getElementById('nav-link-prediction');
+  if (navLinkPrediction) {
+    navLinkPrediction.style.display = user.role === 'odontologo' ? 'block' : 'none';
+  }
   if (dom.navLinkInventario) {
     dom.navLinkInventario.style.display = user.role === 'odontologo' ? 'block' : 'none';
   }

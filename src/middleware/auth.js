@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const db = require('../db');
 
 /**
  * Middleware para proteger rutas de la API mediante la verificación del JWT en las cookies.
@@ -12,8 +13,21 @@ function verifyToken(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'super_secret_secure_key_1234567890_agenda_odontologica');
-    req.user = decoded; // Adjuntamos los datos del token decodificado a la request
-    next();
+    if (!decoded || !Number.isInteger(decoded.id) || typeof decoded.sessionVersion !== 'string') {
+      return res.status(401).json({ error: 'No autorizado: Sesión expirada o inválida.' });
+    }
+    db.get(
+      `SELECT users.id, users.email, users.name, users.role
+       FROM users JOIN authorized_users ON authorized_users.user_id = users.id
+       WHERE users.id = ? AND authorized_users.session_version = ?`,
+      [decoded.id, decoded.sessionVersion],
+      (err, user) => {
+        if (err) return next(err);
+        if (!user) return res.status(401).json({ error: 'No autorizado: Sesión expirada o inválida.' });
+        req.user = user;
+        next();
+      }
+    );
   } catch (error) {
     console.error('Error al verificar JWT:', error.message);
     

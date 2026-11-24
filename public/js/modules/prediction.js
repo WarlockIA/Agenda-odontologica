@@ -338,7 +338,7 @@ export async function setupPredictionHandlers() {
       }
 
       renderPrediction(result);
-      setStatus('Estimación calculada. No es una recomendación para decisiones reales.');
+      setStatus('');
     } catch (error) {
       setStatus(error.message || 'Ocurrió un error al calcular la predicción.', true);
     } finally {

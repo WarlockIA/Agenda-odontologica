@@ -13,6 +13,13 @@ CREATE TABLE IF NOT EXISTS users (
 -- Crear índice para búsquedas rápidas por correo (y asegurar unicidad)
 CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users(email);
 
+-- Solo una cuenta autorizada por rol.
+CREATE TABLE IF NOT EXISTS authorized_users (
+    role TEXT PRIMARY KEY CHECK(role IN ('odontologo', 'recepcionista')),
+    user_id INTEGER NOT NULL UNIQUE REFERENCES users(id),
+    session_version TEXT NOT NULL
+);
+
 -- Tabla de Citas (Appointments)
 -- HU-001: Registro Digital de Citas
 CREATE TABLE IF NOT EXISTS appointments (

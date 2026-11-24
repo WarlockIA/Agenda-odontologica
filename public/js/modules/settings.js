@@ -159,7 +159,7 @@ export function setupSettingsHandlers() {
   const settingsSpinner = document.getElementById('settings-spinner');
 
   // Lógica de navegación por pestañas (Tabs)
-  const tabBtns = document.querySelectorAll('.settings-tab-btn');
+  const tabBtns = document.querySelectorAll('#tab-settings-content .settings-tab-btn');
   const tabPanes = document.querySelectorAll('.settings-tab-pane');
 
   tabBtns.forEach(btn => {
@@ -409,13 +409,13 @@ export function setupSettingsHandlers() {
   });
 
   // Manejo de pestañas dentro de Configuración (Horarios, Feriados, Backup)
-  document.querySelectorAll('.settings-tab-btn').forEach(btn => {
+  document.querySelectorAll('#tab-settings-content .settings-tab-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const targetId = btn.dataset.target;
       if (!targetId) return;
 
-      document.querySelectorAll('.settings-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#tab-settings-content .settings-tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.settings-tab-pane').forEach(p => p.classList.remove('active'));
 
       btn.classList.add('active');

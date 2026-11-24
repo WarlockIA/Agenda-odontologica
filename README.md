@@ -46,8 +46,7 @@ cp .env.example .env
 Variables principales en `.env`:
 * `PORT=80`: Puerto público de acceso en el host (Frontend).
 * `BACKEND_PORT=3000`: Puerto interno del backend.
-* `JWT_SECRET`: Secreto criptográfico para firma de tokens (mínimo 64 caracteres en producción).
-* `SEED_DEFAULT_USERS=true`: Inicializa automáticamente los usuarios de prueba si la base de datos está vacía.
+* `JWT_SECRET`: Reemplace el valor de ejemplo por un secreto único de al menos 64 caracteres, generado por ejemplo con `openssl rand -hex 32`.
 * `BACKUP_INTERVAL=21600`: Frecuencia de respaldos automáticos del contenedor `db` en segundos (por defecto cada 6 horas).
 
 ---
@@ -56,7 +55,7 @@ Variables principales en `.env`:
 
 La persistencia de datos se maneja a través de volúmenes de Docker (`agenda_db_data`, `agenda_uploads_data` y `agenda_db_backups`), por lo que los datos no se pierden al reiniciar o detener contenedores.
 
-* **Inicialización:** Al iniciar por primera vez, el servicio `db` detecta si existe un archivo `database.db` en el repositorio para restaurarlo con datos completos. Si se arranca desde cero, ejecuta automáticamente [`schema.sql`](schema.sql) creando la estructura normalizada de tablas, claves foráneas e índices.
+* **Inicialización:** Al iniciar por primera vez, el servicio `db` ejecuta [`schema.sql`](schema.sql) sobre una base vacía. Los volúmenes existentes se conservan.
 * **Migraciones automáticas:** Cada vez que el contenedor `backend` se inicia, valida el esquema y ejecuta automáticamente las migraciones DDL necesarias (añadir columnas faltantes de odontograma, historial clínico, tablas intermedias de consumibles de inventario, etc.).
 * **Población de datos iniciales (Opcional):**
   Si inicias con una base vacía y deseas cargar pacientes ficticios o catálogo de insumos de prueba, puedes ejecutar:
@@ -91,21 +90,29 @@ Los servicios `agenda_db` y `agenda_backend` deben figurar como **`(healthy)`**,
 
 ---
 
-### Paso 4: Acceso a la Aplicación y Credenciales
+### Paso 4: Configurar las dos cuentas autorizadas
 
-Abre tu navegador web e ingresa a:
-```text
-http://localhost
+Con los servicios iniciados, ejecute desde una terminal interactiva:
+
+```bash
+docker compose exec backend node scripts/configure-access.js
 ```
-*(o `http://localhost:<PORT>` si modificaste el puerto en `.env`)*.
 
-#### Credenciales predeterminadas para pruebas:
+Ingrese el nombre, correo y una contraseña distinta de al menos 12 caracteres
+para el odontólogo y para el asistente (máximo 72 bytes en UTF-8). Las contraseñas no se muestran en la
+terminal ni se guardan en el código. No hay credenciales predeterminadas.
 
-| Rol | Correo Electrónico | Contraseña |
-| :--- | :--- | :--- |
-| **Odontólogo (Administrador)** | `admin@agenda.com` | `Admin123*` |
-| **Odontólogo (Alternativo)** | `admin@agendaodontologica.com` | `Admin123*` |
-| **Recepcionista** | `recepcion@agenda.com` | `Admin123*` |
+Solo las dos cuentas configuradas pueden iniciar sesión. Las demás cuentas
+existentes y sus datos se conservan, pero pierden el acceso; se invalidan todas
+las sesiones anteriores. Para cambiar una cuenta o sus credenciales, ejecute
+el comando nuevamente e introduzca los datos de ambas cuentas. Si un correo ya
+existe, se actualizan su nombre, rol y contraseña.
+
+Para pruebas locales abra `http://localhost` (o el puerto configurado).
+**En un VPS no publique el acceso por HTTP:** el Nginx de Docker no incluye
+TLS; configure un proxy HTTPS y un certificado antes de utilizar credenciales
+o datos reales. La plantilla de `deploy/nginx/` es para el despliegue sin
+Docker y debe adaptarse si se usa con Compose.
 
 ---
 
@@ -115,7 +122,7 @@ http://localhost
 | :--- | :--- |
 | **Ver registros (logs) en tiempo real** | `docker compose logs -f` |
 | **Ver registros únicamente del backend** | `docker compose logs backend -f` |
-| **Crear nuevo odontólogo interactivo** | `docker compose exec backend node scripts/create-admin.js` |
+| **Configurar las dos cuentas autorizadas** | `docker compose exec backend node scripts/configure-access.js` |
 | **Limpiar citas y pacientes (mantener catálogo)** | `docker compose exec backend node clean-db.js` |
 | **Acceder a la consola SQLite interactiva** | `docker compose exec db sqlite3 /data/database.db` |
 | **Detener los servicios (conservando datos)** | `docker compose down` |
@@ -150,6 +157,17 @@ npm start
 ```
 
 Despues abra `http://localhost:3000`.
+
+Antes de iniciar sesión, con el servidor iniciado para crear o migrar la base,
+configure las dos cuentas en otra terminal PowerShell:
+
+```powershell
+$env:DB_PATH = (Join-Path (Get-Location) 'database.db')
+node scripts/configure-access.js
+```
+
+Para Electron use como `DB_PATH` la ruta de la base persistente indicada en el
+registro de inicio de la aplicación.
 
 ## Instalador
 
@@ -215,17 +233,16 @@ Preparacion inicial en el VPS:
    `/etc/agenda-odontologica/agenda.env`, restringir sus permisos y generar un
    secreto propio con `openssl rand -hex 32`. No reutilizar ni compartir ese
    secreto.
-4. Instalar la unidad systemd, iniciar el servicio una vez para crear una base
-   vacia, detenerlo y crear la primera cuenta odontologo desde una terminal SSH:
+4. Instalar la unidad systemd, iniciar el servicio una vez para crear o migrar
+   la base, y configurar ambas cuentas desde una terminal SSH:
 
    ```sh
    sudo -u agenda env DB_PATH=/var/lib/agenda-odontologica/database.db \
-     /usr/bin/node /opt/agenda-odontologica/scripts/create-admin.js
+     /usr/bin/node /opt/agenda-odontologica/scripts/configure-access.js
    ```
 
-   La contrasena se solicita sin mostrarla y requiere al menos 12 caracteres.
-   Luego se puede iniciar de nuevo el servicio. En produccion el registro solo
-   esta disponible para un odontologo autenticado.
+   Las contraseñas se solicitan sin mostrarlas y requieren al menos 12
+   caracteres. El registro desde la aplicación está deshabilitado.
 5. Antes de tener dominio, mantener el puerto 3000 cerrado al exterior. Para
    una prueba privada desde Windows, abrir un tunel SSH:
 
@@ -280,7 +297,7 @@ Proyecto_Ciencia_de_Datos/modelos/regresion_logistica.joblib
 Proyecto_Ciencia_de_Datos/modelos/random_forest.joblib
 ```
 
-En la aplicación, la sección **Predicción** está dentro de **Reportes**. Usa el
+En la aplicación, **Predicción** se encuentra en el menú lateral. Usa el
 artefacto `regresion_logistica_node.json`, generado por el mismo script de
 entrenamiento, para realizar inferencias localmente sin instalar Python en la
 aplicación. El modelo fue evaluado con datos sintéticos y tiene un recall de

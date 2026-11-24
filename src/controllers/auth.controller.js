@@ -47,7 +47,9 @@ const login = catchAsync(async (req, res, next) => {
   }
 
   // Consulta parametrizada para evitar Inyección SQL (Promisificada)
-  const sql = 'SELECT * FROM users WHERE email = ?';
+  const sql = `SELECT users.*, authorized_users.session_version
+    FROM users JOIN authorized_users ON authorized_users.user_id = users.id
+    WHERE users.email = ?`;
   log(`Querying user in DB...`);
   const user = await new Promise((resolve, reject) => {
     db.get(sql, [email.trim().toLowerCase()], (err, r) => {
@@ -83,7 +85,8 @@ const login = catchAsync(async (req, res, next) => {
       id: user.id,
       email: user.email,
       name: user.name,
-      role: user.role
+      role: user.role,
+      sessionVersion: user.session_version
     },
     process.env.JWT_SECRET || 'super_secret_secure_key_1234567890_agenda_odontologica',
     { expiresIn: expiresIn }
@@ -108,48 +111,6 @@ const login = catchAsync(async (req, res, next) => {
     }
   });
   log(`Response sent successfully.`);
-});
-
-/**
- * Endpoint POST /api/auth/register
- * Crea un nuevo usuario en el sistema.
- */
-const register = catchAsync(async (req, res, next) => {
-  const { name, email, password, role } = req.body;
-
-  // 1. Verificar si el correo ya existe
-  const sqlCheck = 'SELECT id FROM users WHERE email = ?';
-  const existingUser = await new Promise((resolve, reject) => {
-    db.get(sqlCheck, [email.trim().toLowerCase()], (err, row) => {
-      if (err) reject(err);
-      else resolve(row);
-    });
-  });
-
-  if (existingUser) {
-    throw new AppError('El correo electrónico ya está registrado.', 400);
-  }
-
-  // 2. Hashear la contraseña
-  const salt = await bcrypt.genSalt(12);
-  const passwordHash = await bcrypt.hash(password, salt);
-
-  // 3. Insertar el nuevo usuario en la BD
-  const sqlInsert = `
-    INSERT INTO users (name, email, password_hash, role) 
-    VALUES (?, ?, ?, ?)
-  `;
-  
-  await new Promise((resolve, reject) => {
-    db.run(sqlInsert, [name.trim(), email.trim().toLowerCase(), passwordHash, role], function(err) {
-      if (err) reject(err);
-      else resolve(this.lastID);
-    });
-  });
-
-  res.status(201).json({
-    message: 'Usuario registrado exitosamente.'
-  });
 });
 
 /**
@@ -290,7 +251,6 @@ const updateProfile = catchAsync(async (req, res, next) => {
 
 module.exports = {
   login,
-  register,
   forgotPassword,
   verifySession,
   logout,

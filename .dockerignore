@@ -1,6 +1,7 @@
 .git
 .gitignore
 node_modules/
+public/uploads/
 dist/
 build/
 *.bak*

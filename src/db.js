@@ -7,15 +7,6 @@ const dbPath = path.resolve(process.env.DB_PATH || './database.db');
 const schemaPath = path.resolve(__dirname, '../schema.sql');
 fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 
-const developmentUserSeeds = `
-  INSERT OR IGNORE INTO users (email, password_hash, name, role)
-  VALUES ('admin@agendaodontologica.com', '$2a$12$66NPhCd6vcZFn0sK9Mz2xeCwIY54qmDeI/M.CNkLWyDY9ZZy6VjBK', 'Dr. Luis D. Reynaga Padilla', 'odontologo');
-  INSERT OR IGNORE INTO users (email, password_hash, name, role)
-  VALUES ('recepcion@agendaodontologica.com', '$2a$12$cdEn9IbENNCgUCMvyf5ZeulF0f6yD7uex.4peMgJ6eQN/22M2.r9i', 'Sra. Laura Gómez', 'recepcionista');
-  INSERT OR IGNORE INTO users (email, password_hash, name, role)
-  VALUES ('admin@dentalflow.com', '$2a$12$opgvHLoDAKk/aU/Rjf20VeIS4LAsJoMOtZGGVqscp9UOqhSm9p/z2', 'Dr. Luis D. Reynaga Padilla', 'odontologo');
-`;
-
 // Verificar si el archivo de base de datos ya existe
 const dbExists = fs.existsSync(dbPath);
 
@@ -40,6 +31,13 @@ const db = new sqlite3.Database(dbPath, (err) => {
   } else {
     // Asegurar que la tabla de pacientes exista (por si se está actualizando una BD ya existente)
     db.serialize(() => {
+      db.run(`CREATE TABLE IF NOT EXISTS authorized_users (
+        role TEXT PRIMARY KEY CHECK(role IN ('odontologo', 'recepcionista')),
+        user_id INTEGER NOT NULL UNIQUE REFERENCES users(id),
+        session_version TEXT NOT NULL
+      )`, (err) => {
+        if (err) console.error('Error al crear la tabla de usuarios autorizados:', err.message);
+      });
       db.run(`
         CREATE TABLE IF NOT EXISTS patients (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -340,13 +338,6 @@ function initializeDatabase() {
       if (err) {
         console.error('Error al ejecutar el esquema de base de datos:', err.message);
       } else {
-        if (process.env.NODE_ENV !== 'production' || process.env.SEED_DEFAULT_USERS === 'true') {
-          db.exec(developmentUserSeeds, (seedErr) => {
-            if (seedErr) {
-              console.error('Error al crear los usuarios de desarrollo:', seedErr.message);
-            }
-          });
-        }
         console.log('Esquema de base de datos creado con éxito.');
       }
     });
